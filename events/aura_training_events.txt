@@ -1,0 +1,168 @@
+﻿namespace = aura_kings
+
+# Martial Training session (launched by aura_martial_training_decision).
+# Flow: 0100 setup format -> 0101 choose core -> 0102 choose method -> 0103 result.
+# Transient state lives in aura_training_* variables (see scripted effects).
+
+# 0100 — Setup format. The "feast/tournament-like" variable setup options. Each
+# format costs differently and grants a flat EXP bonus to the session.
+aura_kings.0100 = {
+	type = character_event
+	title = aura_kings.0100.t
+	desc = aura_kings.0100.desc
+	theme = learning
+
+	# Solitary regimen — free, no bonus.
+	option = {
+		name = aura_kings.0100.solitary
+		set_variable = { name = aura_training_format value = flag:solitary }
+		set_variable = { name = aura_training_format_bonus value = 0 }
+		trigger_event = aura_kings.0101
+	}
+
+	# Sparring tournament — costs gold, grants prestige and a solid EXP bonus.
+	option = {
+		name = aura_kings.0100.tournament
+		trigger = { gold >= 30 }
+		add_gold = -30
+		add_prestige = minor_prestige_gain
+		set_variable = { name = aura_training_format value = flag:tournament }
+		set_variable = { name = aura_training_format_bonus value = 15 }
+		trigger_event = aura_kings.0101
+	}
+
+	# Training feast — costs more gold, relieves stress, modest EXP bonus.
+	option = {
+		name = aura_kings.0100.feast
+		trigger = { gold >= 50 }
+		add_gold = -50
+		add_stress = -20
+		set_variable = { name = aura_training_format value = flag:feast }
+		set_variable = { name = aura_training_format_bonus value = 10 }
+		trigger_event = aura_kings.0101
+	}
+}
+
+# 0101 — Choose which mortal core to train.
+aura_kings.0101 = {
+	type = character_event
+	title = aura_kings.0101.t
+	desc = aura_kings.0101.desc
+	theme = learning
+
+	option = {
+		name = aura_kings.0101.power
+		set_variable = { name = aura_training_target value = flag:power }
+		trigger_event = aura_kings.0102
+	}
+	option = {
+		name = aura_kings.0101.fortitude
+		set_variable = { name = aura_training_target value = flag:fortitude }
+		trigger_event = aura_kings.0102
+	}
+	option = {
+		name = aura_kings.0101.agility
+		set_variable = { name = aura_training_target value = flag:agility }
+		trigger_event = aura_kings.0102
+	}
+	option = {
+		name = aura_kings.0101.soul
+		set_variable = { name = aura_training_target value = flag:soul }
+		trigger_event = aura_kings.0102
+	}
+}
+
+# 0102 — Choose how to train. Each method has its own cost / trade-off, and a
+# weighted roll for how much EXP is gained (success).
+aura_kings.0102 = {
+	type = character_event
+	title = aura_kings.0102.t
+	desc = aura_kings.0102.desc
+	theme = learning
+
+	# Steady drills — safe, minor stress, modest reliable EXP.
+	option = {
+		name = aura_kings.0102.drills
+		add_stress = minor_stress_gain
+		random_list = {
+			40 = { set_variable = { name = aura_training_last_gain value = 20 } }
+			45 = { set_variable = { name = aura_training_last_gain value = 30 } }
+			15 = {
+				modifier = { add = 10 prowess >= 6 }
+				set_variable = { name = aura_training_last_gain value = 40 }
+			}
+		}
+		aura_grant_training_result_effect = yes
+		trigger_event = aura_kings.0103
+	}
+
+	# Brutal sparring — high stress and a chance of injury, but high EXP.
+	option = {
+		name = aura_kings.0102.sparring
+		add_stress = medium_stress_gain
+		random_list = {
+			30 = {
+				set_variable = { name = aura_training_last_gain value = 25 }
+				add_trait = wounded_1
+			}
+			45 = { set_variable = { name = aura_training_last_gain value = 45 } }
+			25 = {
+				modifier = { add = 10 prowess >= 8 }
+				set_variable = { name = aura_training_last_gain value = 65 }
+			}
+		}
+		aura_grant_training_result_effect = yes
+		trigger_event = aura_kings.0103
+	}
+
+	# Hire a master — costs gold, reliably high EXP.
+	option = {
+		name = aura_kings.0102.master
+		trigger = { gold >= 50 }
+		add_gold = -50
+		random_list = {
+			20 = { set_variable = { name = aura_training_last_gain value = 40 } }
+			60 = { set_variable = { name = aura_training_last_gain value = 50 } }
+			20 = { set_variable = { name = aura_training_last_gain value = 60 } }
+		}
+		aura_grant_training_result_effect = yes
+		trigger_event = aura_kings.0103
+	}
+
+	# Withdraw — gain nothing this session.
+	option = {
+		name = aura_kings.0102.withdraw
+		trigger_event = aura_kings.0103
+	}
+}
+
+# 0103 — Result. Text varies by whether a core was forged, some EXP was gained,
+# or nothing happened. Cleans up the transient session variables.
+aura_kings.0103 = {
+	type = character_event
+	title = aura_kings.0103.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					has_variable = aura_training_core_gained
+					var:aura_training_core_gained = yes
+				}
+				desc = aura_kings.0103.desc_core
+			}
+			triggered_desc = {
+				trigger = { var:aura_training_session_gain > 0 }
+				desc = aura_kings.0103.desc_progress
+			}
+			desc = aura_kings.0103.desc_none
+		}
+	}
+	theme = learning
+
+	option = {
+		name = aura_kings.0103.a
+		hidden_effect = {
+			aura_end_training_session_effect = yes
+		}
+	}
+}

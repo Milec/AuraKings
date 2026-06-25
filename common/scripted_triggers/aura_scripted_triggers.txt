@@ -26,6 +26,13 @@ aura_can_train_mortal_core_trigger = {
 	aura_mortal_cores_remaining_value >= 1
 }
 
+# Can undertake a Martial Training session (a martial artist with room to grow).
+aura_can_martial_train_trigger = {
+	aura_is_martial_artist_trigger = yes
+	is_adult = yes
+	aura_mortal_cores_remaining_value >= 1
+}
+
 # Ready to awaken the immortal cores: a trained martial artist, not yet a
 # cultivator, with at least the 100 free Aura Pressure needed to condense a core.
 # This enforces the "100 AP to awaken" rule and guarantees the forced first-core

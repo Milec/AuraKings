@@ -11,6 +11,8 @@ groundwork commit has a working stub or it's a documented placeholder.
 | **Martial Artist** (learned path) | Trait `aura_martial_artist`; tracks mortal cores                  | `common/traits/00_aura_core_traits.txt`            | done (basic) |
 | **Cultivator** (awakened)     | Trait `aura_cultivator` (requires & keeps Martial Artist); tracks immortal cores | `common/traits/00_aura_core_traits.txt`            | done (basic) |
 | **Mortal cores** (trained, max 8) | Variables `aura_mc_{power,fortitude,agility,soul}`, capped via `aura_mortal_cores_remaining_value` | script values + effects | done (basic) |
+| **Mortal-core training (EXP)** | Per-stat EXP `aura_mc_{stat}_exp`; 100 EXP -> +1 core via `aura_gain_mortal_core_exp_effect` | scripted effects + script values | done (basic) |
+| **Martial Training session** | `aura_martial_training_decision` (6mo cooldown) -> format/core/method event chain `aura_kings.0100-0103`; variable EXP by roll. Promotable to a CK3 Activity later. | `common/decisions`, `events` | done (basic) |
 | **Immortal cores** (condensed) | Variables `aura_ic_{power,fortitude,agility,soul}`; `aura_condense_immortal_core_effect` | script values + effects | done (basic) |
 | **Effective core rating**     | `aura_{power,fortitude,agility,soul}_value` = mortal + immortal     | `common/script_values`                             | done (basic) |
 | **Awakening + Foundation**    | `aura_awaken_cultivation_decision`/`_effect`; Foundation grant TODO | `common/decisions`, `common/scripted_effects`      | partial     |
@@ -32,7 +34,12 @@ groundwork commit has a working stub or it's a documented placeholder.
 - Character variables:
   - Aura Pressure: `aura_pressure_total`, `aura_pressure_free`.
   - Mortal cores: `aura_mc_power`, `aura_mc_fortitude`, `aura_mc_agility`, `aura_mc_soul`.
+  - Mortal-core EXP: `aura_mc_{stat}_exp` (0..100 per stat).
   - Immortal cores: `aura_ic_power`, `aura_ic_fortitude`, `aura_ic_agility`, `aura_ic_soul`.
+  - Transient training session: `aura_training_target` (flag), `aura_training_format`
+    (flag), `aura_training_format_bonus`, `aura_training_last_gain`,
+    `aura_training_session_gain`, `aura_training_core_gained` — set up and torn
+    down by the session effects.
   - Bookkeeping: `aura_initialized`.
 - Traits: `aura_martial_artist`, `aura_cultivator` (identity flags; cores live in
   variables), `aura_element_*`, `aura_style_*`.

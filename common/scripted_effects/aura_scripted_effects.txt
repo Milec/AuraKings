@@ -23,6 +23,12 @@ aura_initialize_character_effect = {
 		set_variable = { name = aura_ic_fortitude value = 0 }
 		set_variable = { name = aura_ic_agility value = 0 }
 		set_variable = { name = aura_ic_soul value = 0 }
+
+		# Mortal-core training EXP per stat (0..threshold; converts to a core).
+		set_variable = { name = aura_mc_power_exp value = 0 }
+		set_variable = { name = aura_mc_fortitude_exp value = 0 }
+		set_variable = { name = aura_mc_agility_exp value = 0 }
+		set_variable = { name = aura_mc_soul_exp value = 0 }
 	}
 }
 
@@ -47,6 +53,83 @@ aura_train_mortal_core_effect = {
 		limit = { aura_can_train_mortal_core_trigger = yes }
 		change_variable = { name = aura_mc_$STAT$ add = 1 }
 	}
+}
+
+# Add mortal-core training EXP to a chosen stat. When the EXP bar fills
+# (>= threshold) it converts into +1 mortal core (while under the 8-core cap),
+# carrying over any surplus. Sets aura_training_core_gained when a core is forged.
+# Usage: aura_gain_mortal_core_exp_effect = { STAT = power AMOUNT = 30 }
+#        AMOUNT may be a literal or a variable, e.g. AMOUNT = var:aura_training_session_gain
+aura_gain_mortal_core_exp_effect = {
+	if = {
+		limit = { NOT = { has_variable = aura_mc_$STAT$_exp } }
+		set_variable = { name = aura_mc_$STAT$_exp value = 0 }
+	}
+	change_variable = { name = aura_mc_$STAT$_exp add = $AMOUNT$ }
+	while = {
+		limit = {
+			var:aura_mc_$STAT$_exp >= aura_mortal_core_exp_threshold_value
+			aura_mortal_cores_remaining_value >= 1
+		}
+		change_variable = { name = aura_mc_$STAT$_exp subtract = aura_mortal_core_exp_threshold_value }
+		change_variable = { name = aura_mc_$STAT$ add = 1 }
+		set_variable = { name = aura_training_core_gained value = yes }
+	}
+	# At the cap, don't hoard a full-or-greater bar of unusable EXP.
+	if = {
+		limit = {
+			aura_mortal_cores_remaining_value = 0
+			var:aura_mc_$STAT$_exp >= aura_mortal_core_exp_threshold_value
+		}
+		set_variable = { name = aura_mc_$STAT$_exp value = aura_mortal_core_exp_threshold_value }
+	}
+}
+
+# --- Martial Training session helpers (see events aura_kings.0100-0103) ------
+
+# Reset the transient per-session variables at the start of a training session.
+aura_begin_training_session_effect = {
+	aura_initialize_character_effect = yes
+	set_variable = { name = aura_training_core_gained value = no }
+	set_variable = { name = aura_training_format_bonus value = 0 }
+	set_variable = { name = aura_training_last_gain value = 0 }
+	set_variable = { name = aura_training_session_gain value = 0 }
+}
+
+# Apply a finished training roll: total EXP = rolled gain + the setup-format
+# bonus, granted to whichever core was chosen (aura_training_target flag).
+aura_grant_training_result_effect = {
+	set_variable = { name = aura_training_session_gain value = var:aura_training_last_gain }
+	if = {
+		limit = { has_variable = aura_training_format_bonus }
+		change_variable = { name = aura_training_session_gain add = var:aura_training_format_bonus }
+	}
+	if = {
+		limit = { var:aura_training_target = flag:power }
+		aura_gain_mortal_core_exp_effect = { STAT = power AMOUNT = var:aura_training_session_gain }
+	}
+	else_if = {
+		limit = { var:aura_training_target = flag:fortitude }
+		aura_gain_mortal_core_exp_effect = { STAT = fortitude AMOUNT = var:aura_training_session_gain }
+	}
+	else_if = {
+		limit = { var:aura_training_target = flag:agility }
+		aura_gain_mortal_core_exp_effect = { STAT = agility AMOUNT = var:aura_training_session_gain }
+	}
+	else_if = {
+		limit = { var:aura_training_target = flag:soul }
+		aura_gain_mortal_core_exp_effect = { STAT = soul AMOUNT = var:aura_training_session_gain }
+	}
+}
+
+# Clear the transient per-session variables at the end of a training session.
+aura_end_training_session_effect = {
+	remove_variable = aura_training_target
+	remove_variable = aura_training_format
+	remove_variable = aura_training_format_bonus
+	remove_variable = aura_training_last_gain
+	remove_variable = aura_training_session_gain
+	remove_variable = aura_training_core_gained
 }
 
 # Gain Aura Pressure (adds to both total and free). Initializes first if needed.

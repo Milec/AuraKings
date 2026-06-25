@@ -10,6 +10,7 @@
 
 @aura_mortal_core_cap = 8
 @aura_condense_cost = 100
+@aura_mortal_core_exp_threshold = 100
 
 # --- Effective core ratings (mortal + immortal) -----------------------------
 
@@ -75,6 +76,11 @@ aura_free_pressure_value = {
 # Free AP needed to condense an immortal core. Always a flat 100 AP.
 aura_condense_cost_value = {
 	value = @aura_condense_cost
+}
+
+# Mortal-core training EXP needed to forge one mortal core (a full EXP bar).
+aura_mortal_core_exp_threshold_value = {
+	value = @aura_mortal_core_exp_threshold
 }
 
 # --- Aura Clash resolution --------------------------------------------------

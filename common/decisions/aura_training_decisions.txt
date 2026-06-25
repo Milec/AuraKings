@@ -1,0 +1,29 @@
+﻿# Martial Training — a recurring training "session" (decision-driven for now;
+# designed to be promotable to a full CK3 planner Activity later). Once every
+# 6 months, a martial artist can train a mortal core. The session branches:
+#   setup format (solitary / tournament / feast)  ->  which core  ->  how to train
+# and grants a variable amount of EXP toward the chosen core based on the roll.
+# See events/aura_training_events.txt (aura_kings.0100-0103).
+
+aura_martial_training_decision = {
+	desc = aura_martial_training_decision_desc
+	selection_tooltip = aura_martial_training_decision_tooltip
+
+	cooldown = { months = 6 }
+
+	is_shown = {
+		aura_is_martial_artist_trigger = yes
+	}
+
+	is_valid = {
+		aura_can_martial_train_trigger = yes
+	}
+
+	effect = {
+		aura_begin_training_session_effect = yes
+		trigger_event = aura_kings.0100
+	}
+
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
