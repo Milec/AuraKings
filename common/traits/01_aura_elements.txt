@@ -1,6 +1,7 @@
 ﻿# Elemental affinity traits. Eight elements; a cultivator may master a limited
-# number (see aura_can_master_element_trigger). These are NOT a group — multiple
-# can be held at once up to the cap. Each gives light flavor modifiers.
+# number (normally two), to be enforced by a cap trigger once element-learning
+# is wired up. These are NOT a group — multiple can be held at once up to the
+# cap. Each gives light flavor modifiers.
 
 aura_element_fire = {
 	prowess = 2

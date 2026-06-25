@@ -50,17 +50,35 @@ same `NN_aura_<topic>.txt` pattern.
 
 ## Testing changes
 
-CK3 has no unit-test harness. Validate by:
+CK3 has no unit-test harness. Validate at two levels:
 
-1. Loading the mod in CK3 with `-debug_mode` enabled (launch option / Steam).
-2. Watching `error.log` in the Paradox user `logs/` folder for parse errors —
-   this is the single most important check; a clean `error.log` means the mod
-   parsed.
-3. Using the in-game console (`` ` ``) to test effects, e.g.
+**1. Offline sanity check (`scripts/validate_mod.py`)** — runs with nothing but
+Python (no game files). It catches the easy-to-introduce mistakes: unbalanced
+braces, missing UTF-8 BOM on loc files, and `aura_*` references (scripted
+effects/triggers/values, `aura_kings.*` events, traits) that aren't defined
+anywhere in the mod. Run it any time:
+
+```
+python3 scripts/validate_mod.py
+```
+
+It runs **automatically at the start of every Claude Code session** via the
+SessionStart hook (`.claude/hooks/session-start.sh`), so renamed/typo'd
+references surface before the game is ever launched. It does **not** know vanilla
+CK3 semantics — it can't validate `add_gold`, trait names like `wounded_1`, event
+themes, etc. For that you need the game.
+
+**2. In-game check (the ground truth)** — only this catches vanilla-semantic
+errors:
+
+1. Load the mod in CK3 with `-debug_mode` enabled (launch option / Steam).
+2. Watch `error.log` in the Paradox user `logs/` folder for parse errors —
+   a clean `error.log` means the mod parsed.
+3. Use the in-game console (`` ` ``) to test effects, e.g.
    `effect = { aura_begin_martial_training_effect = yes }`,
    `effect = { aura_gain_pressure_effect = { AMOUNT = 200 } }`, `add_trait aura_cultivator`.
 
-A PR should leave `error.log` free of new errors introduced by the change.
+A PR should pass `validate_mod.py` and leave `error.log` free of new errors.
 
 ## Style
 
