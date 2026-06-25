@@ -76,16 +76,23 @@ and immortal `aura_ic_{…}` — summed by script values `aura_{stat}_value`.
 | **Fortitude** | +0.5 Prowess, +0.05 Health, +5 yrs life expectancy | Durability & longevity |
 | **Soul** | +0.25 Learning | Insight / perception (more once techniques exist) |
 
-**Fortitude longevity thresholds:** at **10** cores, age stops sapping prowess;
-life expectancy rises (applied in +50-year tiers per 10 cores); at **50** cores
-the character gains the **`aura_ageless`** trait (`immortal = yes`) and can no
-longer die of old age.
+**Fortitude longevity thresholds:** at **10** cores, age stops sapping prowess
+(`no_prowess_loss_from_age` modifier); health & life expectancy rise (stepped per
+10 cores); at **50** cores the character gains the **`aura_ageless`** trait
+(`immortal = yes`) and can no longer die of old age.
 
-Implementation: `aura_recalculate_passives_effect` recomputes the totals from
-core counts and applies the delta to base Prowess/Health/Learning (tracked via
-`aura_applied_*`), refreshes the tiered life-expectancy modifiers, and grants
-agelessness. It runs whenever cores change and at game start. Soul's Dread /
-Prestige flavor and a true "+5/core smooth" life curve are still to come.
+Implementation (verified against `wiki_pages/`): `aura_recalculate_passives_effect`
+recomputes the totals from core counts and applies them —
+- **Prowess** (Pow/Agi/For) and **Learning** (Soul) via `add_prowess_skill` /
+  `add_learning_skill`, as a delta vs `aura_applied_*` (values may be fractional;
+  sub-point drift is cosmetic at these magnitudes);
+- **Health + life expectancy** via stepped Fortitude tier modifiers
+  (`aura_fortitude_tier_1..4`) — there is no `add_health` effect, so health must
+  come from a modifier;
+- **no-age-prowess-loss** and **agelessness** by threshold.
+
+It runs whenever cores change and at game start. Soul's Dread / Prestige flavor
+and a smooth (vs stepped) Fortitude curve are still to come.
 
 ## Elements (8, master up to 2)
 
