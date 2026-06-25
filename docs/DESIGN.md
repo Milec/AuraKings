@@ -60,18 +60,32 @@ There are **two progression layers** (see the source guide,
 
 ## The four cores (two tiers each)
 
-A character's effective rating in a stat = **mortal cores + immortal cores**.
-
-| Core       | Fantasy meaning                | CK3 hook (target)                          |
-|------------|--------------------------------|--------------------------------------------|
-| Power      | Raw striking / destructive aura| Prowess; Aura Clash attack                 |
-| Agility    | Speed, evasion, finesse        | Prowess/Intrigue; Aura Clash initiative    |
-| Fortitude  | Toughness, endurance, healing  | Health, fewer wounds; Aura Clash defense   |
-| Soul       | Willpower, perception, control | Stress/dread resistance; Aura Clash tempo  |
+A character's effective rating in a stat = **mortal cores + immortal cores**
+(counted equally). High cultivators leave the human range entirely — an Archon
+(~100 cores, ~10k AP) lives for centuries and slays great spirit beasts.
 
 Cores are tracked as engine variables — mortal `aura_mc_{power,fortitude,agility,soul}`
-and immortal `aura_ic_{…}` — summed by script values `aura_{stat}_value`. They feed
-the Aura Clash resolution today; variable-driven passive modifiers come later.
+and immortal `aura_ic_{…}` — summed by script values `aura_{stat}_value`.
+
+### Passive benefits (per effective core in that stat)
+
+| Core | Benefit per core | Notes |
+|------|------------------|-------|
+| **Power** | +1.5 Prowess | Raw striking force |
+| **Agility** | +1.2 Prowess | Speed / finesse in a fight |
+| **Fortitude** | +0.5 Prowess, +0.05 Health, +5 yrs life expectancy | Durability & longevity |
+| **Soul** | +0.25 Learning | Insight / perception (more once techniques exist) |
+
+**Fortitude longevity thresholds:** at **10** cores, age stops sapping prowess;
+life expectancy rises (applied in +50-year tiers per 10 cores); at **50** cores
+the character gains the **`aura_ageless`** trait (`immortal = yes`) and can no
+longer die of old age.
+
+Implementation: `aura_recalculate_passives_effect` recomputes the totals from
+core counts and applies the delta to base Prowess/Health/Learning (tracked via
+`aura_applied_*`), refreshes the tiered life-expectancy modifiers, and grants
+agelessness. It runs whenever cores change and at game start. Soul's Dread /
+Prestige flavor and a true "+5/core smooth" life curve are still to come.
 
 ## Elements (8, master up to 2)
 

@@ -82,3 +82,42 @@ aura_condense_cost_value = {
 aura_mortal_core_exp_threshold_value = {
 	value = @aura_mortal_core_exp_threshold
 }
+
+# --- Passive benefits from cores --------------------------------------------
+# Cultivators become superhuman as cores accumulate. These are the TARGET totals
+# from cores; the recalc effect applies the delta vs what's already applied
+# (aura_applied_* variables). See aura_recalculate_passives_effect.
+
+# Prowess: Power (striker) + Agility (duelist) + Fortitude (toughness).
+aura_prowess_bonus_value = {
+	value = 0
+	add = { value = aura_power_value multiply = 1.5 }
+	add = { value = aura_agility_value multiply = 1.2 }
+	add = { value = aura_fortitude_value multiply = 0.5 }
+	round = yes
+}
+aura_prowess_delta_value = {
+	value = aura_prowess_bonus_value
+	subtract = var:aura_applied_prowess
+}
+
+# Learning: Soul (insight / perception).
+aura_learning_bonus_value = {
+	value = 0
+	add = { value = aura_soul_value multiply = 0.25 }
+	round = yes
+}
+aura_learning_delta_value = {
+	value = aura_learning_bonus_value
+	subtract = var:aura_applied_learning
+}
+
+# Health: Fortitude (durability / fast healing). Fractional is fine for health.
+aura_health_bonus_value = {
+	value = 0
+	add = { value = aura_fortitude_value multiply = 0.05 }
+}
+aura_health_delta_value = {
+	value = aura_health_bonus_value
+	subtract = var:aura_applied_health
+}

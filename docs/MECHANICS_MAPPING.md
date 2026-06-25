@@ -15,6 +15,7 @@ groundwork commit has a working stub or it's a documented placeholder.
 | **Martial Training session** | `aura_martial_training_decision` (6mo cooldown) -> format/core/method event chain `aura_kings.0100-0103`; variable EXP by roll. Promotable to a CK3 Activity later. | `common/decisions`, `events` | done (basic) |
 | **Immortal cores** (condensed) | Variables `aura_ic_{power,fortitude,agility,soul}`; `aura_condense_immortal_core_effect` | script values + effects | done (basic) |
 | **Effective core rating**     | `aura_{power,fortitude,agility,soul}_value` = mortal + immortal     | `common/script_values`                             | done (basic) |
+| **Passive benefits from cores** | Prowess (Pow/Agi/For), Health & life-expectancy & agelessness (For), Learning (Soul), via `aura_recalculate_passives_effect` (delta-applied base stats + tiered modifiers + `aura_ageless` trait) | script values, effects, modifiers, traits | done (needs in-game check) |
 | **Awakening + Foundation**    | `aura_awaken_cultivation_decision`/`_effect`; Foundation grant TODO | `common/decisions`, `common/scripted_effects`      | partial     |
 | **Aura Pressure gathering**   | `aura_gather_pressure_decision` (placeholder for lifestyle/passive) | `common/decisions`                                 | placeholder |
 | **8 Elements (master 2)**     | Non-exclusive traits `aura_element_*`, capped by trigger       | `common/traits/01_aura_elements.txt`               | stub        |

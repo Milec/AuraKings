@@ -24,6 +24,7 @@ aura_on_game_start = {
 	effect = {
 		every_player = {
 			aura_initialize_character_effect = yes
+			aura_recalculate_passives_effect = yes
 		}
 	}
 }

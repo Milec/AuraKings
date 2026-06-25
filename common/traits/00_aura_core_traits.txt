@@ -60,3 +60,10 @@ aura_cultivator = {
 		}
 	}
 }
+
+# Granted automatically at 50 Fortitude cores. immortal = yes makes the character
+# immune to death by old age (they may still die in other ways).
+aura_ageless = {
+	immortal = yes
+	shown_in_ruler_designer = no
+}

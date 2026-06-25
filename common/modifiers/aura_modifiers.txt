@@ -1,0 +1,18 @@
+﻿# Character modifiers for the Aura Kings passive-benefit system.
+#
+# Life expectancy from Fortitude cores (+5 years/core), applied in tiers of 10
+# cores (+50 years/step) by aura_apply_life_expectancy_effect. Above 50 cores the
+# aura_ageless trait makes these moot.
+
+aura_life_expectancy_1 = {
+	life_expectancy = 50
+}
+aura_life_expectancy_2 = {
+	life_expectancy = 100
+}
+aura_life_expectancy_3 = {
+	life_expectancy = 150
+}
+aura_life_expectancy_4 = {
+	life_expectancy = 200
+}
