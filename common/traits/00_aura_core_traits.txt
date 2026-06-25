@@ -23,6 +23,19 @@ aura_martial_artist = {
 
 	# Not a personality/physical trait and not randomly assigned.
 	shown_in_ruler_designer = no
+
+	# Dynamic tooltip: shows live Aura Pressure and per-stat mortal cores when a
+	# character is in scope; falls back to a static description otherwise (e.g.
+	# the trait encyclopedia, where there is no character).
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = aura_martial_artist_desc
+			}
+			desc = aura_martial_artist_desc_dynamic
+		}
+	}
 }
 
 aura_cultivator = {
@@ -35,4 +48,15 @@ aura_cultivator = {
 	icon = aura_cultivator.dds
 
 	shown_in_ruler_designer = no
+
+	# Dynamic tooltip: shows live Aura Pressure and per-stat immortal cores.
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { NOT = { exists = this } }
+				desc = aura_cultivator_desc
+			}
+			desc = aura_cultivator_desc_dynamic
+		}
+	}
 }

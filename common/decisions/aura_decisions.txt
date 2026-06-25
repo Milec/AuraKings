@@ -75,8 +75,8 @@ aura_awaken_cultivation_decision = {
 
 	effect = {
 		aura_awaken_cultivation_effect = yes
-		# Choose which stat receives the first condensed immortal core.
-		trigger_event = aura_kings.0002
+		# Forced allocation of the first immortal core (no cancel).
+		trigger_event = aura_kings.0003
 	}
 
 	ai_potential = { always = no }

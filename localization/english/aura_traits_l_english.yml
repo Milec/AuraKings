@@ -1,9 +1,14 @@
 ﻿l_english:
  # --- Identity / core traits ---
+ # *_desc are the static fallbacks (used where no character is in scope, e.g. the
+ # trait encyclopedia). *_desc_dynamic are shown on a real character and print
+ # live Aura Pressure and per-stat core counts via MakeScope.Var().GetValue.
  aura_martial_artist:0 "Martial Artist"
  aura_martial_artist_desc:0 "Has learned to gather Aura Pressure and forge mortal cores through relentless physical training. Mortal cores (up to eight, spread across Power, Fortitude, Agility and Soul) raise this warrior far above an untrained mortal."
+ aura_martial_artist_desc_dynamic:0 "Has learned to gather Aura Pressure and forge mortal cores through relentless physical training.\n\n#bold Aura Pressure:#! [ROOT.MakeScope.Var('aura_pressure_total').GetValue|0]  (#bold Free:#! [ROOT.MakeScope.Var('aura_pressure_free').GetValue|0])\n#bold Mortal Cores#! (max 8): Power [ROOT.MakeScope.Var('aura_mc_power').GetValue|0], Fortitude [ROOT.MakeScope.Var('aura_mc_fortitude').GetValue|0], Agility [ROOT.MakeScope.Var('aura_mc_agility').GetValue|0], Soul [ROOT.MakeScope.Var('aura_mc_soul').GetValue|0]"
  aura_cultivator:0 "Cultivator"
  aura_cultivator_desc:0 "Has awakened the immortal cores by condensing Aura Pressure into the body and soul, and forged a Foundation in the process. A true cultivator on the path toward immortality."
+ aura_cultivator_desc_dynamic:0 "Has awakened the immortal cores by condensing Aura Pressure into the body and soul, and forged a Foundation. A true cultivator on the path toward immortality.\n\n#bold Aura Pressure:#! [ROOT.MakeScope.Var('aura_pressure_total').GetValue|0]  (#bold Free:#! [ROOT.MakeScope.Var('aura_pressure_free').GetValue|0])\n#bold Immortal Cores:#! Power [ROOT.MakeScope.Var('aura_ic_power').GetValue|0], Fortitude [ROOT.MakeScope.Var('aura_ic_fortitude').GetValue|0], Agility [ROOT.MakeScope.Var('aura_ic_agility').GetValue|0], Soul [ROOT.MakeScope.Var('aura_ic_soul').GetValue|0]"
 
  # --- Elemental affinity traits ---
  aura_element_fire:0 "Fire Aura"

@@ -13,9 +13,37 @@ aura_kings.0001 = {
 	}
 }
 
-# 0002 — Condense an immortal core: choose which stat receives it. Used both for
-# the awakening (first core) and subsequent condensations. Each option spends
-# the free Aura Pressure cost and adds one immortal core to the chosen stat.
+# 0003 — Awakening: the cultivator is FORCED to allocate their first immortal
+# core (no cancel option). Reached only via the awaken decision, which already
+# guarantees >= 100 free Aura Pressure, so every option is affordable.
+aura_kings.0003 = {
+	type = character_event
+	title = aura_kings.0003.t
+	desc = aura_kings.0003.desc
+	theme = learning
+
+	# No cancel option: allocation is mandatory on awakening.
+	option = {
+		name = aura_kings.0003.power
+		aura_condense_immortal_core_effect = { STAT = power }
+	}
+	option = {
+		name = aura_kings.0003.fortitude
+		aura_condense_immortal_core_effect = { STAT = fortitude }
+	}
+	option = {
+		name = aura_kings.0003.agility
+		aura_condense_immortal_core_effect = { STAT = agility }
+	}
+	option = {
+		name = aura_kings.0003.soul
+		aura_condense_immortal_core_effect = { STAT = soul }
+	}
+}
+
+# 0002 — Condense an immortal core: choose which stat receives it. Used for
+# subsequent (post-awakening) condensations, where holding is allowed. Each
+# option spends the free Aura Pressure cost and adds one immortal core.
 aura_kings.0002 = {
 	type = character_event
 	title = aura_kings.0002.t

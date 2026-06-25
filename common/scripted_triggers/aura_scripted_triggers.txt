@@ -27,10 +27,14 @@ aura_can_train_mortal_core_trigger = {
 }
 
 # Ready to awaken the immortal cores: a trained martial artist, not yet a
-# cultivator, with enough free Aura Pressure to condense the first core.
+# cultivator, with at least 100 free Aura Pressure. With zero immortal cores
+# aura_condense_cost_value resolves to the base 100, so this both enforces the
+# "100 AP to awaken" rule and guarantees the forced first-core allocation in
+# event aura_kings.0003 is affordable.
 aura_can_awaken_trigger = {
 	aura_is_martial_artist_trigger = yes
 	NOT = { has_trait = aura_cultivator }
+	aura_free_pressure_value >= 100
 	aura_free_pressure_value >= aura_condense_cost_value
 }
 

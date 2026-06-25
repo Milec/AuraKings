@@ -25,6 +25,13 @@
  aura_kings.0001.desc:0 "Day after day of brutal training finally bears fruit. You feel the natural energy of the world answer your call, and the first mortal cores take shape within Power, Fortitude, Agility, and Soul. You are a Martial Artist now."
  aura_kings.0001.a:0 "My path begins."
 
+ aura_kings.0003.t:0 "Awakening"
+ aura_kings.0003.desc:0 "Your gathered Aura Pressure churns, demanding form. There is no turning back now — you must condense your very first immortal core. Into which will it crystallize?"
+ aura_kings.0003.power:0 "Power — awaken an immortal Power core."
+ aura_kings.0003.fortitude:0 "Fortitude — awaken an immortal Fortitude core."
+ aura_kings.0003.agility:0 "Agility — awaken an immortal Agility core."
+ aura_kings.0003.soul:0 "Soul — awaken an immortal Soul core."
+
  aura_kings.0002.t:0 "Condense an Immortal Core"
  aura_kings.0002.desc:0 "You press your gathered Aura Pressure inward, seeking a core to harden into something immortal. Into which will you force your power?"
  aura_kings.0002.power:0 "Power — condense an immortal Power core."
