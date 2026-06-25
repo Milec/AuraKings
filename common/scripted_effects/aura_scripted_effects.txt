@@ -1,0 +1,63 @@
+﻿# Reusable effects for the Aura Kings cultivation system.
+# Run on the character scope.
+
+# Initialize the cultivation variables on a character exactly once. Safe to call
+# repeatedly (guarded by aura_initialized).
+aura_initialize_character_effect = {
+	if = {
+		limit = { NOT = { has_variable = aura_initialized } }
+		set_variable = { name = aura_initialized value = yes }
+		set_variable = { name = aura_chi value = 0 }
+		set_variable = { name = aura_power value = 0 }
+		set_variable = { name = aura_agility value = 0 }
+		set_variable = { name = aura_fortitude value = 0 }
+		set_variable = { name = aura_soul value = 0 }
+	}
+}
+
+# Add Chi to the character (initializing first if needed).
+# Usage: aura_gain_chi_effect = { AMOUNT = 25 }
+aura_gain_chi_effect = {
+	aura_initialize_character_effect = yes
+	change_variable = { name = aura_chi add = $AMOUNT$ }
+}
+
+# Spend Chi. Does not check affordability — gate with the trigger first.
+# Usage: aura_spend_chi_effect = { AMOUNT = 25 }
+aura_spend_chi_effect = {
+	change_variable = { name = aura_chi subtract = $AMOUNT$ }
+	if = {
+		limit = { var:aura_chi < 0 }
+		set_variable = { name = aura_chi value = 0 }
+	}
+}
+
+# Awaken a mortal into the first cultivation realm.
+aura_awaken_cultivation_effect = {
+	aura_initialize_character_effect = yes
+	if = {
+		limit = { aura_is_mortal_trigger = yes }
+		add_trait = aura_realm_initiate
+	}
+}
+
+# Advance one cultivation realm. The grouped traits handle removing the lower
+# realm automatically. Caps at ascendant.
+aura_advance_realm_effect = {
+	if =      { limit = { has_trait = aura_realm_sovereign }   add_trait = aura_realm_ascendant }
+	else_if = { limit = { has_trait = aura_realm_grandmaster } add_trait = aura_realm_sovereign }
+	else_if = { limit = { has_trait = aura_realm_master }      add_trait = aura_realm_grandmaster }
+	else_if = { limit = { has_trait = aura_realm_warrior }     add_trait = aura_realm_master }
+	else_if = { limit = { has_trait = aura_realm_adept }       add_trait = aura_realm_warrior }
+	else_if = { limit = { has_trait = aura_realm_initiate }    add_trait = aura_realm_adept }
+	else =    { add_trait = aura_realm_initiate }
+}
+
+# Attempt to advance: spend the required Chi and move up a realm if able.
+aura_try_advance_realm_effect = {
+	if = {
+		limit = { aura_can_advance_realm_trigger = yes }
+		aura_spend_chi_effect = { AMOUNT = aura_chi_to_advance_value }
+		aura_advance_realm_effect = yes
+	}
+}

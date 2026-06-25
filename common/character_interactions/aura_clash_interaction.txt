@@ -1,0 +1,35 @@
+﻿# The signature confrontation: one cultivator challenges another to an Aura Clash.
+# The groundwork routes an accepted challenge into a resolution event that
+# compares each duelist's aura_clash_power_value. Stakes, AI logic, and richer
+# consequences are layered on later.
+
+aura_clash_interaction = {
+	category = interaction_category_hostile
+
+	desc = aura_clash_interaction_desc
+
+	is_shown = {
+		scope:actor = { aura_is_cultivator_trigger = yes }
+		scope:recipient = {
+			aura_is_cultivator_trigger = yes
+			NOT = { this = scope:actor }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		scope:recipient = { is_adult = yes }
+		scope:actor = { is_adult = yes }
+	}
+
+	# For the groundwork the recipient always accepts; replace with an AI/event
+	# acceptance model later.
+	auto_accept = yes
+
+	on_accept = {
+		scope:actor = {
+			trigger_event = aura_kings.0010
+		}
+	}
+
+	ai_will_do = { base = 0 }
+}

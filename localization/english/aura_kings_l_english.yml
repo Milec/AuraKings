@@ -1,0 +1,31 @@
+﻿l_english:
+ # --- Decisions ---
+ aura_begin_cultivation_decision:0 "Begin Cultivation"
+ aura_begin_cultivation_decision_desc:0 "Turn away from the life of a mere mortal. Open yourself to the Chi of the world and begin the long path of cultivation."
+ aura_begin_cultivation_decision_tooltip:0 "Awaken your aura and become a cultivator"
+
+ aura_meditate_decision:0 "Meditate"
+ aura_meditate_decision_desc:0 "Withdraw to absorb natural Chi from the world and refine it within your body."
+ aura_meditate_decision_tooltip:0 "Gain Chi toward your next breakthrough"
+
+ aura_breakthrough_decision:0 "Attempt Breakthrough"
+ aura_breakthrough_decision_desc:0 "Gather the Chi you have refined and force a breakthrough to the next cultivation realm."
+ aura_breakthrough_decision_tooltip:0 "Spend Chi to advance to the next realm"
+
+ # --- Character interaction ---
+ aura_clash_interaction:0 "Challenge to an Aura Clash"
+ aura_clash_interaction_desc:0 "Challenge [SCOPE.Char(scope:recipient).GetFirstName] to settle the matter aura against aura."
+
+ # --- Events ---
+ aura_kings.0001.t:0 "The First Breath"
+ aura_kings.0001.desc:0 "For the first time you feel it — the Chi suffusing the world, the same power the legends spoke of. You draw a slow breath, and your aura awakens."
+ aura_kings.0001.a:0 "My path begins."
+
+ aura_kings.0002.t:0 "Breakthrough"
+ aura_kings.0002.desc:0 "The refined Chi roars through your meridians. With a final effort the barrier shatters, and you rise to a new realm of power."
+ aura_kings.0002.a:0 "I have ascended further."
+
+ aura_kings.0010.t:0 "Aura Clash"
+ aura_kings.0010.desc:0 "Auras flare and collide. The air itself trembles as two cultivators measure their refined power against one another."
+ aura_kings.0010.a:0 "My aura prevails!"
+ aura_kings.0010.b:0 "I am overpowered..."

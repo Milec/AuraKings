@@ -1,0 +1,78 @@
+﻿# Player-facing decisions for the Aura Kings cultivation loop.
+# Pictures/icons are omitted in the groundwork to avoid referencing missing art;
+# add `picture = "..."` once assets exist.
+
+# Awaken: a mortal takes the first step onto the path of cultivation.
+aura_begin_cultivation_decision = {
+	major = yes
+
+	desc = aura_begin_cultivation_decision_desc
+	selection_tooltip = aura_begin_cultivation_decision_tooltip
+
+	is_shown = {
+		aura_is_mortal_trigger = yes
+	}
+
+	is_valid = {
+		is_adult = yes
+	}
+
+	effect = {
+		aura_initialize_character_effect = yes
+		trigger_event = aura_kings.0001
+	}
+
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# Meditate: spend time cultivating to absorb Chi from the world.
+aura_meditate_decision = {
+	desc = aura_meditate_decision_desc
+	selection_tooltip = aura_meditate_decision_tooltip
+
+	cooldown = { years = 1 }
+
+	is_shown = {
+		aura_is_cultivator_trigger = yes
+	}
+
+	is_valid = {
+		is_adult = yes
+	}
+
+	effect = {
+		# Flat Chi gain for the groundwork; later scale by Soul core, location,
+		# techniques, and difficulty game rule.
+		aura_gain_chi_effect = { AMOUNT = 50 }
+		add_prestige = minor_prestige_gain
+	}
+
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# Breakthrough: spend accumulated Chi to ascend to the next realm.
+aura_breakthrough_decision = {
+	major = yes
+
+	desc = aura_breakthrough_decision_desc
+	selection_tooltip = aura_breakthrough_decision_tooltip
+
+	is_shown = {
+		aura_is_cultivator_trigger = yes
+		NOT = { has_trait = aura_realm_ascendant }
+	}
+
+	is_valid = {
+		aura_can_advance_realm_trigger = yes
+	}
+
+	effect = {
+		aura_try_advance_realm_effect = yes
+		trigger_event = aura_kings.0002
+	}
+
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}

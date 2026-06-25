@@ -1,0 +1,33 @@
+﻿# Reusable triggers for the Aura Kings cultivation system.
+
+# True if the character has awakened (holds any cultivation realm trait).
+aura_is_cultivator_trigger = {
+	OR = {
+		has_trait = aura_realm_initiate
+		has_trait = aura_realm_adept
+		has_trait = aura_realm_warrior
+		has_trait = aura_realm_master
+		has_trait = aura_realm_grandmaster
+		has_trait = aura_realm_sovereign
+		has_trait = aura_realm_ascendant
+	}
+}
+
+# True if the character is a powerless mortal who could begin cultivating.
+aura_is_mortal_trigger = {
+	NOT = { aura_is_cultivator_trigger = yes }
+}
+
+# True if the character has enough Chi to advance to the next realm and isn't
+# already at the peak.
+aura_can_advance_realm_trigger = {
+	has_variable = aura_chi
+	NOT = { has_trait = aura_realm_ascendant }
+	var:aura_chi >= aura_chi_to_advance_value
+}
+
+# True if the character may master another element (under the realm cap).
+aura_can_master_element_trigger = {
+	aura_is_cultivator_trigger = yes
+	aura_elements_mastered_value < aura_max_elements_value
+}

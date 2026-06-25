@@ -1,0 +1,77 @@
+﻿namespace = aura_kings
+
+# 0001 — Awakening: flavor shown after the "Begin Cultivation" decision.
+aura_kings.0001 = {
+	type = character_event
+	title = aura_kings.0001.t
+	desc = aura_kings.0001.desc
+	theme = learning
+
+	immediate = {
+		aura_awaken_cultivation_effect = yes
+	}
+
+	option = {
+		name = aura_kings.0001.a
+		add_prestige = minor_prestige_gain
+	}
+}
+
+# 0002 — Breakthrough: flavor shown after a successful realm advancement.
+aura_kings.0002 = {
+	type = character_event
+	title = aura_kings.0002.t
+	desc = aura_kings.0002.desc
+	theme = learning
+
+	option = {
+		name = aura_kings.0002.a
+		add_prestige = major_prestige_gain
+	}
+}
+
+# 0010 — Aura Clash resolution. Root = the challenger (actor); scope:recipient =
+# the defender. Compares clash power and applies a simple win/lose outcome.
+aura_kings.0010 = {
+	type = character_event
+	title = aura_kings.0010.t
+	desc = aura_kings.0010.desc
+	theme = war
+
+	immediate = {
+		set_variable = { name = aura_clash_self value = aura_clash_power_value }
+		set_variable = { name = aura_clash_foe value = scope:recipient.aura_clash_power_value }
+	}
+
+	# Victory.
+	option = {
+		name = aura_kings.0010.a
+		trigger = {
+			var:aura_clash_self >= var:aura_clash_foe
+		}
+		add_prestige = major_prestige_gain
+		scope:recipient = {
+			add_stress = medium_stress_gain
+		}
+		hidden_effect = {
+			remove_variable = aura_clash_self
+			remove_variable = aura_clash_foe
+		}
+	}
+
+	# Defeat.
+	option = {
+		name = aura_kings.0010.b
+		trigger = {
+			var:aura_clash_self < var:aura_clash_foe
+		}
+		add_stress = medium_stress_gain
+		scope:recipient = {
+			add_prestige = major_prestige_gain
+		}
+		hidden_effect = {
+			remove_variable = aura_clash_self
+			remove_variable = aura_clash_foe
+		}
+	}
+}
