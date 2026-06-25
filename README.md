@@ -34,6 +34,20 @@ See [`docs/DESIGN.md`](docs/DESIGN.md) for the design vision, and
 [`docs/MECHANICS_MAPPING.md`](docs/MECHANICS_MAPPING.md) for how each Aura Clash
 mechanic is represented in CK3 terms.
 
+## Quick install (scripts)
+
+If you just want to play it, clone or download this repo, then run the installer
+for your OS — it registers the mod with the CK3 launcher (pointing at this folder,
+so a later `git pull` updates it in place):
+
+- **Windows:** double-click **`install.bat`**.
+- **Linux / macOS:** run **`./install.sh`** (`chmod +x install.sh` first if needed;
+  set `CK3_USER_DIR=...` to override a non-standard CK3 location).
+
+Then open the CK3 launcher, add **Aura Kings** to a playset, enable it, and play.
+There's no compiled `.exe` on purpose — a readable script you can inspect is safer
+and won't trip antivirus.
+
 ## Installing for development
 
 1. Locate your Paradox CK3 user directory:
