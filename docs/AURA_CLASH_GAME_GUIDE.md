@@ -51,7 +51,10 @@ and **Shard Cycling** (dissolving `$shards` into raw AP via `menu-cultivation-cy
 
 ## 3. The four Combat Cores
 
-The heart of the power system. All start at `1`.
+The heart of the power system. Cores exist in **four stats**, and there are **two
+kinds of core** within each stat — *mortal* and *immortal*. The `$power`,
+`$fortitude`, `$agility`, `$soul` variables hold the **combined** core rating
+(mortal + immortal) used in checks; all start at `1`.
 
 | Core | Var | Combat role |
 |---|---|---|
@@ -59,6 +62,35 @@ The heart of the power system. All start at `1`.
 | **Fortitude** | `$fortitude` | Toughness; raises max health |
 | **Agility** | `$agility` | Speed / finesse / precision |
 | **Soul** | `$soul` | Willpower / energy; raises max chi |
+
+### Mortal cores vs Immortal cores (important — author clarification)
+
+These are two distinct tiers of core, not in the raw source variables but
+central to the lore/system:
+
+- **Mortal cores** — gained through ordinary **physical training**. A *mortal*
+  (someone who has **not** begun cultivation) can earn these; no Aura Pressure
+  required.
+  - There are at most **8 mortal cores total**, distributed across the four
+    stats.
+  - Everyone **starts with 1 in each stat** (4 spent), leaving **4 free** mortal
+    cores to place wherever the character trains (e.g. 3 Power / 1 Agility, or
+    spread evenly, etc.). This is the baseline `start at 1` seen in the source.
+- **Immortal cores** — gained by **condensing Aura Pressure into a core**. This
+  is true cultivation: the technique must be **learned/figured out** before a
+  martial artist can do it at all. These are the **Immortal Core Advancements**
+  the source spends AP on (below), stacked on top of the mortal cores in the
+  same four stats.
+- **Awakening immortal cores** (forming your *first* immortal core) also grants a
+  **Foundation** — one you have either **inherited** or **trained up** to be
+  ready for (see §10).
+- **Order:** mortal cores do **not** all have to be filled before forming an
+  immortal core — but maxing your 8 mortal cores first is the **usual/optimal
+  route**, since it builds the body before condensing aura.
+
+> Modeling note: keep a per-stat split — `mortal_<stat>` (0–8 across stats,
+> trainable by anyone) and `immortal_<stat>` (AP-condensed, gated behind
+> awakening) — and present the sum as the effective core rating.
 
 Supporting per-core variables:
 - `$powspent / $forspent / $agispent / $solspent` — chi of that core spent (in-combat).
@@ -203,11 +235,18 @@ A slotted ability system (`menu-cultivation-techs`, `menu-cultivation-techdispla
 
 ## 10. Foundations
 
-Chosen late (around chapter 9.9, `ch9-afternake5-pickfoundation`). The
-**Foundation** (`$foundation`) is the defining basis of your awakened
-cultivation — an alchemically-stabilized "path" keyed to your element, granting a
-permanent **+1 core** and **element mastery**, plus path-specific boons. Example
-sets (each tied to your chosen element):
+The **Foundation** (`$foundation`) is the defining basis of your **awakened
+immortal cultivation**. A character gains a Foundation **when they awaken their
+immortal cores** (form their first immortal core, §3) — it is something the
+character has either **inherited** or **trained themselves up to be ready for**.
+It anchors which path their condensed aura will follow.
+
+In the source, the Foundation is *selected* late (around chapter 9.9,
+`ch9-afternake5-pickfoundation`) as an alchemically-stabilized "path" keyed to
+your element, granting a permanent **+1 core** and **element mastery**, plus
+path-specific boons — but conceptually it represents the awakening of immortal
+cultivation, not just a late-game pick. Example sets (each tied to your chosen
+element):
 
 - Burning Red (Fire): `+1 Power` or `+1 Soul`, +Fire Mastery
 - Crackling Violet (Storm): `+1 Agility`/`+1 Soul`, +Storm Mastery
@@ -330,7 +369,7 @@ Chapters drive `$chapter` (fractional sub-steps like 1.4, 8.9, 9.9 gate features
 | `$style` / `$stylerank` | martial style and its 0–5 rank |
 | `$element1/2/3` / `$elementNrank` | mastered elements and their ranks |
 | `$auracolor` | cosmetic aura color (element+style) |
-| `$foundation` | chosen Foundation (path identity) |
+| `$foundation` | Foundation — path gained on immortal-core awakening |
 | `$knowntech* / $techslot*` | known and equipped (max 4) techniques |
 | `$handseals $lore $stealth …` | skills (0–5) |
 | `$honor $ruthless` | morality axes (0–100) |
@@ -349,6 +388,12 @@ Chapters drive `$chapter` (fractional sub-steps like 1.4, 8.9, 9.9 gate features
 - **Aura Pressure ≠ Chi.** Model AP as the long-term cultivation track (XP-style),
   and Chi as a short-term combat/stamina pool. The current scaffold's single
   `aura_chi` variable conflates these and should be split.
+- **Two core tiers per stat.** Model **mortal cores** (trainable by anyone,
+  capped at 8 total across the four stats, 1 each at start) separately from
+  **immortal cores** (AP-condensed, gated behind awakening). This gives a clean
+  CK3 distinction: *anyone* (even non-cultivator rulers) can be a trained
+  warrior via mortal cores, while immortal cores require awakening — a natural
+  "mortal vs cultivator" divide that fits CK3's character roster.
 - **Cores as growable stats** with an XP-to-advance curve (100-exp cost) map
   naturally to CK3 tracked traits / script values.
 - **Combat checks** (pick a core, optionally spend chi up to surge to pass a
@@ -356,7 +401,8 @@ Chapters drive `$chapter` (fractional sub-steps like 1.4, 8.9, 9.9 gate features
 - **Realms** in *Aura Clash* are not a fixed named ladder — progression is the
   Core/AP/Advancement loop plus milestone "Advancements" (and Immortality). The
   scaffold's fixed realm-trait ladder is a reasonable CK3 abstraction but should
-  be re-anchored to AP/Advancements, with **Foundations** as the awakening choice.
+  be re-anchored to AP/Advancements, with **Immortal-core awakening + a
+  Foundation** as the pivotal "becoming a cultivator" step.
 - **Styles (5)** and **Elements (8, pick 2)** already align with the scaffold's
   trait stubs — keep, and add the rank ladder (Novice→Sage) and synergy hooks.
 - The **sect / clan / connection** layer is the obvious hook into CK3's native
