@@ -58,8 +58,7 @@ aura_gain_pressure_effect = {
 }
 
 # Condense one immortal core in a chosen stat, spending free Aura Pressure.
-# Cost (aura_condense_cost_value) is read before the core is added, so it
-# reflects the pre-increment count. Gate with the trigger before calling.
+# Cost is a flat 100 AP (aura_condense_cost_value). Gate with the trigger first.
 # Usage: aura_condense_immortal_core_effect = { STAT = soul }
 aura_condense_immortal_core_effect = {
 	change_variable = { name = aura_pressure_free subtract = aura_condense_cost_value }

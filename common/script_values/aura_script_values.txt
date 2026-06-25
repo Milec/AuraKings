@@ -9,8 +9,7 @@
 #                   (unspent, condensable into immortal cores)
 
 @aura_mortal_core_cap = 8
-@aura_base_condense_cost = 100
-@aura_condense_cost_growth = 50
+@aura_condense_cost = 100
 
 # --- Effective core ratings (mortal + immortal) -----------------------------
 
@@ -73,11 +72,9 @@ aura_free_pressure_value = {
 	if = { limit = { has_variable = aura_pressure_free } add = var:aura_pressure_free }
 }
 
-# Free AP needed to condense the next immortal core. Scales with how many
-# immortal cores already exist (placeholder curve; tune later).
+# Free AP needed to condense an immortal core. Always a flat 100 AP.
 aura_condense_cost_value = {
-	value = @aura_base_condense_cost
-	add = { value = aura_immortal_cores_total_value multiply = @aura_condense_cost_growth }
+	value = @aura_condense_cost
 }
 
 # --- Aura Clash resolution --------------------------------------------------
