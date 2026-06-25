@@ -43,6 +43,7 @@ aura_begin_martial_training_effect = {
 		set_variable = { name = aura_mc_fortitude value = 1 }
 		set_variable = { name = aura_mc_agility value = 1 }
 		set_variable = { name = aura_mc_soul value = 1 }
+		aura_recalculate_passives_effect = yes
 	}
 }
 
@@ -83,6 +84,7 @@ aura_gain_mortal_core_exp_effect = {
 		}
 		set_variable = { name = aura_mc_$STAT$_exp value = aura_mortal_core_exp_threshold_value }
 	}
+	aura_recalculate_passives_effect = yes
 }
 
 # --- Martial Training session helpers (see events aura_kings.0100-0103) ------
@@ -146,6 +148,7 @@ aura_gain_pressure_effect = {
 aura_condense_immortal_core_effect = {
 	change_variable = { name = aura_pressure_free subtract = aura_condense_cost_value }
 	change_variable = { name = aura_ic_$STAT$ add = 1 }
+	aura_recalculate_passives_effect = yes
 }
 
 # Awaken the immortal cores: a martial artist becomes a cultivator (keeping the
@@ -158,5 +161,71 @@ aura_awaken_cultivation_effect = {
 			NOT = { has_trait = aura_cultivator }
 		}
 		add_trait = aura_cultivator
+	}
+}
+
+# --- Passive benefits: recalculation ----------------------------------------
+# Recompute the passive stat bonuses from current core counts and apply the
+# delta vs what's already applied. Called whenever cores change (training,
+# condensing) and at game start. Safe to run on anyone (zero cores -> zero).
+aura_recalculate_passives_effect = {
+	# Tracking variables for what we've already baked into base skills.
+	if = { limit = { NOT = { has_variable = aura_applied_prowess } } set_variable = { name = aura_applied_prowess value = 0 } }
+	if = { limit = { NOT = { has_variable = aura_applied_learning } } set_variable = { name = aura_applied_learning value = 0 } }
+
+	# Prowess (Power + Agility + Fortitude) and Learning (Soul): smooth, via the
+	# add_*_skill effects applied as a delta vs what we've already added.
+	add_prowess_skill = aura_prowess_delta_value
+	set_variable = { name = aura_applied_prowess value = aura_prowess_bonus_value }
+
+	add_learning_skill = aura_learning_delta_value
+	set_variable = { name = aura_applied_learning value = aura_learning_bonus_value }
+
+	# Health + life expectancy from Fortitude (stepped character modifiers).
+	aura_apply_fortitude_tiers_effect = yes
+
+	# No prowess loss from age, from 10 Fortitude cores.
+	if = {
+		limit = { aura_fortitude_value >= 10 }
+		add_character_modifier = aura_no_age_prowess_loss
+	}
+	else = {
+		remove_character_modifier = aura_no_age_prowess_loss
+	}
+
+	# Agelessness: at 50 Fortitude cores, become immune to death by old age.
+	if = {
+		limit = {
+			aura_fortitude_value >= 50
+			NOT = { has_trait = aura_ageless }
+		}
+		add_trait = aura_ageless
+	}
+}
+
+# Health and life expectancy scale with Fortitude cores, applied via tiered
+# character modifiers in steps of 10 cores (+0.5 Health and +50 years/step).
+# Above 50 cores the aura_ageless trait makes life expectancy moot. Re-applied on
+# every recalc.
+aura_apply_fortitude_tiers_effect = {
+	remove_character_modifier = aura_fortitude_tier_1
+	remove_character_modifier = aura_fortitude_tier_2
+	remove_character_modifier = aura_fortitude_tier_3
+	remove_character_modifier = aura_fortitude_tier_4
+	if = {
+		limit = { aura_fortitude_value >= 40 }
+		add_character_modifier = aura_fortitude_tier_4
+	}
+	else_if = {
+		limit = { aura_fortitude_value >= 30 }
+		add_character_modifier = aura_fortitude_tier_3
+	}
+	else_if = {
+		limit = { aura_fortitude_value >= 20 }
+		add_character_modifier = aura_fortitude_tier_2
+	}
+	else_if = {
+		limit = { aura_fortitude_value >= 10 }
+		add_character_modifier = aura_fortitude_tier_1
 	}
 }

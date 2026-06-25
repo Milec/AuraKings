@@ -39,7 +39,7 @@ events, character interactions, and modifiers rather than fighting the engine.
    Gather Aura Pressure  ->  free AP accumulates  ->  Awaken (aura_cultivator)
         ^                                                     |  + Foundation
         |                                                     v
-   Win Aura Clashes / train  <----  Condense Immortal Cores (spend free AP)
+   train / earn AP  <------------  Condense Immortal Cores (spend free AP)
 ```
 
 There are **two progression layers** (see the source guide,
@@ -60,18 +60,39 @@ There are **two progression layers** (see the source guide,
 
 ## The four cores (two tiers each)
 
-A character's effective rating in a stat = **mortal cores + immortal cores**.
-
-| Core       | Fantasy meaning                | CK3 hook (target)                          |
-|------------|--------------------------------|--------------------------------------------|
-| Power      | Raw striking / destructive aura| Prowess; Aura Clash attack                 |
-| Agility    | Speed, evasion, finesse        | Prowess/Intrigue; Aura Clash initiative    |
-| Fortitude  | Toughness, endurance, healing  | Health, fewer wounds; Aura Clash defense   |
-| Soul       | Willpower, perception, control | Stress/dread resistance; Aura Clash tempo  |
+A character's effective rating in a stat = **mortal cores + immortal cores**
+(counted equally). High cultivators leave the human range entirely — an Archon
+(~100 cores, ~10k AP) lives for centuries and slays great spirit beasts.
 
 Cores are tracked as engine variables — mortal `aura_mc_{power,fortitude,agility,soul}`
-and immortal `aura_ic_{…}` — summed by script values `aura_{stat}_value`. They feed
-the Aura Clash resolution today; variable-driven passive modifiers come later.
+and immortal `aura_ic_{…}` — summed by script values `aura_{stat}_value`.
+
+### Passive benefits (per effective core in that stat)
+
+| Core | Benefit per core | Notes |
+|------|------------------|-------|
+| **Power** | +1.5 Prowess | Raw striking force |
+| **Agility** | +1.2 Prowess | Speed / finesse in a fight |
+| **Fortitude** | +0.5 Prowess, +0.05 Health, +5 yrs life expectancy | Durability & longevity |
+| **Soul** | +0.25 Learning | Insight / perception (more once techniques exist) |
+
+**Fortitude longevity thresholds:** at **10** cores, age stops sapping prowess
+(`no_prowess_loss_from_age` modifier); health & life expectancy rise (stepped per
+10 cores); at **50** cores the character gains the **`aura_ageless`** trait
+(`immortal = yes`) and can no longer die of old age.
+
+Implementation (verified against `wiki_pages/`): `aura_recalculate_passives_effect`
+recomputes the totals from core counts and applies them —
+- **Prowess** (Pow/Agi/For) and **Learning** (Soul) via `add_prowess_skill` /
+  `add_learning_skill`, as a delta vs `aura_applied_*` (values may be fractional;
+  sub-point drift is cosmetic at these magnitudes);
+- **Health + life expectancy** via stepped Fortitude tier modifiers
+  (`aura_fortitude_tier_1..4`) — there is no `add_health` effect, so health must
+  come from a modifier;
+- **no-age-prowess-loss** and **agelessness** by threshold.
+
+It runs whenever cores change and at game start. Soul's Dread / Prestige flavor
+and a smooth (vs stepped) Fortitude curve are still to come.
 
 ## Elements (8, master up to 2)
 
@@ -84,14 +105,15 @@ number of elements (normally 2). Elements color the aura and gate certain techni
 Distinct combat philosophies (`aura_style_*`) that bias the cores and unlock
 style-specific techniques. A character commits to a style as they cultivate.
 
-## Aura Clash (the duel)
+## Aura Clash (the duel) — planned, not yet built
 
-A character interaction, `aura_clash_interaction`, lets one martial artist
-challenge another. Resolution compares effective cores (mortal + immortal,
-immortal weighted heavier) via `aura_clash_power_value`, and will grow to factor
-in elements/styles and spent Chi through a structured event chain — producing a
-winner, consequences (prestige, injuries, claims, hooks), and flavor. This is the
-signature system and will be expanded in its own iteration.
+The signature confrontation between cultivators. This will **not** be a single
+"bigger number wins" comparison — it is meant to be an in-depth, interactive duel
+driven by **techniques and decisions**: round-by-round choices, spending Chi,
+elemental/style matchups, feints and counters, with cores as inputs rather than
+the whole story. Designed in its own iteration. (An earlier placeholder
+interaction that just compared a clash-power value has been removed so it doesn't
+anchor the design to that approach.)
 
 ## Sects (future)
 

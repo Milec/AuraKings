@@ -3,7 +3,6 @@ tags={
 	"Gameplay"
 	"Fantasy"
 	"Total Conversion"
-	"Character Interactions"
 }
 name="Aura Kings"
 supported_version="1.14.*"

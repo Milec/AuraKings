@@ -15,6 +15,7 @@ groundwork commit has a working stub or it's a documented placeholder.
 | **Martial Training session** | `aura_martial_training_decision` (6mo cooldown) -> format/core/method event chain `aura_kings.0100-0103`; variable EXP by roll. Promotable to a CK3 Activity later. | `common/decisions`, `events` | done (basic) |
 | **Immortal cores** (condensed) | Variables `aura_ic_{power,fortitude,agility,soul}`; `aura_condense_immortal_core_effect` | script values + effects | done (basic) |
 | **Effective core rating**     | `aura_{power,fortitude,agility,soul}_value` = mortal + immortal     | `common/script_values`                             | done (basic) |
+| **Passive benefits from cores** | Prowess (Pow/Agi/For), Health & life-expectancy & agelessness (For), Learning (Soul), via `aura_recalculate_passives_effect` (delta-applied base stats + tiered modifiers + `aura_ageless` trait) | script values, effects, modifiers, traits | done (needs in-game check) |
 | **Awakening + Foundation**    | `aura_awaken_cultivation_decision`/`_effect`; Foundation grant TODO | `common/decisions`, `common/scripted_effects`      | partial     |
 | **Aura Pressure gathering**   | `aura_gather_pressure_decision` (placeholder for lifestyle/passive) | `common/decisions`                                 | placeholder |
 | **8 Elements (master 2)**     | Non-exclusive traits `aura_element_*`, capped by trigger       | `common/traits/01_aura_elements.txt`               | stub        |
@@ -22,7 +23,7 @@ groundwork commit has a working stub or it's a documented placeholder.
 | **Ranks (Novice→Sage)**       | 0–5 ladder on styles/elements                                  | future                                             | planned     |
 | **Aura color**                | Derived from mastered elements + style (cosmetic)              | future GUI + script value                          | planned     |
 | **Techniques (slotted, max 4)**| Modifiers + "equipped" variables / perks                      | `common/modifiers` (future)                        | planned     |
-| **Aura Clash (combat check)** | Character interaction + resolution event (`aura_clash_power_value`) | `common/character_interactions`, `events`          | stub        |
+| **Aura Clash (the duel)**     | Planned in-depth duel driven by techniques + decisions (round-by-round, Chi spend, matchups) — **not** a number comparison. Placeholder interaction removed. | TBD | planned     |
 | **Sects / clans**             | Decisions + membership variable + native vassal/faction hooks  | future                                             | planned     |
 | **Demonic corruption**        | Hellscape capacity vs Taint variables                          | future                                             | planned     |
 | **Difficulty (Jade Dragon / Mortal Limits)** | Game rule scaling AP gain / clash difficulty    | `common/game_rules` (future)                       | planned     |

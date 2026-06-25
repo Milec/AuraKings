@@ -1,0 +1,26 @@
+﻿# Character modifiers for the Aura Kings passive-benefit system.
+
+# Fortitude tiers — health (durability) and life expectancy (longevity), applied
+# in steps of 10 Fortitude cores by aura_apply_fortitude_tiers_effect. Above 50
+# cores the aura_ageless trait removes old-age death entirely; health still helps.
+aura_fortitude_tier_1 = {
+	health = 0.5
+	life_expectancy = 50
+}
+aura_fortitude_tier_2 = {
+	health = 1.0
+	life_expectancy = 100
+}
+aura_fortitude_tier_3 = {
+	health = 1.5
+	life_expectancy = 150
+}
+aura_fortitude_tier_4 = {
+	health = 2.0
+	life_expectancy = 200
+}
+
+# Granted at 10 Fortitude cores: the cultivator's prowess no longer decays with age.
+aura_no_age_prowess_loss = {
+	no_prowess_loss_from_age = yes
+}
