@@ -22,7 +22,7 @@ groundwork commit has a working stub or it's a documented placeholder.
 | **Ranks (Novice→Sage)**       | 0–5 ladder on styles/elements                                  | future                                             | planned     |
 | **Aura color**                | Derived from mastered elements + style (cosmetic)              | future GUI + script value                          | planned     |
 | **Techniques (slotted, max 4)**| Modifiers + "equipped" variables / perks                      | `common/modifiers` (future)                        | planned     |
-| **Aura Clash (combat check)** | Character interaction + resolution event (`aura_clash_power_value`) | `common/character_interactions`, `events`          | stub        |
+| **Aura Clash (the duel)**     | Planned in-depth duel driven by techniques + decisions (round-by-round, Chi spend, matchups) — **not** a number comparison. Placeholder interaction removed. | TBD | planned     |
 | **Sects / clans**             | Decisions + membership variable + native vassal/faction hooks  | future                                             | planned     |
 | **Demonic corruption**        | Hellscape capacity vs Taint variables                          | future                                             | planned     |
 | **Difficulty (Jade Dragon / Mortal Limits)** | Game rule scaling AP gain / clash difficulty    | `common/game_rules` (future)                       | planned     |

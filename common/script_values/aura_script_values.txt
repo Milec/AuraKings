@@ -82,14 +82,3 @@ aura_condense_cost_value = {
 aura_mortal_core_exp_threshold_value = {
 	value = @aura_mortal_core_exp_threshold
 }
-
-# --- Aura Clash resolution --------------------------------------------------
-# Effective cores, with immortal cores weighted heavier (true cultivation).
-aura_clash_power_value = {
-	value = 0
-	add = aura_power_value
-	add = aura_fortitude_value
-	add = aura_agility_value
-	add = aura_soul_value
-	add = { value = aura_immortal_cores_total_value multiply = 5 }
-}

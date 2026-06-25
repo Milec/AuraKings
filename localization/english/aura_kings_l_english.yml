@@ -16,10 +16,6 @@
  aura_condense_core_decision_desc:0 "Force more of your free Aura Pressure inward, condensing another immortal core to deepen your power."
  aura_condense_core_decision_tooltip:0 "Spend free Aura Pressure to condense another immortal core"
 
- # --- Character interaction ---
- aura_clash_interaction:0 "Challenge to an Aura Clash"
- aura_clash_interaction_desc:0 "Challenge [SCOPE.Char(scope:recipient).GetFirstName] to settle the matter aura against aura."
-
  # --- Events ---
  aura_kings.0001.t:0 "The First Step"
  aura_kings.0001.desc:0 "Day after day of brutal training finally bears fruit. You feel the natural energy of the world answer your call, and the first mortal cores take shape within Power, Fortitude, Agility, and Soul. You are a Martial Artist now."
@@ -39,8 +35,3 @@
  aura_kings.0002.agility:0 "Agility — condense an immortal Agility core."
  aura_kings.0002.soul:0 "Soul — condense an immortal Soul core."
  aura_kings.0002.cancel:0 "Not yet — hold my Aura Pressure for now."
-
- aura_kings.0010.t:0 "Aura Clash"
- aura_kings.0010.desc:0 "Auras flare and collide. The air itself trembles as two martial artists measure their refined power against one another."
- aura_kings.0010.a:0 "My aura prevails!"
- aura_kings.0010.b:0 "I am overpowered..."

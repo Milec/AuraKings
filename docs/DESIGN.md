@@ -39,7 +39,7 @@ events, character interactions, and modifiers rather than fighting the engine.
    Gather Aura Pressure  ->  free AP accumulates  ->  Awaken (aura_cultivator)
         ^                                                     |  + Foundation
         |                                                     v
-   Win Aura Clashes / train  <----  Condense Immortal Cores (spend free AP)
+   train / earn AP  <------------  Condense Immortal Cores (spend free AP)
 ```
 
 There are **two progression layers** (see the source guide,
@@ -84,14 +84,15 @@ number of elements (normally 2). Elements color the aura and gate certain techni
 Distinct combat philosophies (`aura_style_*`) that bias the cores and unlock
 style-specific techniques. A character commits to a style as they cultivate.
 
-## Aura Clash (the duel)
+## Aura Clash (the duel) — planned, not yet built
 
-A character interaction, `aura_clash_interaction`, lets one martial artist
-challenge another. Resolution compares effective cores (mortal + immortal,
-immortal weighted heavier) via `aura_clash_power_value`, and will grow to factor
-in elements/styles and spent Chi through a structured event chain — producing a
-winner, consequences (prestige, injuries, claims, hooks), and flavor. This is the
-signature system and will be expanded in its own iteration.
+The signature confrontation between cultivators. This will **not** be a single
+"bigger number wins" comparison — it is meant to be an in-depth, interactive duel
+driven by **techniques and decisions**: round-by-round choices, spending Chi,
+elemental/style matchups, feints and counters, with cores as inputs rather than
+the whole story. Designed in its own iteration. (An earlier placeholder
+interaction that just compared a clash-power value has been removed so it doesn't
+anchor the design to that approach.)
 
 ## Sects (future)
 
