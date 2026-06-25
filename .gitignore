@@ -1,0 +1,20 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.vscode/
+.idea/
+
+# CK3 generated / local files
+*.log
+.cache/
+thumbnail.png.import
+
+# Local-only launcher artifacts
+/playset.json
+
+# Scratch / build output
+/build/
+/dist/
+*.zip

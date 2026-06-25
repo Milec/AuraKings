@@ -1,0 +1,45 @@
+﻿# Elemental affinity traits. Eight elements; a cultivator may master a limited
+# number (normally two), to be enforced by a cap trigger once element-learning
+# is wired up. These are NOT a group — multiple can be held at once up to the
+# cap. Each gives light flavor modifiers.
+
+aura_element_fire = {
+	prowess = 2
+	icon = aura_element_fire.dds
+}
+
+aura_element_storm = {
+	prowess = 1
+	intrigue = 1
+	icon = aura_element_storm.dds
+}
+
+aura_element_wind = {
+	prowess = 1
+	icon = aura_element_wind.dds
+}
+
+aura_element_earth = {
+	health = 0.25
+	icon = aura_element_earth.dds
+}
+
+aura_element_ice = {
+	prowess = 1
+	icon = aura_element_ice.dds
+}
+
+aura_element_water = {
+	health = 0.2
+	icon = aura_element_water.dds
+}
+
+aura_element_light = {
+	monthly_piety = 0.25
+	icon = aura_element_light.dds
+}
+
+aura_element_darkness = {
+	dread_baseline_add = 5
+	icon = aura_element_darkness.dds
+}

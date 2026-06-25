@@ -1,0 +1,41 @@
+﻿# Martial arts style traits. Five styles, each biasing the four cores and (later)
+# unlocking style-specific techniques. A cultivator commits to a single style;
+# the group keeps them mutually exclusive.
+
+aura_style_iron_fist = {
+	group = aura_style
+	prowess = 4
+	icon = aura_style_iron_fist.dds
+	# Power-focused: overwhelming offense.
+}
+
+aura_style_flowing_river = {
+	group = aura_style
+	prowess = 2
+	monthly_stress_loss_per_combat = 0
+	icon = aura_style_flowing_river.dds
+	# Agility-focused: evasion and counters.
+}
+
+aura_style_mountain_root = {
+	group = aura_style
+	prowess = 1
+	health = 0.5
+	icon = aura_style_mountain_root.dds
+	# Fortitude-focused: immovable defense.
+}
+
+aura_style_serene_mind = {
+	group = aura_style
+	learning = 2
+	icon = aura_style_serene_mind.dds
+	# Soul-focused: control, perception, willpower.
+}
+
+aura_style_shifting_shadow = {
+	group = aura_style
+	intrigue = 2
+	prowess = 2
+	icon = aura_style_shifting_shadow.dds
+	# Mixed Agility/Soul: deception and ambush.
+}

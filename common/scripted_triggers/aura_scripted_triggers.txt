@@ -1,0 +1,50 @@
+﻿# Reusable triggers for the Aura Kings cultivation system.
+
+# Identity checks.
+aura_is_martial_artist_trigger = {
+	has_trait = aura_martial_artist
+}
+
+aura_is_cultivator_trigger = {
+	has_trait = aura_cultivator
+}
+
+# An untrained mortal: has never learned the martial path.
+aura_is_untrained_trigger = {
+	NOT = { has_trait = aura_martial_artist }
+}
+
+# Could begin training (needs a teacher / manual / self-study — gating TODO).
+aura_can_begin_training_trigger = {
+	is_adult = yes
+	aura_is_untrained_trigger = yes
+}
+
+# Has room to forge another mortal core (under the cap of 8).
+aura_can_train_mortal_core_trigger = {
+	aura_is_martial_artist_trigger = yes
+	aura_mortal_cores_remaining_value >= 1
+}
+
+# Can undertake a Martial Training session (a martial artist with room to grow).
+aura_can_martial_train_trigger = {
+	aura_is_martial_artist_trigger = yes
+	is_adult = yes
+	aura_mortal_cores_remaining_value >= 1
+}
+
+# Ready to awaken the immortal cores: a trained martial artist, not yet a
+# cultivator, with at least the 100 free Aura Pressure needed to condense a core.
+# This enforces the "100 AP to awaken" rule and guarantees the forced first-core
+# allocation in event aura_kings.0003 is affordable.
+aura_can_awaken_trigger = {
+	aura_is_martial_artist_trigger = yes
+	NOT = { has_trait = aura_cultivator }
+	aura_free_pressure_value >= aura_condense_cost_value
+}
+
+# A cultivator with enough free Aura Pressure to condense another immortal core.
+aura_can_condense_core_trigger = {
+	aura_is_cultivator_trigger = yes
+	aura_free_pressure_value >= aura_condense_cost_value
+}

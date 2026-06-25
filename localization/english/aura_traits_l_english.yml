@@ -1,0 +1,41 @@
+﻿l_english:
+ # --- Identity / core traits ---
+ # *_desc are the static fallbacks (used where no character is in scope, e.g. the
+ # trait encyclopedia). *_desc_dynamic are shown on a real character and print
+ # live Aura Pressure and per-stat core counts via MakeScope.Var().GetValue.
+ aura_martial_artist:0 "Martial Artist"
+ aura_martial_artist_desc:0 "Has learned to gather Aura Pressure and forge mortal cores through relentless physical training. Mortal cores (up to eight, spread across Power, Fortitude, Agility and Soul) raise this warrior far above an untrained mortal."
+ aura_martial_artist_desc_dynamic:0 "Has learned to gather Aura Pressure and forge mortal cores through relentless physical training.\n\n#bold Aura Pressure:#! [ROOT.MakeScope.Var('aura_pressure_total').GetValue|0]  (#bold Free:#! [ROOT.MakeScope.Var('aura_pressure_free').GetValue|0])\n#bold Mortal Cores#! (max 8): Power [ROOT.MakeScope.Var('aura_mc_power').GetValue|0], Fortitude [ROOT.MakeScope.Var('aura_mc_fortitude').GetValue|0], Agility [ROOT.MakeScope.Var('aura_mc_agility').GetValue|0], Soul [ROOT.MakeScope.Var('aura_mc_soul').GetValue|0]"
+ aura_cultivator:0 "Cultivator"
+ aura_cultivator_desc:0 "Has awakened the immortal cores by condensing Aura Pressure into the body and soul, and forged a Foundation in the process. A true cultivator on the path toward immortality."
+ aura_cultivator_desc_dynamic:0 "Has awakened the immortal cores by condensing Aura Pressure into the body and soul, and forged a Foundation. A true cultivator on the path toward immortality.\n\n#bold Aura Pressure:#! [ROOT.MakeScope.Var('aura_pressure_total').GetValue|0]  (#bold Free:#! [ROOT.MakeScope.Var('aura_pressure_free').GetValue|0])\n#bold Immortal Cores:#! Power [ROOT.MakeScope.Var('aura_ic_power').GetValue|0], Fortitude [ROOT.MakeScope.Var('aura_ic_fortitude').GetValue|0], Agility [ROOT.MakeScope.Var('aura_ic_agility').GetValue|0], Soul [ROOT.MakeScope.Var('aura_ic_soul').GetValue|0]"
+
+ # --- Elemental affinity traits ---
+ aura_element_fire:0 "Fire Aura"
+ aura_element_fire_desc:0 "Channels the searing, destructive element of Fire."
+ aura_element_storm:0 "Storm Aura"
+ aura_element_storm_desc:0 "Channels the crackling, sudden element of Storm."
+ aura_element_wind:0 "Wind Aura"
+ aura_element_wind_desc:0 "Channels the swift, untouchable element of Wind."
+ aura_element_earth:0 "Earth Aura"
+ aura_element_earth_desc:0 "Channels the steadfast, enduring element of Earth."
+ aura_element_ice:0 "Ice Aura"
+ aura_element_ice_desc:0 "Channels the piercing, relentless element of Ice."
+ aura_element_water:0 "Water Aura"
+ aura_element_water_desc:0 "Channels the flowing, restorative element of Water."
+ aura_element_light:0 "Light Aura"
+ aura_element_light_desc:0 "Channels the radiant, revealing element of Light."
+ aura_element_darkness:0 "Darkness Aura"
+ aura_element_darkness_desc:0 "Channels the dreadful, concealing element of Darkness."
+
+ # --- Martial arts style traits ---
+ aura_style_iron_fist:0 "Iron Fist Style"
+ aura_style_iron_fist_desc:0 "A style of overwhelming offense, built upon the Power core."
+ aura_style_flowing_river:0 "Flowing River Style"
+ aura_style_flowing_river_desc:0 "A style of evasion and counters, built upon the Agility core."
+ aura_style_mountain_root:0 "Mountain Root Style"
+ aura_style_mountain_root_desc:0 "A style of immovable defense, built upon the Fortitude core."
+ aura_style_serene_mind:0 "Serene Mind Style"
+ aura_style_serene_mind_desc:0 "A style of control and perception, built upon the Soul core."
+ aura_style_shifting_shadow:0 "Shifting Shadow Style"
+ aura_style_shifting_shadow_desc:0 "A style of deception and ambush, blending Agility and Soul."

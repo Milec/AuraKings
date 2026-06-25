@@ -1,0 +1,35 @@
+﻿# On-action hooks for Aura Kings.
+#
+# We append to vanilla on-actions rather than overwriting them. For the
+# groundwork we keep this light: initialize players at game start and newborns at
+# birth so the cultivation variables always exist before anything reads them.
+# Broad population initialization is deliberately deferred (performance) and will
+# be handled lazily by aura_initialize_character_effect on first use.
+
+on_game_start_after_lobby = {
+	on_actions = {
+		aura_on_game_start
+	}
+}
+
+on_birth = {
+	on_actions = {
+		aura_on_birth
+	}
+}
+
+# --- Custom on-actions -------------------------------------------------------
+
+aura_on_game_start = {
+	effect = {
+		every_player = {
+			aura_initialize_character_effect = yes
+		}
+	}
+}
+
+aura_on_birth = {
+	effect = {
+		aura_initialize_character_effect = yes
+	}
+}

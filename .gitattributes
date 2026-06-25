@@ -1,0 +1,21 @@
+# Crusader Kings 3 script files are plain text; keep LF endings and treat as text
+*.txt    text eol=lf
+*.gui    text eol=lf
+*.gfx    text eol=lf
+*.mod    text eol=lf
+*.info   text eol=lf
+*.asset  text eol=lf
+
+# Localization MUST be UTF-8 with BOM. Let git treat as text but never normalize
+# the BOM away. CK3 will fail to read loc files saved as UTF-8 without BOM.
+*.yml    text eol=lf working-tree-encoding=UTF-8
+
+# Binary art / audio assets
+*.dds    binary
+*.png    binary
+*.tga    binary
+*.mesh   binary
+*.anim   binary
+*.wav    binary
+*.ogg    binary
+*.bk2    binary

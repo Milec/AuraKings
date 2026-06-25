@@ -1,0 +1,35 @@
+﻿l_english:
+ # --- Martial Training decision ---
+ aura_martial_training_decision:0 "Undertake Martial Training"
+ aura_martial_training_decision_desc:0 "Devote a season to honing your body and forging your mortal cores. You may train once every six months."
+ aura_martial_training_decision_tooltip:0 "Begin a martial training session to build EXP toward a mortal core"
+
+ # --- 0100: Setup format ---
+ aura_kings.0100.t:0 "Martial Training"
+ aura_kings.0100.desc:0 "You set aside the coming season for training. How will you arrange it?"
+ aura_kings.0100.solitary:0 "A solitary regimen. (No cost, no bonus)"
+ aura_kings.0100.tournament:0 "Host a sparring tournament. (#R−30 Gold#!, gain Prestige, #G+15 EXP bonus#!)"
+ aura_kings.0100.feast:0 "Hold a training feast. (#R−50 Gold#!, relieve stress, #G+10 EXP bonus#!)"
+
+ # --- 0101: Choose core ---
+ aura_kings.0101.t:0 "Which Core?"
+ aura_kings.0101.desc:0 "Where will you focus your training this season?"
+ aura_kings.0101.power:0 "Power — raw striking force."
+ aura_kings.0101.fortitude:0 "Fortitude — toughness and endurance."
+ aura_kings.0101.agility:0 "Agility — speed and finesse."
+ aura_kings.0101.soul:0 "Soul — willpower and spirit."
+
+ # --- 0102: Choose method ---
+ aura_kings.0102.t:0 "How Will You Train?"
+ aura_kings.0102.desc:0 "Every method has its price and its promise. How will you push yourself?"
+ aura_kings.0102.drills:0 "Steady drills. (Minor stress; modest, reliable EXP)"
+ aura_kings.0102.sparring:0 "Brutal sparring. (Heavy stress and risk of injury; high EXP)"
+ aura_kings.0102.master:0 "Hire a master. (#R−50 Gold#!; reliably high EXP)"
+ aura_kings.0102.withdraw:0 "Withdraw — train no further this season."
+
+ # --- 0103: Result ---
+ aura_kings.0103.t:0 "Training Complete"
+ aura_kings.0103.desc_core:0 "Something shifts deep within. After [ROOT.MakeScope.Var('aura_training_session_gain').GetValue|0] hard-won points of progress, a new #bold mortal core#! crystallizes into being. You are stronger than you were."
+ aura_kings.0103.desc_progress:0 "The work pays off. You gain #G[ROOT.MakeScope.Var('aura_training_session_gain').GetValue|0] EXP#! toward your chosen core, though it has not yet fully formed."
+ aura_kings.0103.desc_none:0 "The season passes without progress. There is always next time."
+ aura_kings.0103.a:0 "Onward."
