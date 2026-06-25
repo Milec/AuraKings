@@ -1,66 +1,92 @@
 ﻿# Computed numbers for the Aura Kings cultivation system.
 # Constants prefixed with @ are file-local script constants.
+#
+# Core model (see docs/AURA_CLASH_GAME_GUIDE.md §3):
+#   effective core (per stat) = mortal cores + immortal cores
+#   mortal cores  : variables aura_mc_power / _fortitude / _agility / _soul
+#   immortal cores: variables aura_ic_power / _fortitude / _agility / _soul
+#   aura pressure : aura_pressure_total (lifetime) and aura_pressure_free
+#                   (unspent, condensable into immortal cores)
 
-@aura_base_chi_to_advance = 100
-@aura_chi_growth_per_realm = 150
+@aura_mortal_core_cap = 8
+@aura_base_condense_cost = 100
+@aura_condense_cost_growth = 50
 
-# Chi required to advance from the character's CURRENT realm to the next one.
-# Scales with how far along the cultivator already is.
-aura_chi_to_advance_value = {
-	value = @aura_base_chi_to_advance
-	if = { limit = { has_trait = aura_realm_initiate }     add = { value = @aura_chi_growth_per_realm } }
-	else_if = { limit = { has_trait = aura_realm_adept }       add = { value = @aura_chi_growth_per_realm multiply = 2 } }
-	else_if = { limit = { has_trait = aura_realm_warrior }     add = { value = @aura_chi_growth_per_realm multiply = 3 } }
-	else_if = { limit = { has_trait = aura_realm_master }      add = { value = @aura_chi_growth_per_realm multiply = 4 } }
-	else_if = { limit = { has_trait = aura_realm_grandmaster } add = { value = @aura_chi_growth_per_realm multiply = 5 } }
-	else_if = { limit = { has_trait = aura_realm_sovereign }   add = { value = @aura_chi_growth_per_realm multiply = 6 } }
-}
+# --- Effective core ratings (mortal + immortal) -----------------------------
 
-# Maximum number of elements a cultivator may master, by realm.
-# Mortal/initiate: 0, adept+: 1, master+: 2 (the Aura Clash "master two" cap).
-aura_max_elements_value = {
+aura_power_value = {
 	value = 0
-	if = { limit = { has_trait = aura_realm_adept }  value = 1 }
-	if = { limit = { has_trait = aura_realm_warrior } value = 1 }
-	if = { limit = { has_trait = aura_realm_master } value = 2 }
-	if = { limit = { has_trait = aura_realm_grandmaster } value = 2 }
-	if = { limit = { has_trait = aura_realm_sovereign } value = 2 }
-	if = { limit = { has_trait = aura_realm_ascendant } value = 2 }
+	if = { limit = { has_variable = aura_mc_power } add = var:aura_mc_power }
+	if = { limit = { has_variable = aura_ic_power } add = var:aura_ic_power }
 }
-
-# How many elements the character currently has mastered.
-aura_elements_mastered_value = {
+aura_fortitude_value = {
 	value = 0
-	if = { limit = { has_trait = aura_element_fire } add = 1 }
-	if = { limit = { has_trait = aura_element_storm } add = 1 }
-	if = { limit = { has_trait = aura_element_wind } add = 1 }
-	if = { limit = { has_trait = aura_element_earth } add = 1 }
-	if = { limit = { has_trait = aura_element_ice } add = 1 }
-	if = { limit = { has_trait = aura_element_water } add = 1 }
-	if = { limit = { has_trait = aura_element_light } add = 1 }
-	if = { limit = { has_trait = aura_element_darkness } add = 1 }
+	if = { limit = { has_variable = aura_mc_fortitude } add = var:aura_mc_fortitude }
+	if = { limit = { has_variable = aura_ic_fortitude } add = var:aura_ic_fortitude }
+}
+aura_agility_value = {
+	value = 0
+	if = { limit = { has_variable = aura_mc_agility } add = var:aura_mc_agility }
+	if = { limit = { has_variable = aura_ic_agility } add = var:aura_ic_agility }
+}
+aura_soul_value = {
+	value = 0
+	if = { limit = { has_variable = aura_mc_soul } add = var:aura_mc_soul }
+	if = { limit = { has_variable = aura_ic_soul } add = var:aura_ic_soul }
 }
 
-# Aggregate "clash power" used to resolve an Aura Clash. Combines the four cores
-# with a realm bonus. Spent Chi and elements/styles will modify this later.
+# --- Mortal core accounting (capped at 8 total) -----------------------------
+
+aura_mortal_cores_total_value = {
+	value = 0
+	if = { limit = { has_variable = aura_mc_power } add = var:aura_mc_power }
+	if = { limit = { has_variable = aura_mc_fortitude } add = var:aura_mc_fortitude }
+	if = { limit = { has_variable = aura_mc_agility } add = var:aura_mc_agility }
+	if = { limit = { has_variable = aura_mc_soul } add = var:aura_mc_soul }
+}
+
+aura_mortal_cores_remaining_value = {
+	value = @aura_mortal_core_cap
+	subtract = aura_mortal_cores_total_value
+	min = 0
+}
+
+# --- Immortal core accounting -----------------------------------------------
+
+aura_immortal_cores_total_value = {
+	value = 0
+	if = { limit = { has_variable = aura_ic_power } add = var:aura_ic_power }
+	if = { limit = { has_variable = aura_ic_fortitude } add = var:aura_ic_fortitude }
+	if = { limit = { has_variable = aura_ic_agility } add = var:aura_ic_agility }
+	if = { limit = { has_variable = aura_ic_soul } add = var:aura_ic_soul }
+}
+
+# --- Aura Pressure ----------------------------------------------------------
+
+aura_total_pressure_value = {
+	value = 0
+	if = { limit = { has_variable = aura_pressure_total } add = var:aura_pressure_total }
+}
+
+aura_free_pressure_value = {
+	value = 0
+	if = { limit = { has_variable = aura_pressure_free } add = var:aura_pressure_free }
+}
+
+# Free AP needed to condense the next immortal core. Scales with how many
+# immortal cores already exist (placeholder curve; tune later).
+aura_condense_cost_value = {
+	value = @aura_base_condense_cost
+	add = { value = aura_immortal_cores_total_value multiply = @aura_condense_cost_growth }
+}
+
+# --- Aura Clash resolution --------------------------------------------------
+# Effective cores, with immortal cores weighted heavier (true cultivation).
 aura_clash_power_value = {
 	value = 0
-	if = { limit = { has_variable = aura_power } add = var:aura_power }
-	if = { limit = { has_variable = aura_agility } add = var:aura_agility }
-	if = { limit = { has_variable = aura_fortitude } add = var:aura_fortitude }
-	if = { limit = { has_variable = aura_soul } add = var:aura_soul }
-	# Realm contributes raw might.
-	add = { value = aura_realm_level_value multiply = 10 }
-}
-
-# Numeric level of the character's current realm (0 = mortal .. 7 = ascendant).
-aura_realm_level_value = {
-	value = 0
-	if = { limit = { has_trait = aura_realm_initiate } value = 1 }
-	if = { limit = { has_trait = aura_realm_adept } value = 2 }
-	if = { limit = { has_trait = aura_realm_warrior } value = 3 }
-	if = { limit = { has_trait = aura_realm_master } value = 4 }
-	if = { limit = { has_trait = aura_realm_grandmaster } value = 5 }
-	if = { limit = { has_trait = aura_realm_sovereign } value = 6 }
-	if = { limit = { has_trait = aura_realm_ascendant } value = 7 }
+	add = aura_power_value
+	add = aura_fortitude_value
+	add = aura_agility_value
+	add = aura_soul_value
+	add = { value = aura_immortal_cores_total_value multiply = 5 }
 }

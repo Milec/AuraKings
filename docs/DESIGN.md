@@ -33,53 +33,51 @@ events, character interactions, and modifiers rather than fighting the engine.
 ## Core loop
 
 ```
-Absorb Chi  ->  Refine Chi into a Core / Aura  ->  Meet realm threshold
-     ^                                                     |
-     |                                                     v
- Win Aura Clashes / train / meditate  <-----------  Advance Realm (new powers)
+                  Begin Martial Training (aura_martial_artist)
+                              |  forge mortal cores (max 8)
+                              v
+   Gather Aura Pressure  ->  free AP accumulates  ->  Awaken (aura_cultivator)
+        ^                                                     |  + Foundation
+        |                                                     v
+   Win Aura Clashes / train  <----  Condense Immortal Cores (spend free AP)
 ```
 
-- **Chi** is a per-character stored resource (engine variable `aura_chi`).
-- Characters gain Chi over time (meditation, training, victories, locations,
-  decisions) and spend it to **advance realms** and fuel **techniques**.
-- Each **realm** grants a tiered trait with escalating modifiers and unlocks new
-  options (more element slots, stronger techniques, access to higher sects).
+There are **two progression layers** (see the source guide,
+`AURA_CLASH_GAME_GUIDE.md`):
 
-## Cultivation realms (initial ladder)
+1. **Mortal cores** — trained by any **Martial Artist** (`aura_martial_artist`
+   trait, learned from a teacher / manual / self-study). Capped at **8 total**
+   across the four stats; everyone starts with 1 in each (4 free to place).
+2. **Immortal cores** — condensed from **free Aura Pressure** once a Martial
+   Artist **awakens** into a **Cultivator** (`aura_cultivator` trait, which is
+   kept alongside Martial Artist) and gains a **Foundation**.
 
-| Level | Realm trait            | Theme                         |
-|-------|------------------------|-------------------------------|
-| 0     | *(none)* — Mortal      | No aura; cannot sense Chi     |
-| 1     | `aura_realm_initiate`  | First Chi sensing / awakening |
-| 2     | `aura_realm_adept`     | Aura forged                   |
-| 3     | `aura_realm_warrior`   | Aura manifests in combat      |
-| 4     | `aura_realm_master`    | Element mastery deepens       |
-| 5     | `aura_realm_grandmaster`| Techniques empower the realm |
-| 6     | `aura_realm_sovereign` | Aura dominates the battlefield|
-| 7     | `aura_realm_ascendant` | Heavenly Ascension achieved   |
+- **Aura Pressure** is the long-term cultivation meter, tracked two ways:
+  `aura_pressure_total` (lifetime) and `aura_pressure_free` (unspent, condensable
+  into immortal cores).
+- **Chi** (a separate, short-term *combat stamina* pool — not yet modeled) is
+  spent during the Aura Clash; do not conflate it with Aura Pressure.
 
-These names/thresholds are placeholders to be tuned. The grouped-trait
-implementation means a character holds exactly one realm trait at a time and
-advancing automatically removes the previous one.
+## The four cores (two tiers each)
 
-## The four cores
+A character's effective rating in a stat = **mortal cores + immortal cores**.
 
-| Core       | Fantasy meaning                | CK3 hook (initial)                         |
+| Core       | Fantasy meaning                | CK3 hook (target)                          |
 |------------|--------------------------------|--------------------------------------------|
-| Power      | Raw striking / destructive Chi | Prowess; Aura Clash attack                 |
+| Power      | Raw striking / destructive aura| Prowess; Aura Clash attack                 |
 | Agility    | Speed, evasion, finesse        | Prowess/Intrigue; Aura Clash initiative    |
 | Fortitude  | Toughness, endurance, healing  | Health, fewer wounds; Aura Clash defense   |
 | Soul       | Willpower, perception, control | Stress/dread resistance; Aura Clash tempo  |
 
-Cores are tracked as engine variables (`aura_power`, `aura_agility`,
-`aura_fortitude`, `aura_soul`) so they can grow independently of realm and feed
-both passive modifiers and the Aura Clash resolution.
+Cores are tracked as engine variables — mortal `aura_mc_{power,fortitude,agility,soul}`
+and immortal `aura_ic_{…}` — summed by script values `aura_{stat}_value`. They feed
+the Aura Clash resolution today; variable-driven passive modifiers come later.
 
 ## Elements (8, master up to 2)
 
 Fire, Storm, Wind, Earth, Ice, Water, Light, Darkness — each a non-exclusive
-trait (`aura_element_*`). A scripted trigger caps mastery at the realm-appropriate
-number of elements. Elements color the aura and gate certain techniques.
+trait (`aura_element_*`). A scripted trigger caps mastery at the appropriate
+number of elements (normally 2). Elements color the aura and gate certain techniques.
 
 ## Martial arts styles (5)
 
@@ -88,11 +86,12 @@ style-specific techniques. A character commits to a style as they cultivate.
 
 ## Aura Clash (the duel)
 
-A character interaction, `aura_clash_interaction`, lets one cultivator challenge
-another. Resolution compares cores + realm + elements/styles + spent Chi through
-a structured event chain, producing a winner, consequences (prestige, injuries,
-claims, hooks), and flavor. This is the signature system and will be expanded in
-its own iteration.
+A character interaction, `aura_clash_interaction`, lets one martial artist
+challenge another. Resolution compares effective cores (mortal + immortal,
+immortal weighted heavier) via `aura_clash_power_value`, and will grow to factor
+in elements/styles and spent Chi through a structured event chain — producing a
+winner, consequences (prestige, injuries, claims, hooks), and flavor. This is the
+signature system and will be expanded in its own iteration.
 
 ## Sects (future)
 

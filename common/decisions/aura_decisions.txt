@@ -1,24 +1,31 @@
 ﻿# Player-facing decisions for the Aura Kings cultivation loop.
-# Pictures/icons are omitted in the groundwork to avoid referencing missing art;
-# add `picture = "..."` once assets exist.
+# Pictures/icons are omitted in the groundwork to avoid referencing missing art.
+#
+# This is the minimal vertical slice that exercises the two traits and the Aura
+# Pressure tracker end to end:
+#   Begin Martial Training -> Gather Aura Pressure -> Awaken -> Condense cores.
+# The gathering and condensing here are placeholders for the richer lifestyle /
+# activity systems on the roadmap.
 
-# Awaken: a mortal takes the first step onto the path of cultivation.
-aura_begin_cultivation_decision = {
+# Learn the martial path and forge your first mortal cores.
+aura_begin_martial_training_decision = {
 	major = yes
 
-	desc = aura_begin_cultivation_decision_desc
-	selection_tooltip = aura_begin_cultivation_decision_tooltip
+	desc = aura_begin_martial_training_decision_desc
+	selection_tooltip = aura_begin_martial_training_decision_tooltip
 
 	is_shown = {
-		aura_is_mortal_trigger = yes
+		aura_is_untrained_trigger = yes
 	}
 
 	is_valid = {
-		is_adult = yes
+		aura_can_begin_training_trigger = yes
+		# TODO: require access to a teacher, a training manual, or a self-study
+		# lifestyle before this is selectable.
 	}
 
 	effect = {
-		aura_initialize_character_effect = yes
+		aura_begin_martial_training_effect = yes
 		trigger_event = aura_kings.0001
 	}
 
@@ -26,15 +33,16 @@ aura_begin_cultivation_decision = {
 	ai_will_do = { base = 0 }
 }
 
-# Meditate: spend time cultivating to absorb Chi from the world.
-aura_meditate_decision = {
-	desc = aura_meditate_decision_desc
-	selection_tooltip = aura_meditate_decision_tooltip
+# Gather Aura Pressure. Placeholder for the passive/active gathering system
+# (lifestyle + decisions) described in the roadmap.
+aura_gather_pressure_decision = {
+	desc = aura_gather_pressure_decision_desc
+	selection_tooltip = aura_gather_pressure_decision_tooltip
 
 	cooldown = { years = 1 }
 
 	is_shown = {
-		aura_is_cultivator_trigger = yes
+		aura_is_martial_artist_trigger = yes
 	}
 
 	is_valid = {
@@ -42,34 +50,53 @@ aura_meditate_decision = {
 	}
 
 	effect = {
-		# Flat Chi gain for the groundwork; later scale by Soul core, location,
-		# techniques, and difficulty game rule.
-		aura_gain_chi_effect = { AMOUNT = 50 }
-		add_prestige = minor_prestige_gain
+		aura_gain_pressure_effect = { AMOUNT = 50 }
 	}
 
 	ai_potential = { always = no }
 	ai_will_do = { base = 0 }
 }
 
-# Breakthrough: spend accumulated Chi to ascend to the next realm.
-aura_breakthrough_decision = {
+# Awaken the immortal cores and become a Cultivator.
+aura_awaken_cultivation_decision = {
 	major = yes
 
-	desc = aura_breakthrough_decision_desc
-	selection_tooltip = aura_breakthrough_decision_tooltip
+	desc = aura_awaken_cultivation_decision_desc
+	selection_tooltip = aura_awaken_cultivation_decision_tooltip
 
 	is_shown = {
-		aura_is_cultivator_trigger = yes
-		NOT = { has_trait = aura_realm_ascendant }
+		aura_is_martial_artist_trigger = yes
+		NOT = { has_trait = aura_cultivator }
 	}
 
 	is_valid = {
-		aura_can_advance_realm_trigger = yes
+		aura_can_awaken_trigger = yes
 	}
 
 	effect = {
-		aura_try_advance_realm_effect = yes
+		aura_awaken_cultivation_effect = yes
+		# Choose which stat receives the first condensed immortal core.
+		trigger_event = aura_kings.0002
+	}
+
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# Condense another immortal core (cultivators only).
+aura_condense_core_decision = {
+	desc = aura_condense_core_decision_desc
+	selection_tooltip = aura_condense_core_decision_tooltip
+
+	is_shown = {
+		aura_is_cultivator_trigger = yes
+	}
+
+	is_valid = {
+		aura_can_condense_core_trigger = yes
+	}
+
+	effect = {
 		trigger_event = aura_kings.0002
 	}
 

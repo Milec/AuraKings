@@ -1,0 +1,38 @@
+﻿# Identity traits for the Aura Kings cultivation system.
+#
+# Cores come in two tiers (see docs/AURA_CLASH_GAME_GUIDE.md §3):
+#   - Mortal cores   : trained by anyone who has learned the martial path.
+#                      Tracked by the MARTIAL ARTIST trait. Capped at 8 total
+#                      across the four stats (1 in each at start = 4 free to train).
+#   - Immortal cores : condensed from free Aura Pressure once awakened.
+#                      Tracked by the CULTIVATOR trait. Requires Martial Artist.
+#
+# A Cultivator KEEPS the Martial Artist trait (the two stack): Martial Artist
+# tracks the mortal cores, Cultivator tracks the immortal cores on top.
+#
+# The traits are identity flags. The actual per-stat core counts and Aura
+# Pressure live in character variables (see common/scripted_effects). Icons are
+# referenced but not yet supplied; they fall back gracefully.
+
+aura_martial_artist = {
+	# Has learned to gather Aura Pressure and forge mortal cores through training.
+	# Acquired via a teacher, a manual, or self-study (gating TODO).
+	prowess = 2
+
+	icon = aura_martial_artist.dds
+
+	# Not a personality/physical trait and not randomly assigned.
+	shown_in_ruler_designer = no
+}
+
+aura_cultivator = {
+	# Has awakened the immortal cores by condensing Aura Pressure, and gained a
+	# Foundation in the process (Foundation system TODO). Implies Martial Artist.
+	prowess = 4
+	dread_baseline_add = 5
+	monthly_prestige = 0.25
+
+	icon = aura_cultivator.dds
+
+	shown_in_ruler_designer = no
+}

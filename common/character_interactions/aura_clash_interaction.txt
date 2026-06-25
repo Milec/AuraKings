@@ -9,9 +9,9 @@ aura_clash_interaction = {
 	desc = aura_clash_interaction_desc
 
 	is_shown = {
-		scope:actor = { aura_is_cultivator_trigger = yes }
+		scope:actor = { aura_is_martial_artist_trigger = yes }
 		scope:recipient = {
-			aura_is_cultivator_trigger = yes
+			aura_is_martial_artist_trigger = yes
 			NOT = { this = scope:actor }
 		}
 	}

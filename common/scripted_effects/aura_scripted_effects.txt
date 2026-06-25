@@ -1,63 +1,80 @@
-﻿# Reusable effects for the Aura Kings cultivation system.
-# Run on the character scope.
+﻿# Reusable effects for the Aura Kings cultivation system. Run on character scope.
 
-# Initialize the cultivation variables on a character exactly once. Safe to call
-# repeatedly (guarded by aura_initialized).
+# Initialize the cultivation variables exactly once. Safe to call repeatedly.
+# Every variable that other effects mutate with change_variable is created here
+# so those calls never touch a non-existent variable.
 aura_initialize_character_effect = {
 	if = {
 		limit = { NOT = { has_variable = aura_initialized } }
 		set_variable = { name = aura_initialized value = yes }
-		set_variable = { name = aura_chi value = 0 }
-		set_variable = { name = aura_power value = 0 }
-		set_variable = { name = aura_agility value = 0 }
-		set_variable = { name = aura_fortitude value = 0 }
-		set_variable = { name = aura_soul value = 0 }
+
+		# Aura Pressure: total (lifetime) and free (unspent / condensable).
+		set_variable = { name = aura_pressure_total value = 0 }
+		set_variable = { name = aura_pressure_free value = 0 }
+
+		# Mortal cores per stat (trained; capped at 8 total).
+		set_variable = { name = aura_mc_power value = 0 }
+		set_variable = { name = aura_mc_fortitude value = 0 }
+		set_variable = { name = aura_mc_agility value = 0 }
+		set_variable = { name = aura_mc_soul value = 0 }
+
+		# Immortal cores per stat (condensed from Aura Pressure).
+		set_variable = { name = aura_ic_power value = 0 }
+		set_variable = { name = aura_ic_fortitude value = 0 }
+		set_variable = { name = aura_ic_agility value = 0 }
+		set_variable = { name = aura_ic_soul value = 0 }
 	}
 }
 
-# Add Chi to the character (initializing first if needed).
-# Usage: aura_gain_chi_effect = { AMOUNT = 25 }
-aura_gain_chi_effect = {
+# Become a Martial Artist: learn the path and forge the starting mortal core in
+# each stat (1 each = 4 of the 8-core cap used).
+aura_begin_martial_training_effect = {
 	aura_initialize_character_effect = yes
-	change_variable = { name = aura_chi add = $AMOUNT$ }
-}
-
-# Spend Chi. Does not check affordability — gate with the trigger first.
-# Usage: aura_spend_chi_effect = { AMOUNT = 25 }
-aura_spend_chi_effect = {
-	change_variable = { name = aura_chi subtract = $AMOUNT$ }
 	if = {
-		limit = { var:aura_chi < 0 }
-		set_variable = { name = aura_chi value = 0 }
+		limit = { aura_can_begin_training_trigger = yes }
+		add_trait = aura_martial_artist
+		set_variable = { name = aura_mc_power value = 1 }
+		set_variable = { name = aura_mc_fortitude value = 1 }
+		set_variable = { name = aura_mc_agility value = 1 }
+		set_variable = { name = aura_mc_soul value = 1 }
 	}
 }
 
-# Awaken a mortal into the first cultivation realm.
+# Train one mortal core in a chosen stat, if under the cap.
+# Usage: aura_train_mortal_core_effect = { STAT = power }
+aura_train_mortal_core_effect = {
+	if = {
+		limit = { aura_can_train_mortal_core_trigger = yes }
+		change_variable = { name = aura_mc_$STAT$ add = 1 }
+	}
+}
+
+# Gain Aura Pressure (adds to both total and free). Initializes first if needed.
+# Usage: aura_gain_pressure_effect = { AMOUNT = 25 }
+aura_gain_pressure_effect = {
+	aura_initialize_character_effect = yes
+	change_variable = { name = aura_pressure_total add = $AMOUNT$ }
+	change_variable = { name = aura_pressure_free add = $AMOUNT$ }
+}
+
+# Condense one immortal core in a chosen stat, spending free Aura Pressure.
+# Cost (aura_condense_cost_value) is read before the core is added, so it
+# reflects the pre-increment count. Gate with the trigger before calling.
+# Usage: aura_condense_immortal_core_effect = { STAT = soul }
+aura_condense_immortal_core_effect = {
+	change_variable = { name = aura_pressure_free subtract = aura_condense_cost_value }
+	change_variable = { name = aura_ic_$STAT$ add = 1 }
+}
+
+# Awaken the immortal cores: a martial artist becomes a cultivator (keeping the
+# martial artist trait). Foundation grant is a TODO; the actual first core is
+# chosen via the condense chooser event.
 aura_awaken_cultivation_effect = {
-	aura_initialize_character_effect = yes
 	if = {
-		limit = { aura_is_mortal_trigger = yes }
-		add_trait = aura_realm_initiate
-	}
-}
-
-# Advance one cultivation realm. The grouped traits handle removing the lower
-# realm automatically. Caps at ascendant.
-aura_advance_realm_effect = {
-	if =      { limit = { has_trait = aura_realm_sovereign }   add_trait = aura_realm_ascendant }
-	else_if = { limit = { has_trait = aura_realm_grandmaster } add_trait = aura_realm_sovereign }
-	else_if = { limit = { has_trait = aura_realm_master }      add_trait = aura_realm_grandmaster }
-	else_if = { limit = { has_trait = aura_realm_warrior }     add_trait = aura_realm_master }
-	else_if = { limit = { has_trait = aura_realm_adept }       add_trait = aura_realm_warrior }
-	else_if = { limit = { has_trait = aura_realm_initiate }    add_trait = aura_realm_adept }
-	else =    { add_trait = aura_realm_initiate }
-}
-
-# Attempt to advance: spend the required Chi and move up a realm if able.
-aura_try_advance_realm_effect = {
-	if = {
-		limit = { aura_can_advance_realm_trigger = yes }
-		aura_spend_chi_effect = { AMOUNT = aura_chi_to_advance_value }
-		aura_advance_realm_effect = yes
+		limit = {
+			aura_is_martial_artist_trigger = yes
+			NOT = { has_trait = aura_cultivator }
+		}
+		add_trait = aura_cultivator
 	}
 }

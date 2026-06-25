@@ -1,19 +1,9 @@
 ﻿l_english:
- # --- Cultivation realm traits ---
- aura_realm_initiate:0 "Chi Initiate"
- aura_realm_initiate_desc:0 "Has awakened to the Chi flowing through the world and taken the first step on the path of cultivation."
- aura_realm_adept:0 "Aura Adept"
- aura_realm_adept_desc:0 "Has forged a stable personal aura from refined Chi."
- aura_realm_warrior:0 "Aura Warrior"
- aura_realm_warrior_desc:0 "Can manifest their aura in battle, striking far above mortal limits."
- aura_realm_master:0 "Aura Master"
- aura_realm_master_desc:0 "A master of the aura whose command of the elements deepens."
- aura_realm_grandmaster:0 "Aura Grandmaster"
- aura_realm_grandmaster_desc:0 "A grandmaster whose techniques and presence overwhelm lesser cultivators."
- aura_realm_sovereign:0 "Aura Sovereign"
- aura_realm_sovereign_desc:0 "An aura sovereign who dominates any battlefield they set foot upon."
- aura_realm_ascendant:0 "Ascendant"
- aura_realm_ascendant_desc:0 "Has passed the Heavenly Ascension and stands at the peak of mortal cultivation."
+ # --- Identity / core traits ---
+ aura_martial_artist:0 "Martial Artist"
+ aura_martial_artist_desc:0 "Has learned to gather Aura Pressure and forge mortal cores through relentless physical training. Mortal cores (up to eight, spread across Power, Fortitude, Agility and Soul) raise this warrior far above an untrained mortal."
+ aura_cultivator:0 "Cultivator"
+ aura_cultivator_desc:0 "Has awakened the immortal cores by condensing Aura Pressure into the body and soul, and forged a Foundation in the process. A true cultivator on the path toward immortality."
 
  # --- Elemental affinity traits ---
  aura_element_fire:0 "Fire Aura"

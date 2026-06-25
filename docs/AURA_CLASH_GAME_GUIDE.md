@@ -386,8 +386,9 @@ Chapters drive `$chapter` (fractional sub-steps like 1.4, 8.9, 9.9 gate features
 ## 19. Implications for the CK3 mod (quick notes)
 
 - **Aura Pressure ≠ Chi.** Model AP as the long-term cultivation track (XP-style),
-  and Chi as a short-term combat/stamina pool. The current scaffold's single
-  `aura_chi` variable conflates these and should be split.
+  and Chi as a short-term combat/stamina pool. *(Done: the scaffold now tracks
+  `aura_pressure_total` + `aura_pressure_free`; a separate Chi combat pool is
+  still to be added.)*
 - **Two core tiers per stat.** Model **mortal cores** (trainable by anyone,
   capped at 8 total across the four stats, 1 each at start) separately from
   **immortal cores** (AP-condensed, gated behind awakening). This gives a clean

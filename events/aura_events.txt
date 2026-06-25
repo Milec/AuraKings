@@ -1,15 +1,11 @@
 ﻿namespace = aura_kings
 
-# 0001 — Awakening: flavor shown after the "Begin Cultivation" decision.
+# 0001 — The First Step: flavor after learning the martial path.
 aura_kings.0001 = {
 	type = character_event
 	title = aura_kings.0001.t
 	desc = aura_kings.0001.desc
 	theme = learning
-
-	immediate = {
-		aura_awaken_cultivation_effect = yes
-	}
 
 	option = {
 		name = aura_kings.0001.a
@@ -17,7 +13,9 @@ aura_kings.0001 = {
 	}
 }
 
-# 0002 — Breakthrough: flavor shown after a successful realm advancement.
+# 0002 — Condense an immortal core: choose which stat receives it. Used both for
+# the awakening (first core) and subsequent condensations. Each option spends
+# the free Aura Pressure cost and adds one immortal core to the chosen stat.
 aura_kings.0002 = {
 	type = character_event
 	title = aura_kings.0002.t
@@ -25,13 +23,32 @@ aura_kings.0002 = {
 	theme = learning
 
 	option = {
-		name = aura_kings.0002.a
-		add_prestige = major_prestige_gain
+		name = aura_kings.0002.power
+		trigger = { aura_free_pressure_value >= aura_condense_cost_value }
+		aura_condense_immortal_core_effect = { STAT = power }
+	}
+	option = {
+		name = aura_kings.0002.fortitude
+		trigger = { aura_free_pressure_value >= aura_condense_cost_value }
+		aura_condense_immortal_core_effect = { STAT = fortitude }
+	}
+	option = {
+		name = aura_kings.0002.agility
+		trigger = { aura_free_pressure_value >= aura_condense_cost_value }
+		aura_condense_immortal_core_effect = { STAT = agility }
+	}
+	option = {
+		name = aura_kings.0002.soul
+		trigger = { aura_free_pressure_value >= aura_condense_cost_value }
+		aura_condense_immortal_core_effect = { STAT = soul }
+	}
+	option = {
+		name = aura_kings.0002.cancel
 	}
 }
 
-# 0010 — Aura Clash resolution. Root = the challenger (actor); scope:recipient =
-# the defender. Compares clash power and applies a simple win/lose outcome.
+# 0010 — Aura Clash resolution. Root = challenger (actor); scope:recipient =
+# defender. Compares clash power and applies a simple win/lose outcome.
 aura_kings.0010 = {
 	type = character_event
 	title = aura_kings.0010.t

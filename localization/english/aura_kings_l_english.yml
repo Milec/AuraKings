@@ -1,31 +1,39 @@
 ﻿l_english:
  # --- Decisions ---
- aura_begin_cultivation_decision:0 "Begin Cultivation"
- aura_begin_cultivation_decision_desc:0 "Turn away from the life of a mere mortal. Open yourself to the Chi of the world and begin the long path of cultivation."
- aura_begin_cultivation_decision_tooltip:0 "Awaken your aura and become a cultivator"
+ aura_begin_martial_training_decision:0 "Begin Martial Training"
+ aura_begin_martial_training_decision_desc:0 "Turn away from the life of a mere mortal. Seek out a teacher, a hidden manual, or wrest the secrets from your own flesh, and forge your first mortal cores."
+ aura_begin_martial_training_decision_tooltip:0 "Become a Martial Artist and forge your first mortal cores"
 
- aura_meditate_decision:0 "Meditate"
- aura_meditate_decision_desc:0 "Withdraw to absorb natural Chi from the world and refine it within your body."
- aura_meditate_decision_tooltip:0 "Gain Chi toward your next breakthrough"
+ aura_gather_pressure_decision:0 "Gather Aura Pressure"
+ aura_gather_pressure_decision_desc:0 "Draw the world's natural energy into your body, building the Aura Pressure that one day may be condensed into immortal cores."
+ aura_gather_pressure_decision_tooltip:0 "Gain Aura Pressure (total and free)"
 
- aura_breakthrough_decision:0 "Attempt Breakthrough"
- aura_breakthrough_decision_desc:0 "Gather the Chi you have refined and force a breakthrough to the next cultivation realm."
- aura_breakthrough_decision_tooltip:0 "Spend Chi to advance to the next realm"
+ aura_awaken_cultivation_decision:0 "Awaken the Immortal Cores"
+ aura_awaken_cultivation_decision_desc:0 "You have gathered enough Aura Pressure. Condense it inward, awaken your first immortal core, and become a true Cultivator."
+ aura_awaken_cultivation_decision_tooltip:0 "Become a Cultivator and condense your first immortal core"
+
+ aura_condense_core_decision:0 "Condense an Immortal Core"
+ aura_condense_core_decision_desc:0 "Force more of your free Aura Pressure inward, condensing another immortal core to deepen your power."
+ aura_condense_core_decision_tooltip:0 "Spend free Aura Pressure to condense another immortal core"
 
  # --- Character interaction ---
  aura_clash_interaction:0 "Challenge to an Aura Clash"
  aura_clash_interaction_desc:0 "Challenge [SCOPE.Char(scope:recipient).GetFirstName] to settle the matter aura against aura."
 
  # --- Events ---
- aura_kings.0001.t:0 "The First Breath"
- aura_kings.0001.desc:0 "For the first time you feel it — the Chi suffusing the world, the same power the legends spoke of. You draw a slow breath, and your aura awakens."
+ aura_kings.0001.t:0 "The First Step"
+ aura_kings.0001.desc:0 "Day after day of brutal training finally bears fruit. You feel the natural energy of the world answer your call, and the first mortal cores take shape within Power, Fortitude, Agility, and Soul. You are a Martial Artist now."
  aura_kings.0001.a:0 "My path begins."
 
- aura_kings.0002.t:0 "Breakthrough"
- aura_kings.0002.desc:0 "The refined Chi roars through your meridians. With a final effort the barrier shatters, and you rise to a new realm of power."
- aura_kings.0002.a:0 "I have ascended further."
+ aura_kings.0002.t:0 "Condense an Immortal Core"
+ aura_kings.0002.desc:0 "You press your gathered Aura Pressure inward, seeking a core to harden into something immortal. Into which will you force your power?"
+ aura_kings.0002.power:0 "Power — condense an immortal Power core."
+ aura_kings.0002.fortitude:0 "Fortitude — condense an immortal Fortitude core."
+ aura_kings.0002.agility:0 "Agility — condense an immortal Agility core."
+ aura_kings.0002.soul:0 "Soul — condense an immortal Soul core."
+ aura_kings.0002.cancel:0 "Not yet — hold my Aura Pressure for now."
 
  aura_kings.0010.t:0 "Aura Clash"
- aura_kings.0010.desc:0 "Auras flare and collide. The air itself trembles as two cultivators measure their refined power against one another."
+ aura_kings.0010.desc:0 "Auras flare and collide. The air itself trembles as two martial artists measure their refined power against one another."
  aura_kings.0010.a:0 "My aura prevails!"
  aura_kings.0010.b:0 "I am overpowered..."

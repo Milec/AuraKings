@@ -13,7 +13,7 @@ folder layout matches what CK3 expects (`common/`, `events/`, `localization/`,
 
 CK3 loads files in a folder alphabetically and later definitions override earlier
 ones. We prefix files with a two-digit number to make order explicit, e.g.
-`00_aura_realms.txt`, `01_aura_elements.txt`. New data files should follow the
+`00_aura_core_traits.txt`, `01_aura_elements.txt`. New data files should follow the
 same `NN_aura_<topic>.txt` pattern.
 
 ## Namespacing
@@ -57,7 +57,8 @@ CK3 has no unit-test harness. Validate by:
    this is the single most important check; a clean `error.log` means the mod
    parsed.
 3. Using the in-game console (`` ` ``) to test effects, e.g.
-   `effect = { aura_advance_realm_effect = yes }`, `add_trait aura_realm_initiate`.
+   `effect = { aura_begin_martial_training_effect = yes }`,
+   `effect = { aura_gain_pressure_effect = { AMOUNT = 200 } }`, `add_trait aura_cultivator`.
 
 A PR should leave `error.log` free of new errors introduced by the change.
 

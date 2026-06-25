@@ -1,33 +1,41 @@
 ﻿# Reusable triggers for the Aura Kings cultivation system.
 
-# True if the character has awakened (holds any cultivation realm trait).
+# Identity checks.
+aura_is_martial_artist_trigger = {
+	has_trait = aura_martial_artist
+}
+
 aura_is_cultivator_trigger = {
-	OR = {
-		has_trait = aura_realm_initiate
-		has_trait = aura_realm_adept
-		has_trait = aura_realm_warrior
-		has_trait = aura_realm_master
-		has_trait = aura_realm_grandmaster
-		has_trait = aura_realm_sovereign
-		has_trait = aura_realm_ascendant
-	}
+	has_trait = aura_cultivator
 }
 
-# True if the character is a powerless mortal who could begin cultivating.
-aura_is_mortal_trigger = {
-	NOT = { aura_is_cultivator_trigger = yes }
+# An untrained mortal: has never learned the martial path.
+aura_is_untrained_trigger = {
+	NOT = { has_trait = aura_martial_artist }
 }
 
-# True if the character has enough Chi to advance to the next realm and isn't
-# already at the peak.
-aura_can_advance_realm_trigger = {
-	has_variable = aura_chi
-	NOT = { has_trait = aura_realm_ascendant }
-	var:aura_chi >= aura_chi_to_advance_value
+# Could begin training (needs a teacher / manual / self-study — gating TODO).
+aura_can_begin_training_trigger = {
+	is_adult = yes
+	aura_is_untrained_trigger = yes
 }
 
-# True if the character may master another element (under the realm cap).
-aura_can_master_element_trigger = {
+# Has room to forge another mortal core (under the cap of 8).
+aura_can_train_mortal_core_trigger = {
+	aura_is_martial_artist_trigger = yes
+	aura_mortal_cores_remaining_value >= 1
+}
+
+# Ready to awaken the immortal cores: a trained martial artist, not yet a
+# cultivator, with enough free Aura Pressure to condense the first core.
+aura_can_awaken_trigger = {
+	aura_is_martial_artist_trigger = yes
+	NOT = { has_trait = aura_cultivator }
+	aura_free_pressure_value >= aura_condense_cost_value
+}
+
+# A cultivator with enough free Aura Pressure to condense another immortal core.
+aura_can_condense_core_trigger = {
 	aura_is_cultivator_trigger = yes
-	aura_elements_mastered_value < aura_max_elements_value
+	aura_free_pressure_value >= aura_condense_cost_value
 }
