@@ -47,6 +47,11 @@ These are different things and the mod must keep them distinct:
 You gain **AP** from: winning combat checks (`<<apboost N>>`), story choices,
 and **Shard Cycling** (dissolving `$shards` into raw AP via `menu-cultivation-cycle`).
 
+**AP cap (author clarification):** Aura Pressure tops out around **20,000**, a
+figure that is *extremely rare and nigh unobtainable*. At 100 AP per immortal
+core (see §3) that is the ceiling on cultivation, and the mod should treat ~20k
+as the practical maximum when scaling benefits.
+
 ---
 
 ## 3. The four Combat Cores
@@ -87,10 +92,25 @@ central to the lore/system:
 - **Order:** mortal cores do **not** all have to be filled before forming an
   immortal core — but maxing your 8 mortal cores first is the **usual/optimal
   route**, since it builds the body before condensing aura.
+- **Equal value:** an immortal core counts exactly the **same as a mortal core**
+  toward a stat's effective rating — immortal cores are simply how you push a
+  stat past the 8-mortal-core ceiling, not a stronger kind of core.
+
+**Core economy & ceiling (author clarification):**
+- Each immortal core costs a flat **100 free AP** to condense. With the ~20,000
+  AP cap (§2), that is **~200 immortal cores** maximum.
+- Plus the **8 mortal cores** → a practical ceiling of **~208 cores total** per
+  character (spread across the four stats however the player builds). Rare,
+  non-AP ways to gain extra cores exist, but 208 is the number to scale against.
+- **Power scaling / "leaving humanity":** a high cultivator is *no longer in the
+  realm of humans.* An **Archon** (~**10,000 AP**, ~100 immortal cores) can live
+  for **centuries** and slay **massive spirit beasts**. Benefits should ramp so
+  that this tier feels flatly superhuman, with ~208 cores as the demigod ceiling.
 
 > Modeling note: keep a per-stat split — `mortal_<stat>` (0–8 across stats,
 > trainable by anyone) and `immortal_<stat>` (AP-condensed, gated behind
-> awakening) — and present the sum as the effective core rating.
+> awakening) — and present the sum (equally weighted) as the effective core
+> rating.
 
 Supporting per-core variables:
 - `$powspent / $forspent / $agispent / $solspent` — chi of that core spent (in-combat).
