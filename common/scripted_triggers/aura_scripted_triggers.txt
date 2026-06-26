@@ -52,6 +52,7 @@ aura_can_condense_core_trigger = {
 # Has any Foundation.
 aura_has_foundation_trigger = {
 	OR = {
+		# Zodiac (12)
 		has_trait = aura_foundation_boar
 		has_trait = aura_foundation_crane
 		has_trait = aura_foundation_dragon
@@ -64,6 +65,16 @@ aura_has_foundation_trigger = {
 		has_trait = aura_foundation_stallion
 		has_trait = aura_foundation_tiger
 		has_trait = aura_foundation_wolf
+		# Core (4)
+		has_trait = aura_foundation_power
+		has_trait = aura_foundation_fortitude
+		has_trait = aura_foundation_agility
+		has_trait = aura_foundation_soul
+		# Special / graded
+		has_trait = aura_foundation_fuel
+		has_trait = aura_foundation_flayed_god
+		has_trait = aura_foundation_jade_lotus
+		has_trait = aura_foundation_jade_dragon
 	}
 }
 

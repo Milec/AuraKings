@@ -111,3 +111,82 @@ aura_foundation_wolf = {
 	icon = aura_foundation_wolf.dds
 	shown_in_ruler_designer = no
 }
+
+# --- Core Foundations (basic; sect-flavored, e.g. Thunderfall = Fortitude) ----
+# Lean hard into a single core's domain. Future: tie each to a Sect.
+
+aura_foundation_power = {
+	prowess = 4
+	icon = aura_foundation_power.dds
+	shown_in_ruler_designer = no
+}
+aura_foundation_fortitude = {
+	health = 1.0
+	prowess = 1
+	icon = aura_foundation_fortitude.dds
+	shown_in_ruler_designer = no
+}
+aura_foundation_agility = {
+	prowess = 2
+	travel_danger = -20
+	personal_scheme_resistance_add = 15
+	icon = aura_foundation_agility.dds
+	shown_in_ruler_designer = no
+}
+aura_foundation_soul = {
+	learning = 2
+	dread_baseline_add = 5
+	monthly_piety = 0.25
+	icon = aura_foundation_soul.dds
+	shown_in_ruler_designer = no
+}
+
+# --- Special / graded Foundations --------------------------------------------
+
+# Fuel — a low-grade Foundation focused on absorbing Heavenly Gates. For now it
+# grants bonus Aura Pressure when gathering (see aura_gain_pressure_effect);
+# Heavenly-Gate absorption (stronger inside Gates, weaker outside) comes later.
+aura_foundation_fuel = {
+	icon = aura_foundation_fuel.dds
+	shown_in_ruler_designer = no
+}
+
+# Flayed God ("blood god") — demonic regeneration and immunities. Age immunity
+# via immortal=yes; high health stands in for regeneration/disease resistance.
+# Full poison/disease immunity + the active Regenerate option are future hooks
+# (tie into Chi and the Hellscape/Taint corruption system).
+aura_foundation_flayed_god = {
+	immortal = yes
+	health = 1.5
+	prowess = 2
+	dread_baseline_add = 15
+	icon = aura_foundation_flayed_god.dds
+	shown_in_ruler_designer = no
+}
+
+# Jade Lotus — the enlightened path: +1 to every skill.
+aura_foundation_jade_lotus = {
+	diplomacy = 1
+	martial = 1
+	stewardship = 1
+	intrigue = 1
+	learning = 1
+	prowess = 1
+	icon = aura_foundation_jade_lotus.dds
+	shown_in_ruler_designer = no
+}
+
+# Jade Dragon — legendary/sovereign Foundation. On acquisition it also grants +2
+# to every immortal core (see aura_grant_jade_dragon_cores_effect).
+aura_foundation_jade_dragon = {
+	prowess = 4
+	health = 1.0
+	learning = 2
+	monthly_prestige = 0.5
+	diplomacy = 1
+	martial = 1
+	stewardship = 1
+	intrigue = 1
+	icon = aura_foundation_jade_dragon.dds
+	shown_in_ruler_designer = no
+}

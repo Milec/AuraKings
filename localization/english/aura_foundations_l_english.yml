@@ -26,3 +26,23 @@
  aura_foundation_tiger_desc:0 "A stable Foundation marked by the Tiger — majesty and persuasion. Presence that commands and intimidates."
  aura_foundation_wolf:0 "Wolf Foundation"
  aura_foundation_wolf_desc:0 "A stable Foundation marked by the Wolf — insight and the pack. A born commander whose warriors fight harder."
+
+ # Core Foundations — basic, sect-flavored paths that lean into a single core.
+ aura_foundation_power:0 "Power Foundation"
+ aura_foundation_power_desc:0 "A Foundation forged around the Power core — overwhelming, destructive strength."
+ aura_foundation_fortitude:0 "Fortitude Foundation"
+ aura_foundation_fortitude_desc:0 "A Foundation forged around the Fortitude core — the immovable resilience of sects like the Thunderfall."
+ aura_foundation_agility:0 "Agility Foundation"
+ aura_foundation_agility_desc:0 "A Foundation forged around the Agility core — speed, evasion, and untouchable footwork."
+ aura_foundation_soul:0 "Soul Foundation"
+ aura_foundation_soul_desc:0 "A Foundation forged around the Soul core — willpower, insight, and spiritual command."
+
+ # Special / graded Foundations.
+ aura_foundation_fuel:0 "Fuel Foundation"
+ aura_foundation_fuel_desc:0 "A low-grade Foundation that hungers for Heavenly Gates, drinking deep of the world's energy. It draws extra Aura Pressure — and one day, far more from within a Gate."
+ aura_foundation_flayed_god:0 "Flayed God Foundation"
+ aura_foundation_flayed_god_desc:0 "A demonic Foundation of the Flayed God — flesh that regenerates and refuses to age, sickness, or poison. Power bought against the soul."
+ aura_foundation_jade_lotus:0 "Jade Lotus Foundation"
+ aura_foundation_jade_lotus_desc:0 "An enlightened Foundation — perfect balance and clarity, sharpening every talent the cultivator possesses."
+ aura_foundation_jade_dragon:0 "Jade Dragon Foundation"
+ aura_foundation_jade_dragon_desc:0 "A legendary sovereign Foundation. Its bearer's cores swell beyond all others — the path of those reborn to rule."
