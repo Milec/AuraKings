@@ -1,0 +1,113 @@
+﻿# Foundation traits for Aura Kings.
+#
+# Inspired by the Aura Clash Foundations (see docs/AURA_CLASH_GAME_GUIDE.md §10):
+# in the source a Foundation is a {elemental color base} + {Zodiac animal symbol}
+# (e.g. "Swirling Wolf"), granting a core + element mastery + a skill, and above
+# all STABILITY — a cultivator with a Foundation never sees their cores break or
+# their Advancement bottleneck, "good all the way to Ascension."
+#
+# Here the 12 Zodiac animals are the buildable Foundation identities, each mapped
+# to a distinct CK3 benefit. A character gains exactly one, at awakening (chosen
+# or inherited — see events/aura_events.txt aura_kings.0004). The elemental
+# color-base layer (core lean + element mastery) will be added once the element
+# system exists.
+#
+# Each foundation also reserves hooks to "circle into other aspects" later:
+# elements, techniques, spirit beasts, sects, and dynasty inheritance.
+# Icons are referenced but not yet supplied; they fall back gracefully.
+
+aura_foundation_boar = {
+	# Survival / endurance. Hook: spirit-beast hunts, resilience techniques.
+	health = 0.5
+	prowess = 2
+	icon = aura_foundation_boar.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_crane = {
+	# Perception / foresight. Hook: detecting schemes, divination.
+	personal_scheme_resistance_add = 25
+	intrigue = 1
+	icon = aura_foundation_crane.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_dragon = {
+	# Sovereign / handseals. Hook: the strongest techniques, imperial authority.
+	monthly_prestige = 0.5
+	prowess = 2
+	icon = aura_foundation_dragon.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_monkey = {
+	# Cunning / thievery. Hook: heists, larceny, trickster techniques.
+	intrigue = 2
+	hostile_scheme_power_add = 15
+	icon = aura_foundation_monkey.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_ox = {
+	# Industry / craft. Hook: holdings, men-at-arms, economy.
+	stewardship = 3
+	icon = aura_foundation_ox.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_rabbit = {
+	# Vitality / alchemy. Hook: medicine, elixirs, fertility.
+	health = 0.5
+	fertility = 0.2
+	learning = 1
+	icon = aura_foundation_rabbit.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_ram = {
+	# Wisdom / lore. Hook: faith, study, soul techniques.
+	learning = 3
+	monthly_piety = 0.25
+	icon = aura_foundation_ram.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_rat = {
+	# Survival / stealth. Hook: intrigue, escape, ambush.
+	intrigue = 2
+	personal_scheme_resistance_add = 15
+	icon = aura_foundation_rat.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_serpent = {
+	# Deception. Hook: schemes, poison, shadow techniques.
+	personal_scheme_power_add = 25
+	dread_baseline_add = 5
+	icon = aura_foundation_serpent.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_stallion = {
+	# Athletics / speed. Hook: mobility, raiding, travel.
+	prowess = 2
+	travel_danger = -20
+	icon = aura_foundation_stallion.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_tiger = {
+	# Majesty / persuasion. Hook: intimidation, dread politics.
+	diplomacy = 2
+	dread_baseline_add = 10
+	icon = aura_foundation_tiger.dds
+	shown_in_ruler_designer = no
+}
+
+aura_foundation_wolf = {
+	# Insight / the pack. Hook: warfare, knights, commanders.
+	martial = 3
+	knight_effectiveness_mult = 0.1
+	icon = aura_foundation_wolf.dds
+	shown_in_ruler_designer = no
+}

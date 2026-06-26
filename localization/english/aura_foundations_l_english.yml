@@ -1,0 +1,28 @@
+﻿l_english:
+ # Foundations — the awakened cultivator's path. Every Foundation grants
+ # stability (cores never break, Advancement never bottlenecks). The Zodiac
+ # symbol shapes the cultivator's strengths.
+ aura_foundation_boar:0 "Boar Foundation"
+ aura_foundation_boar_desc:0 "A stable Foundation marked by the Boar — endurance and survival. Hardy of body and relentless in a fight."
+ aura_foundation_crane:0 "Crane Foundation"
+ aura_foundation_crane_desc:0 "A stable Foundation marked by the Crane — perception and foresight. Schemes break against a mind that sees them coming."
+ aura_foundation_dragon:0 "Dragon Foundation"
+ aura_foundation_dragon_desc:0 "A stable Foundation marked by the Dragon — sovereign majesty. The rarest path, drawing prestige and martial might."
+ aura_foundation_monkey:0 "Monkey Foundation"
+ aura_foundation_monkey_desc:0 "A stable Foundation marked by the Monkey — cunning and thievery. A trickster's edge in every scheme."
+ aura_foundation_ox:0 "Ox Foundation"
+ aura_foundation_ox_desc:0 "A stable Foundation marked by the Ox — industry and craft. Tireless stewardship and a builder's hand."
+ aura_foundation_rabbit:0 "Rabbit Foundation"
+ aura_foundation_rabbit_desc:0 "A stable Foundation marked by the Rabbit — vitality and alchemy. Long-lived, fertile, and learned in medicine."
+ aura_foundation_ram:0 "Ram Foundation"
+ aura_foundation_ram_desc:0 "A stable Foundation marked by the Ram — wisdom and lore. Deep study and devotion."
+ aura_foundation_rat:0 "Rat Foundation"
+ aura_foundation_rat_desc:0 "A stable Foundation marked by the Rat — survival and stealth. Slips every trap and turns the shadows to advantage."
+ aura_foundation_serpent:0 "Serpent Foundation"
+ aura_foundation_serpent_desc:0 "A stable Foundation marked by the Serpent — deception. A whispered word does what a blade cannot, and fear follows."
+ aura_foundation_stallion:0 "Stallion Foundation"
+ aura_foundation_stallion_desc:0 "A stable Foundation marked by the Stallion — speed and athletics. Swift in battle and safe upon the road."
+ aura_foundation_tiger:0 "Tiger Foundation"
+ aura_foundation_tiger_desc:0 "A stable Foundation marked by the Tiger — majesty and persuasion. Presence that commands and intimidates."
+ aura_foundation_wolf:0 "Wolf Foundation"
+ aura_foundation_wolf_desc:0 "A stable Foundation marked by the Wolf — insight and the pack. A born commander whose warriors fight harder."

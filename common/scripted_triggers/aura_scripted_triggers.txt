@@ -48,3 +48,29 @@ aura_can_condense_core_trigger = {
 	aura_is_cultivator_trigger = yes
 	aura_free_pressure_value >= aura_condense_cost_value
 }
+
+# Has any Foundation.
+aura_has_foundation_trigger = {
+	OR = {
+		has_trait = aura_foundation_boar
+		has_trait = aura_foundation_crane
+		has_trait = aura_foundation_dragon
+		has_trait = aura_foundation_monkey
+		has_trait = aura_foundation_ox
+		has_trait = aura_foundation_rabbit
+		has_trait = aura_foundation_ram
+		has_trait = aura_foundation_rat
+		has_trait = aura_foundation_serpent
+		has_trait = aura_foundation_stallion
+		has_trait = aura_foundation_tiger
+		has_trait = aura_foundation_wolf
+	}
+}
+
+# A parent has a Foundation that could be inherited.
+aura_parent_has_foundation_trigger = {
+	OR = {
+		AND = { exists = father father = { aura_has_foundation_trigger = yes } }
+		AND = { exists = mother mother = { aura_has_foundation_trigger = yes } }
+	}
+}

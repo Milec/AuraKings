@@ -164,6 +164,35 @@ aura_awaken_cultivation_effect = {
 	}
 }
 
+# Inherit a forebear's Foundation: copy the matching foundation trait from a
+# parent (father preferred, else mother). Used by the awakening foundation
+# chooser when aura_parent_has_foundation_trigger is true.
+aura_inherit_foundation_effect = {
+	if = {
+		limit = { exists = father father = { aura_has_foundation_trigger = yes } }
+		father = { save_scope_as = aura_forebear }
+	}
+	else_if = {
+		limit = { exists = mother mother = { aura_has_foundation_trigger = yes } }
+		mother = { save_scope_as = aura_forebear }
+	}
+	if = {
+		limit = { exists = scope:aura_forebear }
+		if =      { limit = { scope:aura_forebear = { has_trait = aura_foundation_boar } }     add_trait = aura_foundation_boar }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_crane } }    add_trait = aura_foundation_crane }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_dragon } }   add_trait = aura_foundation_dragon }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_monkey } }   add_trait = aura_foundation_monkey }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_ox } }       add_trait = aura_foundation_ox }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_rabbit } }   add_trait = aura_foundation_rabbit }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_ram } }      add_trait = aura_foundation_ram }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_rat } }      add_trait = aura_foundation_rat }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_serpent } }  add_trait = aura_foundation_serpent }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_stallion } } add_trait = aura_foundation_stallion }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_tiger } }    add_trait = aura_foundation_tiger }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_wolf } }     add_trait = aura_foundation_wolf }
+	}
+}
+
 # --- Passive benefits: recalculation ----------------------------------------
 # Recompute the passive stat bonuses from current core counts and apply the
 # delta vs what's already applied. Called whenever cores change (training,

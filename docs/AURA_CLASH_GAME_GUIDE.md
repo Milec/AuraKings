@@ -280,6 +280,28 @@ element):
 - Bloody Crimson (corrupted): +core, +1 Chi, +500 Inner Hellscape Capacity
 - Resolute Grey (elementless): `+1 Health`, `+1 Chi`
 
+A full Foundation is **two parts**, combined into its name
+(`$foundation = yangftxt1 + yangftxt2`):
+
+1. **Elemental color base** (above) — the core boost + element mastery (or the
+   Fox / Bloody / Resolute special bases). Becomes an adjective: *Burning*,
+   *Crackling*, *Dark*, *Dense*, *Howling*, *Misty*, *Shining*, *Swirling*,
+   *Enchanting*, *Bloody*, *Resolute*.
+2. **Zodiac animal symbol** (`pickfoundation2`/`3`) — one of **twelve**: Boar
+   (+Survival), Crane (+Perception), Dragon (+Handseals), Monkey (+Thievery), Ox
+   (+Craft), Rabbit (+Alchemy), Ram (+Lore), Rat (+Stealth), Serpent (+Deception),
+   Stallion (+Athletics), Tiger (+Persuasion), Wolf (+Insight). Matching your
+   subrace grants a second skill. The skills here are *Aura Clash* skills (§8).
+
+So a Foundation reads like **"Swirling Wolf"** or **"Burning Tiger."** Above all,
+any Foundation grants **stability**: a cultivator with one never has their cores
+break or their Advancement bottleneck — "good all the way to Ascension."
+
+> **Mod note:** Aura Kings implements the **12 Zodiac animals** as the Foundation
+> traits (`aura_foundation_*`), each mapped to a distinct CK3 benefit, chosen or
+> inherited at awakening. The elemental color-base layer (core lean + element
+> mastery) will be added when the element system exists.
+
 ---
 
 ## 11. Races

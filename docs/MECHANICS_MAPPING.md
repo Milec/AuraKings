@@ -16,7 +16,8 @@ groundwork commit has a working stub or it's a documented placeholder.
 | **Immortal cores** (condensed) | Variables `aura_ic_{power,fortitude,agility,soul}`; `aura_condense_immortal_core_effect` | script values + effects | done (basic) |
 | **Effective core rating**     | `aura_{power,fortitude,agility,soul}_value` = mortal + immortal     | `common/script_values`                             | done (basic) |
 | **Passive benefits from cores** | Prowess (Pow/Agi/For), Health & life-expectancy & agelessness (For), Learning (Soul), via `aura_recalculate_passives_effect` (delta-applied base stats + tiered modifiers + `aura_ageless` trait) | script values, effects, modifiers, traits | done (needs in-game check) |
-| **Awakening + Foundation**    | `aura_awaken_cultivation_decision`/`_effect`; Foundation grant TODO | `common/decisions`, `common/scripted_effects`      | partial     |
+| **Awakening**                 | `aura_awaken_cultivation_decision`/`_effect` -> forced first immortal core (`aura_kings.0003`) -> Foundation (`aura_kings.0004`) | `common/decisions`, `events` | done (basic) |
+| **Foundations (12 Zodiac)**   | Traits `aura_foundation_*` (Boar..Wolf), each a distinct CK3 benefit; chosen or inherited at awakening (`aura_inherit_foundation_effect`). Elemental color-base + element-mastery layer is a future addition. | `common/traits/03_aura_foundations.txt`, effects, events | done (basic) |
 | **Aura Pressure gathering**   | `aura_gather_pressure_decision` (placeholder for lifestyle/passive) | `common/decisions`                                 | placeholder |
 | **8 Elements (master 2)**     | Non-exclusive traits `aura_element_*`, capped by trigger       | `common/traits/01_aura_elements.txt`               | stub        |
 | **5 Martial arts styles**     | Traits `aura_style_*`                                          | `common/traits/02_aura_styles.txt`                 | stub        |
