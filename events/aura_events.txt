@@ -22,23 +22,109 @@ aura_kings.0003 = {
 	desc = aura_kings.0003.desc
 	theme = learning
 
-	# No cancel option: allocation is mandatory on awakening.
+	# No cancel option: allocation is mandatory on awakening. After the first core
+	# is set, the cultivator forges their Foundation (aura_kings.0004).
 	option = {
 		name = aura_kings.0003.power
 		aura_condense_immortal_core_effect = { STAT = power }
+		trigger_event = aura_kings.0004
 	}
 	option = {
 		name = aura_kings.0003.fortitude
 		aura_condense_immortal_core_effect = { STAT = fortitude }
+		trigger_event = aura_kings.0004
 	}
 	option = {
 		name = aura_kings.0003.agility
 		aura_condense_immortal_core_effect = { STAT = agility }
+		trigger_event = aura_kings.0004
 	}
 	option = {
 		name = aura_kings.0003.soul
 		aura_condense_immortal_core_effect = { STAT = soul }
+		trigger_event = aura_kings.0004
 	}
+}
+
+# 0004 — Forge your Foundation (at awakening). Choose one of the twelve Zodiac
+# Foundations, or inherit a forebear's path if a parent had one. Granted once.
+aura_kings.0004 = {
+	type = character_event
+	title = aura_kings.0004.t
+	desc = aura_kings.0004.desc
+	theme = learning
+
+	# Inherit a forebear's Foundation (exact path copied).
+	option = {
+		name = aura_kings.0004.inherit
+		trigger = { aura_parent_has_foundation_trigger = yes }
+		aura_inherit_foundation_effect = yes
+	}
+	# Core path -> choose which core (aura_kings.0005).
+	option = {
+		name = aura_kings.0004.core
+		trigger_event = aura_kings.0005
+	}
+	# Zodiac path -> choose an animal symbol (aura_kings.0006).
+	option = {
+		name = aura_kings.0004.zodiac
+		trigger_event = aura_kings.0006
+	}
+	# Fuel — low-grade, gate-absorption.
+	option = {
+		name = aura_kings.0004.fuel
+		add_trait = aura_foundation_fuel
+	}
+	# Flayed God — demonic regeneration & immunities. (Gate later: requires Kaito/demonic path.)
+	option = {
+		name = aura_kings.0004.flayed_god
+		add_trait = aura_foundation_flayed_god
+	}
+	# Jade Lotus — enlightened, +all skills. (Gate later: Eldra/temple path.)
+	option = {
+		name = aura_kings.0004.jade_lotus
+		add_trait = aura_foundation_jade_lotus
+	}
+	# Jade Dragon — legendary, +all cores. (Gate later: reincarnation/Eldra.)
+	option = {
+		name = aura_kings.0004.jade_dragon
+		add_trait = aura_foundation_jade_dragon
+		aura_grant_jade_dragon_cores_effect = yes
+	}
+}
+
+# 0005 — Core Foundation sub-chooser.
+aura_kings.0005 = {
+	type = character_event
+	title = aura_kings.0005.t
+	desc = aura_kings.0005.desc
+	theme = learning
+
+	option = { name = aura_kings.0005.power     add_trait = aura_foundation_power }
+	option = { name = aura_kings.0005.fortitude add_trait = aura_foundation_fortitude }
+	option = { name = aura_kings.0005.agility   add_trait = aura_foundation_agility }
+	option = { name = aura_kings.0005.soul      add_trait = aura_foundation_soul }
+}
+
+# 0006 — Zodiac Foundation sub-chooser (the animal symbol).
+aura_kings.0006 = {
+	type = character_event
+	title = aura_kings.0006.t
+	desc = aura_kings.0006.desc
+	theme = learning
+
+	option = { name = aura_kings.0006.boar     add_trait = aura_foundation_boar }
+	option = { name = aura_kings.0006.crane    add_trait = aura_foundation_crane }
+	option = { name = aura_kings.0006.dragon   add_trait = aura_foundation_dragon }
+	option = { name = aura_kings.0006.monkey   add_trait = aura_foundation_monkey }
+	option = { name = aura_kings.0006.ox       add_trait = aura_foundation_ox }
+	option = { name = aura_kings.0006.rabbit   add_trait = aura_foundation_rabbit }
+	option = { name = aura_kings.0006.ram      add_trait = aura_foundation_ram }
+	option = { name = aura_kings.0006.rat      add_trait = aura_foundation_rat }
+	option = { name = aura_kings.0006.serpent  add_trait = aura_foundation_serpent }
+	option = { name = aura_kings.0006.stallion add_trait = aura_foundation_stallion }
+	option = { name = aura_kings.0006.tiger    add_trait = aura_foundation_tiger }
+	option = { name = aura_kings.0006.wolf     add_trait = aura_foundation_wolf }
 }
 
 # 0002 — Condense an immortal core: choose which stat receives it. Used for

@@ -140,6 +140,13 @@ aura_gain_pressure_effect = {
 	aura_initialize_character_effect = yes
 	change_variable = { name = aura_pressure_total add = $AMOUNT$ }
 	change_variable = { name = aura_pressure_free add = $AMOUNT$ }
+	# Fuel Foundation absorbs extra Aura Pressure (its low-grade benefit; full
+	# Heavenly-Gate absorption is a future hook).
+	if = {
+		limit = { has_trait = aura_foundation_fuel }
+		change_variable = { name = aura_pressure_total add = 15 }
+		change_variable = { name = aura_pressure_free add = 15 }
+	}
 }
 
 # Condense one immortal core in a chosen stat, spending free Aura Pressure.
@@ -162,6 +169,57 @@ aura_awaken_cultivation_effect = {
 		}
 		add_trait = aura_cultivator
 	}
+}
+
+# Inherit a forebear's Foundation: copy the matching foundation trait from a
+# parent (father preferred, else mother). Used by the awakening foundation
+# chooser when aura_parent_has_foundation_trigger is true.
+aura_inherit_foundation_effect = {
+	if = {
+		limit = { exists = father father = { aura_has_foundation_trigger = yes } }
+		father = { save_scope_as = aura_forebear }
+	}
+	else_if = {
+		limit = { exists = mother mother = { aura_has_foundation_trigger = yes } }
+		mother = { save_scope_as = aura_forebear }
+	}
+	if = {
+		limit = { exists = scope:aura_forebear }
+		if =      { limit = { scope:aura_forebear = { has_trait = aura_foundation_boar } }     add_trait = aura_foundation_boar }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_crane } }    add_trait = aura_foundation_crane }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_dragon } }   add_trait = aura_foundation_dragon }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_monkey } }   add_trait = aura_foundation_monkey }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_ox } }       add_trait = aura_foundation_ox }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_rabbit } }   add_trait = aura_foundation_rabbit }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_ram } }      add_trait = aura_foundation_ram }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_rat } }      add_trait = aura_foundation_rat }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_serpent } }  add_trait = aura_foundation_serpent }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_stallion } } add_trait = aura_foundation_stallion }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_tiger } }    add_trait = aura_foundation_tiger }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_wolf } }     add_trait = aura_foundation_wolf }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_power } }    add_trait = aura_foundation_power }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_fortitude } } add_trait = aura_foundation_fortitude }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_agility } }  add_trait = aura_foundation_agility }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_soul } }     add_trait = aura_foundation_soul }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_fuel } }     add_trait = aura_foundation_fuel }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_flayed_god } } add_trait = aura_foundation_flayed_god }
+		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_jade_lotus } } add_trait = aura_foundation_jade_lotus }
+		else_if = {
+			limit = { scope:aura_forebear = { has_trait = aura_foundation_jade_dragon } }
+			add_trait = aura_foundation_jade_dragon
+			aura_grant_jade_dragon_cores_effect = yes
+		}
+	}
+}
+
+# Jade Dragon Foundation also grants +2 to every immortal core on acquisition.
+aura_grant_jade_dragon_cores_effect = {
+	aura_initialize_character_effect = yes
+	change_variable = { name = aura_ic_power add = 2 }
+	change_variable = { name = aura_ic_fortitude add = 2 }
+	change_variable = { name = aura_ic_agility add = 2 }
+	change_variable = { name = aura_ic_soul add = 2 }
+	aura_recalculate_passives_effect = yes
 }
 
 # --- Passive benefits: recalculation ----------------------------------------

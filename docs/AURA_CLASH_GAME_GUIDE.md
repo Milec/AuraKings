@@ -280,6 +280,54 @@ element):
 - Bloody Crimson (corrupted): +core, +1 Chi, +500 Inner Hellscape Capacity
 - Resolute Grey (elementless): `+1 Health`, `+1 Chi`
 
+A full Foundation is **two parts**, combined into its name
+(`$foundation = yangftxt1 + yangftxt2`):
+
+1. **Elemental color base** (above) — the core boost + element mastery (or the
+   Fox / Bloody / Resolute special bases). Becomes an adjective: *Burning*,
+   *Crackling*, *Dark*, *Dense*, *Howling*, *Misty*, *Shining*, *Swirling*,
+   *Enchanting*, *Bloody*, *Resolute*.
+2. **Zodiac animal symbol** (`pickfoundation2`/`3`) — one of **twelve**: Boar
+   (+Survival), Crane (+Perception), Dragon (+Handseals), Monkey (+Thievery), Ox
+   (+Craft), Rabbit (+Alchemy), Ram (+Lore), Rat (+Stealth), Serpent (+Deception),
+   Stallion (+Athletics), Tiger (+Persuasion), Wolf (+Insight). Matching your
+   subrace grants a second skill. The skills here are *Aura Clash* skills (§8).
+
+So a Zodiac Foundation reads like **"Swirling Wolf"** or **"Burning Tiger."**
+
+### Foundation is the awakening passive — and the Zodiac is only one type
+
+A **Foundation is the passive Technique built into the body upon the first
+Immortal Core Advancement** (the awakening). *"Every Martial Artist has a passive
+Technique built into their physical body upon their first Advancement — their
+Foundation."* **Which** Foundation you get depends on your teacher / sect / path,
+and they come in grades. Types found in the source:
+
+| Foundation | Source / path | Effect in-game |
+|---|---|---|
+| **Core Foundations** (Power / **Fortitude** / Agility / Soul) | Sects (e.g. *Thunderfall = Fortitude*) | strengthen that core's domain |
+| **Fuel** | low-grade / common | absorbs Heavenly Gates: more chi/AP inside a Gate, stronger there, weaker outside (~"an extra hundred AP a lifetime"); makes cores more absorbent |
+| **Zodiac** | Yang mentor | stability + {color base + animal symbol} (above) |
+| **Flayed God** | Kaito mentor | demonic: Regenerate option + **poison / disease / age immunity** |
+| **Jade Lotus** | Eldra mentor | **+1 to all skills**; removes Mortal Limits |
+| **Awakened Jade Dragon** | Eldra + Jade Dragon reincarnation | legendary: **+2 all cores**, +style & element mastery |
+| **Kitsune** | racial (Fox) | racial variant |
+
+Above all, any Foundation grants **stability**: a cultivator with one never has
+their cores break or their Advancement bottleneck — "good all the way to
+Ascension." (Fuel materials seen elsewhere: *Jade* fuels Soul+Power, *Beastbone*
+Fortitude+Agility, *Snowsteel* Fortitude+Soul, *Truegold* Power+Agility.)
+
+> **Mod note:** Aura Kings implements Foundations as **types**, chosen or
+> inherited at awakening via a two-step chooser (`aura_kings.0004` → `0005`/`0006`):
+> 4 **Core** foundations, **Fuel** (bonus AP gathering now; Gate absorption
+> later), the **12 Zodiac** animals, **Flayed God** (ageless via `immortal`, full
+> plague immunity via `epidemic_resistance`, high health for regen, scheme
+> resistance for poison), **Jade Lotus** (+all skills), and **Jade Dragon** (+2 all
+> immortal cores). The elemental color-base layer and Kitsune are future
+> additions; the special foundations are freely choosable now and will be gated
+> behind their mentor/sect/reincarnation paths once those exist.
+
 ---
 
 ## 11. Races
