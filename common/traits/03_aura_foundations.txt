@@ -151,15 +151,19 @@ aura_foundation_fuel = {
 	shown_in_ruler_designer = no
 }
 
-# Flayed God ("blood god") — demonic regeneration and immunities. Age immunity
-# via immortal=yes; high health stands in for regeneration/disease resistance.
-# Full poison/disease immunity + the active Regenerate option are future hooks
-# (tie into Chi and the Hellscape/Taint corruption system).
+# Flayed God ("blood god") — demonic regeneration and immunities:
+#   - Age immunity   : immortal = yes
+#   - Disease/plague : epidemic_resistance = 1 (full plague immunity)
+#   - Regeneration   : high health (fast recovery); the active Regenerate option
+#                      (spend Chi to heal) is a future hook once Chi exists.
+# Poison-scheme immunity is approximated by scheme resistance for now.
 aura_foundation_flayed_god = {
 	immortal = yes
+	epidemic_resistance = 1
 	health = 1.5
 	prowess = 2
 	dread_baseline_add = 15
+	personal_scheme_resistance_add = 25
 	icon = aura_foundation_flayed_god.dds
 	shown_in_ruler_designer = no
 }
