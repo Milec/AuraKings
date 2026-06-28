@@ -44,7 +44,7 @@ REM --- Write the launcher descriptor ------------------------------------------
 set "DESC=%MODDIR%\AuraKings.mod"
 > "%DESC%" echo version="0.1.0"
 >> "%DESC%" echo name="Aura Kings"
->> "%DESC%" echo supported_version="1.14.*"
+>> "%DESC%" echo supported_version="1.19.*"
 >> "%DESC%" echo path="%FWDPATH%"
 
 echo   Installed!

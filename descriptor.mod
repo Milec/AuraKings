@@ -5,4 +5,4 @@ tags={
 	"Total Conversion"
 }
 name="Aura Kings"
-supported_version="1.14.*"
+supported_version="1.19.*"
