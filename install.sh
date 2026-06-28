@@ -41,7 +41,7 @@ DESC="$MODDIR/AuraKings.mod"
 cat > "$DESC" <<EOF
 version="0.1.0"
 name="Aura Kings"
-supported_version="1.14.*"
+supported_version="1.19.*"
 path="$REPO"
 EOF
 

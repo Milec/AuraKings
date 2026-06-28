@@ -5,7 +5,7 @@ tags={
 	"Total Conversion"
 }
 name="Aura Kings"
-supported_version="1.14.*"
+supported_version="1.19.*"
 # This is the launcher descriptor. Place a copy of this file (or a symlink to it)
 # in your Paradox CK3 "mod/" folder and point `path` at the cloned repository.
 # Example (Windows): path="mod/AuraKings"
