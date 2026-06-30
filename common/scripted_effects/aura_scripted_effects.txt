@@ -1,10 +1,11 @@
 ﻿# Reusable effects for the Aura Kings cultivation system. Run on character scope.
 #
 # Cores now live in the multi-track traits aura_martial_artist (mortal) and
-# aura_cultivator (immortal): each stat is a track, and a core is one point of
-# track XP (add_trait_xp value = 1). Passive benefits come from the track-level
-# modifiers themselves, so there is no stat recalculation here. Aura Pressure and
-# the mortal-core total (for the 8 cap) are still plain variables.
+# aura_cultivator (immortal): each stat is a track, and a core is 100 track XP
+# (the XP scale equals Aura Pressure — 100 AP condensed = 1 immortal core).
+# Passive benefits come from the track-level modifiers themselves, so there is no
+# stat recalculation here. Aura Pressure and the mortal-core total (for the 8
+# cap) are still plain variables.
 
 # Initialize the non-trait cultivation variables exactly once.
 aura_initialize_character_effect = {
@@ -34,10 +35,10 @@ aura_begin_martial_training_effect = {
 	if = {
 		limit = { aura_can_begin_training_trigger = yes }
 		add_trait = aura_martial_artist
-		add_trait_xp = { trait = aura_martial_artist track = power value = 1 }
-		add_trait_xp = { trait = aura_martial_artist track = fortitude value = 1 }
-		add_trait_xp = { trait = aura_martial_artist track = agility value = 1 }
-		add_trait_xp = { trait = aura_martial_artist track = soul value = 1 }
+		add_trait_xp = { trait = aura_martial_artist track = power value = 100 }
+		add_trait_xp = { trait = aura_martial_artist track = fortitude value = 100 }
+		add_trait_xp = { trait = aura_martial_artist track = agility value = 100 }
+		add_trait_xp = { trait = aura_martial_artist track = soul value = 100 }
 		set_variable = { name = aura_mortal_cores_total value = 4 }
 	}
 }
@@ -47,7 +48,7 @@ aura_begin_martial_training_effect = {
 aura_forge_mortal_core_effect = {
 	if = {
 		limit = { var:aura_mortal_cores_total < 8 }
-		add_trait_xp = { trait = aura_martial_artist track = $STAT$ value = 1 }
+		add_trait_xp = { trait = aura_martial_artist track = $STAT$ value = 100 }
 		change_variable = { name = aura_mortal_cores_total add = 1 }
 		set_variable = { name = aura_training_core_gained value = yes }
 	}
@@ -144,7 +145,7 @@ aura_gain_pressure_effect = {
 # Usage: aura_condense_immortal_core_effect = { STAT = soul }
 aura_condense_immortal_core_effect = {
 	change_variable = { name = aura_pressure_free subtract = aura_condense_cost_value }
-	add_trait_xp = { trait = aura_cultivator track = $STAT$ value = 1 }
+	add_trait_xp = { trait = aura_cultivator track = $STAT$ value = 100 }
 	aura_check_ageless_effect = yes
 }
 
@@ -165,7 +166,7 @@ aura_check_ageless_effect = {
 	if = {
 		limit = {
 			NOT = { has_trait = aura_ageless }
-			has_trait_xp = { trait = aura_cultivator track = fortitude value >= 50 }
+			has_trait_xp = { trait = aura_cultivator track = fortitude value >= 5000 }
 		}
 		add_trait = aura_ageless
 	}
@@ -173,10 +174,10 @@ aura_check_ageless_effect = {
 
 # Jade Dragon Foundation grants +2 to every immortal core on acquisition.
 aura_grant_jade_dragon_cores_effect = {
-	add_trait_xp = { trait = aura_cultivator track = power value = 2 }
-	add_trait_xp = { trait = aura_cultivator track = fortitude value = 2 }
-	add_trait_xp = { trait = aura_cultivator track = agility value = 2 }
-	add_trait_xp = { trait = aura_cultivator track = soul value = 2 }
+	add_trait_xp = { trait = aura_cultivator track = power value = 200 }
+	add_trait_xp = { trait = aura_cultivator track = fortitude value = 200 }
+	add_trait_xp = { trait = aura_cultivator track = agility value = 200 }
+	add_trait_xp = { trait = aura_cultivator track = soul value = 200 }
 	aura_check_ageless_effect = yes
 }
 

@@ -71,6 +71,7 @@ The reference docs are **large** (the effects and triggers lists alone are
 | Decisions (major/minor) | `wiki_pages/Decisions_modding.md` |
 | Character interactions | `wiki_pages/Interactions_modding.md` |
 | Traits | `wiki_pages/Trait_modding.md` |
+| **Leveled / multi-track traits** (lifestyle/blademaster-style: `track`/`tracks`, `add_trait_xp`, `has_trait_xp`) | `reference/leveled-traits.md` — **fills a gap the wiki page omits**, with verified vanilla examples |
 | Characters / history / appearance | `wiki_pages/Characters_modding.md`, `wiki_pages/History_modding.md` |
 | Dynasties & houses, dynasty legacies | `wiki_pages/Dynasties_modding.md` |
 | Cultures, traditions, ethos | `wiki_pages/Culture_modding.md` |

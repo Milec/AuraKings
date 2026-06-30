@@ -24,28 +24,29 @@ aura_martial_artist = {
 	# Base (the path itself).
 	prowess = 1
 
-	# Mortal-core tracks. Levels at 1/2/3 cores in a stat (8 total cap enforced
-	# in script). Modest gains — mortal cores are the human-tier foundation.
+	# Mortal-core tracks. 1 core = 100 track XP (same scale as Aura Pressure).
+	# Levels at 1/2/3 cores in a stat (8 total cap enforced in script). Modest
+	# gains — mortal cores are the human-tier foundation.
 	tracks = {
 		power = {
-			1 = { prowess = 1 }
-			2 = { prowess = 1 }
-			3 = { prowess = 2 }
+			100 = { prowess = 1 }
+			200 = { prowess = 1 }
+			300 = { prowess = 2 }
 		}
 		fortitude = {
-			1 = { health = 0.2 }
-			2 = { health = 0.2 }
-			3 = { health = 0.3  prowess = 1 }
+			100 = { health = 0.2 }
+			200 = { health = 0.2 }
+			300 = { health = 0.3  prowess = 1 }
 		}
 		agility = {
-			1 = { prowess = 1 }
-			2 = { prowess = 1 }
-			3 = { prowess = 2 }
+			100 = { prowess = 1 }
+			200 = { prowess = 1 }
+			300 = { prowess = 2 }
 		}
 		soul = {
-			1 = { learning = 1 }
-			2 = { learning = 1 }
-			3 = { learning = 1 }
+			100 = { learning = 1 }
+			200 = { learning = 1 }
+			300 = { learning = 1 }
 		}
 	}
 }
@@ -59,38 +60,40 @@ aura_cultivator = {
 	monthly_prestige = 0.25
 	dread_baseline_add = 5
 
-	# Immortal-core tracks. Five realm tiers reached at 1 / 10 / 30 / 75 / 150
-	# immortal cores in that stat. Increments are cumulative, so a focused
-	# Archon (~100-150 cores in one core) becomes flatly superhuman.
+	# Immortal-core tracks. 1 core = 100 track XP, because the XP IS the Aura
+	# Pressure condensed into that core (100 AP per core). Five realm tiers reached
+	# at 1 / 10 / 30 / 75 / 150 cores -> 100 / 1000 / 3000 / 7500 / 15000 XP.
+	# Increments are cumulative, so a focused Archon (~100-150 cores in one core)
+	# becomes flatly superhuman.
 	tracks = {
 		power = {
-			1   = { prowess = 3 }
-			10  = { prowess = 7 }
-			30  = { prowess = 15 }
-			75  = { prowess = 25 }
-			150 = { prowess = 50 }
+			100   = { prowess = 3 }
+			1000  = { prowess = 7 }
+			3000  = { prowess = 15 }
+			7500  = { prowess = 25 }
+			15000 = { prowess = 50 }
 		}
 		fortitude = {
 			# health, longevity, and the "no prowess loss from age" threshold.
-			1   = { health = 0.5  prowess = 1  life_expectancy = 25 }
-			10  = { health = 0.5  prowess = 2  life_expectancy = 50  no_prowess_loss_from_age = yes }
-			30  = { health = 1.0  prowess = 3  life_expectancy = 75 }
-			75  = { health = 1.0  prowess = 5  life_expectancy = 100 }
-			150 = { health = 2.0  prowess = 9  life_expectancy = 150 }
+			100   = { health = 0.5  prowess = 1  life_expectancy = 25 }
+			1000  = { health = 0.5  prowess = 2  life_expectancy = 50  no_prowess_loss_from_age = yes }
+			3000  = { health = 1.0  prowess = 3  life_expectancy = 75 }
+			7500  = { health = 1.0  prowess = 5  life_expectancy = 100 }
+			15000 = { health = 2.0  prowess = 9  life_expectancy = 150 }
 		}
 		agility = {
-			1   = { prowess = 2 }
-			10  = { prowess = 6 }
-			30  = { prowess = 12 }
-			75  = { prowess = 20 }
-			150 = { prowess = 40 }
+			100   = { prowess = 2 }
+			1000  = { prowess = 6 }
+			3000  = { prowess = 12 }
+			7500  = { prowess = 20 }
+			15000 = { prowess = 40 }
 		}
 		soul = {
-			1   = { learning = 1  monthly_piety = 0.1 }
-			10  = { learning = 2  monthly_piety = 0.1 }
-			30  = { learning = 3 }
-			75  = { learning = 4 }
-			150 = { learning = 5 }
+			100   = { learning = 1  monthly_piety = 0.1 }
+			1000  = { learning = 2  monthly_piety = 0.1 }
+			3000  = { learning = 3 }
+			7500  = { learning = 4 }
+			15000 = { learning = 5 }
 		}
 	}
 }

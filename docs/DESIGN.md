@@ -71,7 +71,9 @@ trait's overall level.
   **1 / 10 / 30 / 75 / 150** cores. A focused Archon (~100–150 in one core) is
   flatly superhuman.
 
-A core is one point of track XP: `add_trait_xp = { trait = … track = … value = 1 }`.
+A core is **100 track XP** — the XP scale equals Aura Pressure (100 AP condensed
+= 1 immortal core), so cultivator realm tiers sit at 100/1000/3000/7500/15000 XP:
+`add_trait_xp = { trait = … track = … value = 100 }`.
 **Passive benefits are the track-level modifiers themselves** (cumulative — base
 + every reached level, exactly like blademaster's +3/+6/+12), so there is no
 separate stat recalculation:
