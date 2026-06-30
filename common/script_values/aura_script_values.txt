@@ -1,65 +1,11 @@
 ﻿# Computed numbers for the Aura Kings cultivation system.
-# Constants prefixed with @ are file-local script constants.
 #
-# Core model (see docs/AURA_CLASH_GAME_GUIDE.md §3):
-#   effective core (per stat) = mortal cores + immortal cores
-#   mortal cores  : variables aura_mc_power / _fortitude / _agility / _soul
-#   immortal cores: variables aura_ic_power / _fortitude / _agility / _soul
-#   aura pressure : aura_pressure_total (lifetime) and aura_pressure_free
-#                   (unspent, condensable into immortal cores)
+# Cores are now stored as track XP on the aura_martial_artist / aura_cultivator
+# multi-track traits (read with has_trait_xp), so the old per-stat core script
+# values are gone. What remains here is Aura Pressure and a couple of costs.
 
-@aura_mortal_core_cap = 8
 @aura_condense_cost = 100
 @aura_mortal_core_exp_threshold = 100
-
-# --- Effective core ratings (mortal + immortal) -----------------------------
-
-aura_power_value = {
-	value = 0
-	if = { limit = { has_variable = aura_mc_power } add = var:aura_mc_power }
-	if = { limit = { has_variable = aura_ic_power } add = var:aura_ic_power }
-}
-aura_fortitude_value = {
-	value = 0
-	if = { limit = { has_variable = aura_mc_fortitude } add = var:aura_mc_fortitude }
-	if = { limit = { has_variable = aura_ic_fortitude } add = var:aura_ic_fortitude }
-}
-aura_agility_value = {
-	value = 0
-	if = { limit = { has_variable = aura_mc_agility } add = var:aura_mc_agility }
-	if = { limit = { has_variable = aura_ic_agility } add = var:aura_ic_agility }
-}
-aura_soul_value = {
-	value = 0
-	if = { limit = { has_variable = aura_mc_soul } add = var:aura_mc_soul }
-	if = { limit = { has_variable = aura_ic_soul } add = var:aura_ic_soul }
-}
-
-# --- Mortal core accounting (capped at 8 total) -----------------------------
-
-aura_mortal_cores_total_value = {
-	value = 0
-	if = { limit = { has_variable = aura_mc_power } add = var:aura_mc_power }
-	if = { limit = { has_variable = aura_mc_fortitude } add = var:aura_mc_fortitude }
-	if = { limit = { has_variable = aura_mc_agility } add = var:aura_mc_agility }
-	if = { limit = { has_variable = aura_mc_soul } add = var:aura_mc_soul }
-}
-
-aura_mortal_cores_remaining_value = {
-	value = @aura_mortal_core_cap
-	subtract = aura_mortal_cores_total_value
-	min = 0
-}
-
-# --- Immortal core accounting -----------------------------------------------
-
-aura_immortal_cores_total_value = {
-	value = 0
-	if = { limit = { has_variable = aura_ic_power } add = var:aura_ic_power }
-	if = { limit = { has_variable = aura_ic_fortitude } add = var:aura_ic_fortitude }
-	if = { limit = { has_variable = aura_ic_agility } add = var:aura_ic_agility }
-	if = { limit = { has_variable = aura_ic_soul } add = var:aura_ic_soul }
-}
 
 # --- Aura Pressure ----------------------------------------------------------
 
@@ -81,35 +27,4 @@ aura_condense_cost_value = {
 # Mortal-core training EXP needed to forge one mortal core (a full EXP bar).
 aura_mortal_core_exp_threshold_value = {
 	value = @aura_mortal_core_exp_threshold
-}
-
-# --- Passive benefits from cores --------------------------------------------
-# Cultivators become superhuman as cores accumulate. These are the TARGET totals
-# from cores; the recalc effect applies the delta vs what's already applied
-# (aura_applied_* variables). See aura_recalculate_passives_effect.
-
-# Prowess: Power (striker) + Agility (duelist) + Fortitude (toughness).
-# Applied via add_prowess_skill as a delta vs what we've already added. Values
-# may be fractional (skills round for display); any sub-point drift is cosmetic
-# at these magnitudes. Health comes from Fortitude tier modifiers instead, since
-# there is no add_health effect.
-aura_prowess_bonus_value = {
-	value = 0
-	add = { value = aura_power_value multiply = 1.5 }
-	add = { value = aura_agility_value multiply = 1.2 }
-	add = { value = aura_fortitude_value multiply = 0.5 }
-}
-aura_prowess_delta_value = {
-	value = aura_prowess_bonus_value
-	subtract = var:aura_applied_prowess
-}
-
-# Learning: Soul (insight / perception).
-aura_learning_bonus_value = {
-	value = 0
-	add = { value = aura_soul_value multiply = 0.25 }
-}
-aura_learning_delta_value = {
-	value = aura_learning_bonus_value
-	subtract = var:aura_applied_learning
 }

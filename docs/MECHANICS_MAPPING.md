@@ -8,14 +8,14 @@ groundwork commit has a working stub or it's a documented placeholder.
 |-------------------------------|----------------------------------------------------------------|----------------------------------------------------|-------------|
 | **Aura Pressure** (cultivation meter) | Variables `aura_pressure_total` + `aura_pressure_free`; script values `aura_total_pressure_value` / `aura_free_pressure_value` | `common/scripted_effects`, `common/script_values` | done (basic) |
 | **Chi** (combat stamina)      | *Not yet modeled* — will be a separate short-term pool (`maxchi = pool + soul/2`) | future | planned |
-| **Martial Artist** (learned path) | Trait `aura_martial_artist`; tracks mortal cores                  | `common/traits/00_aura_core_traits.txt`            | done (basic) |
-| **Cultivator** (awakened)     | Trait `aura_cultivator` (requires & keeps Martial Artist); tracks immortal cores | `common/traits/00_aura_core_traits.txt`            | done (basic) |
-| **Mortal cores** (trained, max 8) | Variables `aura_mc_{power,fortitude,agility,soul}`, capped via `aura_mortal_cores_remaining_value` | script values + effects | done (basic) |
-| **Mortal-core training (EXP)** | Per-stat EXP `aura_mc_{stat}_exp`; 100 EXP -> +1 core via `aura_gain_mortal_core_exp_effect` | scripted effects + script values | done (basic) |
-| **Martial Training session** | `aura_martial_training_decision` (6mo cooldown) -> format/core/method event chain `aura_kings.0100-0103`; variable EXP by roll. Promotable to a CK3 Activity later. | `common/decisions`, `events` | done (basic) |
-| **Immortal cores** (condensed) | Variables `aura_ic_{power,fortitude,agility,soul}`; `aura_condense_immortal_core_effect` | script values + effects | done (basic) |
-| **Effective core rating**     | `aura_{power,fortitude,agility,soul}_value` = mortal + immortal     | `common/script_values`                             | done (basic) |
-| **Passive benefits from cores** | Prowess (Pow/Agi/For), Health & life-expectancy & agelessness (For), Learning (Soul), via `aura_recalculate_passives_effect` (delta-applied base stats + tiered modifiers + `aura_ageless` trait) | script values, effects, modifiers, traits | done (needs in-game check) |
+| **Martial Artist** (learned path) | **Multi-track trait** `aura_martial_artist` (`category = lifestyle`) with 4 tracks (power/fortitude/agility/soul); mortal cores = track XP | `common/traits/00_aura_core_traits.txt` | done (needs in-game check) |
+| **Cultivator** (awakened)     | **Multi-track trait** `aura_cultivator` with 4 tracks; immortal cores = track XP; 5 realm tiers per track at 1/10/30/75/150 | `common/traits/00_aura_core_traits.txt` | done (needs in-game check) |
+| **Cores (per-stat tracked level)** | A core = 1 point of track XP (`add_trait_xp = { trait track value = 1 }`); track level = realm tier; 4 track levels sum to total. Passive benefits are the **track-level modifiers** (cumulative). | trait tracks | done (needs in-game check) |
+| **Mortal cores** (trained, max 8) | XP on `aura_martial_artist` tracks; 8-total cap via `aura_mortal_cores_total` variable | effects + traits | done (basic) |
+| **Mortal-core training (EXP)** | Per-stat EXP `aura_mc_{stat}_exp`; 100 EXP -> +1 core (`add_trait_xp`) via `aura_gain_mortal_core_exp_effect` | scripted effects + script values | done (basic) |
+| **Martial Training session** | `aura_martial_training_decision` (6mo cooldown) -> format/core/method event chain `aura_kings.0100-0103`; variable EXP by roll | `common/decisions`, `events` | done (basic) |
+| **Immortal cores** (condensed) | XP on `aura_cultivator` tracks; `aura_condense_immortal_core_effect` spends 100 AP -> `add_trait_xp` | effects + traits | done (basic) |
+| **Passive benefits from cores** | Carried by the track-level modifiers themselves (Prowess on Pow/Agi/For; Health/life-expectancy/no-age-prowess on For; Learning on Soul). Agelessness (`aura_ageless`) granted at Fortitude track 50 via `aura_check_ageless_effect`. | trait tracks + effect | done (needs in-game check) |
 | **Awakening**                 | `aura_awaken_cultivation_decision`/`_effect` -> forced first immortal core (`aura_kings.0003`) -> Foundation (`aura_kings.0004`) | `common/decisions`, `events` | done (basic) |
 | **Foundations (types)**       | Traits `aura_foundation_*`: 4 Core, Fuel, 12 Zodiac, Flayed God, Jade Lotus, Jade Dragon. Chosen or inherited at awakening via two-step chooser (`aura_kings.0004`→`0005`/`0006`); `aura_inherit_foundation_effect`. Elemental color-base, Kitsune, and mentor/sect gating are future. | `common/traits/03_aura_foundations.txt`, effects, events | done (basic) |
 | **Aura Pressure gathering**   | `aura_gather_pressure_decision` (placeholder for lifestyle/passive) | `common/decisions`                                 | placeholder |
@@ -33,18 +33,20 @@ groundwork commit has a working stub or it's a documented placeholder.
 
 - **Prefix everything `aura_`** to avoid collisions with the base game and other
   mods.
+- **Cores live as trait-track XP**, not variables: `add_trait_xp = { trait =
+  aura_martial_artist|aura_cultivator track = power|fortitude|agility|soul value = N }`;
+  read with `has_trait_xp = { trait = X track = Y value >= N }`.
 - Character variables:
   - Aura Pressure: `aura_pressure_total`, `aura_pressure_free`.
-  - Mortal cores: `aura_mc_power`, `aura_mc_fortitude`, `aura_mc_agility`, `aura_mc_soul`.
-  - Mortal-core EXP: `aura_mc_{stat}_exp` (0..100 per stat).
-  - Immortal cores: `aura_ic_power`, `aura_ic_fortitude`, `aura_ic_agility`, `aura_ic_soul`.
+  - Mortal-core total (8 cap): `aura_mortal_cores_total`.
+  - Mortal-core training EXP: `aura_mc_{stat}_exp` (0..100 sub-core progress).
   - Transient training session: `aura_training_target` (flag), `aura_training_format`
     (flag), `aura_training_format_bonus`, `aura_training_last_gain`,
-    `aura_training_session_gain`, `aura_training_core_gained` — set up and torn
-    down by the session effects.
+    `aura_training_session_gain`, `aura_training_core_gained`.
   - Bookkeeping: `aura_initialized`.
-- Traits: `aura_martial_artist`, `aura_cultivator` (identity flags; cores live in
-  variables), `aura_element_*`, `aura_style_*`.
+- Traits: `aura_martial_artist`, `aura_cultivator` (multi-track leveled traits,
+  `category = lifestyle`, tracks = the four cores), `aura_ageless`,
+  `aura_foundation_*`, `aura_element_*`, `aura_style_*`.
 - Scripted effects end in `_effect`, scripted triggers end in `_trigger`,
   script values end in `_value` (e.g. `aura_free_pressure_value`).
 - Event namespace: `aura_kings` (e.g. `aura_kings.0001`).

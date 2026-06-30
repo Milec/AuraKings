@@ -23,14 +23,16 @@ aura_can_begin_training_trigger = {
 # Has room to forge another mortal core (under the cap of 8).
 aura_can_train_mortal_core_trigger = {
 	aura_is_martial_artist_trigger = yes
-	aura_mortal_cores_remaining_value >= 1
+	has_variable = aura_mortal_cores_total
+	var:aura_mortal_cores_total < 8
 }
 
 # Can undertake a Martial Training session (a martial artist with room to grow).
 aura_can_martial_train_trigger = {
 	aura_is_martial_artist_trigger = yes
 	is_adult = yes
-	aura_mortal_cores_remaining_value >= 1
+	has_variable = aura_mortal_cores_total
+	var:aura_mortal_cores_total < 8
 }
 
 # Ready to awaken the immortal cores: a trained martial artist, not yet a

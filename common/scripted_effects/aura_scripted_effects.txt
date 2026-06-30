@@ -1,8 +1,12 @@
 ﻿# Reusable effects for the Aura Kings cultivation system. Run on character scope.
+#
+# Cores now live in the multi-track traits aura_martial_artist (mortal) and
+# aura_cultivator (immortal): each stat is a track, and a core is one point of
+# track XP (add_trait_xp value = 1). Passive benefits come from the track-level
+# modifiers themselves, so there is no stat recalculation here. Aura Pressure and
+# the mortal-core total (for the 8 cap) are still plain variables.
 
-# Initialize the cultivation variables exactly once. Safe to call repeatedly.
-# Every variable that other effects mutate with change_variable is created here
-# so those calls never touch a non-existent variable.
+# Initialize the non-trait cultivation variables exactly once.
 aura_initialize_character_effect = {
 	if = {
 		limit = { NOT = { has_variable = aura_initialized } }
@@ -12,17 +16,8 @@ aura_initialize_character_effect = {
 		set_variable = { name = aura_pressure_total value = 0 }
 		set_variable = { name = aura_pressure_free value = 0 }
 
-		# Mortal cores per stat (trained; capped at 8 total).
-		set_variable = { name = aura_mc_power value = 0 }
-		set_variable = { name = aura_mc_fortitude value = 0 }
-		set_variable = { name = aura_mc_agility value = 0 }
-		set_variable = { name = aura_mc_soul value = 0 }
-
-		# Immortal cores per stat (condensed from Aura Pressure).
-		set_variable = { name = aura_ic_power value = 0 }
-		set_variable = { name = aura_ic_fortitude value = 0 }
-		set_variable = { name = aura_ic_agility value = 0 }
-		set_variable = { name = aura_ic_soul value = 0 }
+		# Count of mortal cores forged so far (enforces the 8-core cap).
+		set_variable = { name = aura_mortal_cores_total value = 0 }
 
 		# Mortal-core training EXP per stat (0..threshold; converts to a core).
 		set_variable = { name = aura_mc_power_exp value = 0 }
@@ -39,28 +34,29 @@ aura_begin_martial_training_effect = {
 	if = {
 		limit = { aura_can_begin_training_trigger = yes }
 		add_trait = aura_martial_artist
-		set_variable = { name = aura_mc_power value = 1 }
-		set_variable = { name = aura_mc_fortitude value = 1 }
-		set_variable = { name = aura_mc_agility value = 1 }
-		set_variable = { name = aura_mc_soul value = 1 }
-		aura_recalculate_passives_effect = yes
+		add_trait_xp = { trait = aura_martial_artist track = power value = 1 }
+		add_trait_xp = { trait = aura_martial_artist track = fortitude value = 1 }
+		add_trait_xp = { trait = aura_martial_artist track = agility value = 1 }
+		add_trait_xp = { trait = aura_martial_artist track = soul value = 1 }
+		set_variable = { name = aura_mortal_cores_total value = 4 }
 	}
 }
 
-# Train one mortal core in a chosen stat, if under the cap.
-# Usage: aura_train_mortal_core_effect = { STAT = power }
-aura_train_mortal_core_effect = {
+# Forge one mortal core in a chosen stat (a point of XP on the martial-artist
+# track), if under the 8-core cap. Usage: aura_forge_mortal_core_effect = { STAT = power }
+aura_forge_mortal_core_effect = {
 	if = {
-		limit = { aura_can_train_mortal_core_trigger = yes }
-		change_variable = { name = aura_mc_$STAT$ add = 1 }
+		limit = { var:aura_mortal_cores_total < 8 }
+		add_trait_xp = { trait = aura_martial_artist track = $STAT$ value = 1 }
+		change_variable = { name = aura_mortal_cores_total add = 1 }
+		set_variable = { name = aura_training_core_gained value = yes }
 	}
 }
 
 # Add mortal-core training EXP to a chosen stat. When the EXP bar fills
-# (>= threshold) it converts into +1 mortal core (while under the 8-core cap),
-# carrying over any surplus. Sets aura_training_core_gained when a core is forged.
+# (>= threshold) it forges +1 mortal core on that stat's track (while under the
+# cap), carrying over surplus.
 # Usage: aura_gain_mortal_core_exp_effect = { STAT = power AMOUNT = 30 }
-#        AMOUNT may be a literal or a variable, e.g. AMOUNT = var:aura_training_session_gain
 aura_gain_mortal_core_exp_effect = {
 	if = {
 		limit = { NOT = { has_variable = aura_mc_$STAT$_exp } }
@@ -70,26 +66,23 @@ aura_gain_mortal_core_exp_effect = {
 	while = {
 		limit = {
 			var:aura_mc_$STAT$_exp >= aura_mortal_core_exp_threshold_value
-			aura_mortal_cores_remaining_value >= 1
+			var:aura_mortal_cores_total < 8
 		}
 		change_variable = { name = aura_mc_$STAT$_exp subtract = aura_mortal_core_exp_threshold_value }
-		change_variable = { name = aura_mc_$STAT$ add = 1 }
-		set_variable = { name = aura_training_core_gained value = yes }
+		aura_forge_mortal_core_effect = { STAT = $STAT$ }
 	}
 	# At the cap, don't hoard a full-or-greater bar of unusable EXP.
 	if = {
 		limit = {
-			aura_mortal_cores_remaining_value = 0
+			var:aura_mortal_cores_total >= 8
 			var:aura_mc_$STAT$_exp >= aura_mortal_core_exp_threshold_value
 		}
 		set_variable = { name = aura_mc_$STAT$_exp value = aura_mortal_core_exp_threshold_value }
 	}
-	aura_recalculate_passives_effect = yes
 }
 
 # --- Martial Training session helpers (see events aura_kings.0100-0103) ------
 
-# Reset the transient per-session variables at the start of a training session.
 aura_begin_training_session_effect = {
 	aura_initialize_character_effect = yes
 	set_variable = { name = aura_training_core_gained value = no }
@@ -98,8 +91,6 @@ aura_begin_training_session_effect = {
 	set_variable = { name = aura_training_session_gain value = 0 }
 }
 
-# Apply a finished training roll: total EXP = rolled gain + the setup-format
-# bonus, granted to whichever core was chosen (aura_training_target flag).
 aura_grant_training_result_effect = {
 	set_variable = { name = aura_training_session_gain value = var:aura_training_last_gain }
 	if = {
@@ -124,7 +115,6 @@ aura_grant_training_result_effect = {
 	}
 }
 
-# Clear the transient per-session variables at the end of a training session.
 aura_end_training_session_effect = {
 	remove_variable = aura_training_target
 	remove_variable = aura_training_format
@@ -149,18 +139,17 @@ aura_gain_pressure_effect = {
 	}
 }
 
-# Condense one immortal core in a chosen stat, spending free Aura Pressure.
-# Cost is a flat 100 AP (aura_condense_cost_value). Gate with the trigger first.
+# Condense one immortal core in a chosen stat: spend free Aura Pressure and add a
+# point of XP to the cultivator track. Gate with the trigger first.
 # Usage: aura_condense_immortal_core_effect = { STAT = soul }
 aura_condense_immortal_core_effect = {
 	change_variable = { name = aura_pressure_free subtract = aura_condense_cost_value }
-	change_variable = { name = aura_ic_$STAT$ add = 1 }
-	aura_recalculate_passives_effect = yes
+	add_trait_xp = { trait = aura_cultivator track = $STAT$ value = 1 }
+	aura_check_ageless_effect = yes
 }
 
-# Awaken the immortal cores: a martial artist becomes a cultivator (keeping the
-# martial artist trait). Foundation grant is a TODO; the actual first core is
-# chosen via the condense chooser event.
+# Awaken: a martial artist becomes a cultivator (keeping the martial artist
+# trait). The first immortal core is chosen via the condense chooser event.
 aura_awaken_cultivation_effect = {
 	if = {
 		limit = {
@@ -171,9 +160,28 @@ aura_awaken_cultivation_effect = {
 	}
 }
 
+# Grant agelessness once the Fortitude immortal track reaches 50 cores.
+aura_check_ageless_effect = {
+	if = {
+		limit = {
+			NOT = { has_trait = aura_ageless }
+			has_trait_xp = { trait = aura_cultivator track = fortitude value >= 50 }
+		}
+		add_trait = aura_ageless
+	}
+}
+
+# Jade Dragon Foundation grants +2 to every immortal core on acquisition.
+aura_grant_jade_dragon_cores_effect = {
+	add_trait_xp = { trait = aura_cultivator track = power value = 2 }
+	add_trait_xp = { trait = aura_cultivator track = fortitude value = 2 }
+	add_trait_xp = { trait = aura_cultivator track = agility value = 2 }
+	add_trait_xp = { trait = aura_cultivator track = soul value = 2 }
+	aura_check_ageless_effect = yes
+}
+
 # Inherit a forebear's Foundation: copy the matching foundation trait from a
-# parent (father preferred, else mother). Used by the awakening foundation
-# chooser when aura_parent_has_foundation_trigger is true.
+# parent (father preferred, else mother).
 aura_inherit_foundation_effect = {
 	if = {
 		limit = { exists = father father = { aura_has_foundation_trigger = yes } }
@@ -209,81 +217,5 @@ aura_inherit_foundation_effect = {
 			add_trait = aura_foundation_jade_dragon
 			aura_grant_jade_dragon_cores_effect = yes
 		}
-	}
-}
-
-# Jade Dragon Foundation also grants +2 to every immortal core on acquisition.
-aura_grant_jade_dragon_cores_effect = {
-	aura_initialize_character_effect = yes
-	change_variable = { name = aura_ic_power add = 2 }
-	change_variable = { name = aura_ic_fortitude add = 2 }
-	change_variable = { name = aura_ic_agility add = 2 }
-	change_variable = { name = aura_ic_soul add = 2 }
-	aura_recalculate_passives_effect = yes
-}
-
-# --- Passive benefits: recalculation ----------------------------------------
-# Recompute the passive stat bonuses from current core counts and apply the
-# delta vs what's already applied. Called whenever cores change (training,
-# condensing) and at game start. Safe to run on anyone (zero cores -> zero).
-aura_recalculate_passives_effect = {
-	# Tracking variables for what we've already baked into base skills.
-	if = { limit = { NOT = { has_variable = aura_applied_prowess } } set_variable = { name = aura_applied_prowess value = 0 } }
-	if = { limit = { NOT = { has_variable = aura_applied_learning } } set_variable = { name = aura_applied_learning value = 0 } }
-
-	# Prowess (Power + Agility + Fortitude) and Learning (Soul): smooth, via the
-	# add_*_skill effects applied as a delta vs what we've already added.
-	add_prowess_skill = aura_prowess_delta_value
-	set_variable = { name = aura_applied_prowess value = aura_prowess_bonus_value }
-
-	add_learning_skill = aura_learning_delta_value
-	set_variable = { name = aura_applied_learning value = aura_learning_bonus_value }
-
-	# Health + life expectancy from Fortitude (stepped character modifiers).
-	aura_apply_fortitude_tiers_effect = yes
-
-	# No prowess loss from age, from 10 Fortitude cores.
-	if = {
-		limit = { aura_fortitude_value >= 10 }
-		add_character_modifier = aura_no_age_prowess_loss
-	}
-	else = {
-		remove_character_modifier = aura_no_age_prowess_loss
-	}
-
-	# Agelessness: at 50 Fortitude cores, become immune to death by old age.
-	if = {
-		limit = {
-			aura_fortitude_value >= 50
-			NOT = { has_trait = aura_ageless }
-		}
-		add_trait = aura_ageless
-	}
-}
-
-# Health and life expectancy scale with Fortitude cores, applied via tiered
-# character modifiers in steps of 10 cores (+0.5 Health and +50 years/step).
-# Above 50 cores the aura_ageless trait makes life expectancy moot. Re-applied on
-# every recalc.
-aura_apply_fortitude_tiers_effect = {
-	remove_character_modifier = aura_fortitude_tier_1
-	remove_character_modifier = aura_fortitude_tier_2
-	remove_character_modifier = aura_fortitude_tier_3
-	remove_character_modifier = aura_fortitude_tier_4
-	if = {
-		limit = { aura_fortitude_value >= 40 }
-		add_character_modifier = aura_fortitude_tier_4
-	}
-	else_if = {
-		limit = { aura_fortitude_value >= 30 }
-		add_character_modifier = aura_fortitude_tier_3
-	}
-	else_if = {
-		limit = { aura_fortitude_value >= 20 }
-		add_character_modifier = aura_fortitude_tier_2
-	}
-	else_if = {
-		limit = { aura_fortitude_value >= 10 }
-		add_character_modifier = aura_fortitude_tier_1
 	}
 }

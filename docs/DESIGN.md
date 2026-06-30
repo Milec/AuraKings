@@ -58,41 +58,38 @@ There are **two progression layers** (see the source guide,
 - **Chi** (a separate, short-term *combat stamina* pool — not yet modeled) is
   spent during the Aura Clash; do not conflate it with Aura Pressure.
 
-## The four cores (two tiers each)
+## The four cores — multi-track leveled traits
 
-A character's effective rating in a stat = **mortal cores + immortal cores**
-(counted equally). High cultivators leave the human range entirely — an Archon
-(~100 cores, ~10k AP) lives for centuries and slays great spirit beasts.
+The cores are **multi-track leveled traits** (the same machinery as vanilla
+`lifestyle_hunter`/`blademaster`). Each stat — Power, Fortitude, Agility, Soul —
+is a **track** inside the trait: a track's XP is the cores forged in that stat,
+its level is that core's **realm tier**, and the four track levels sum to the
+trait's overall level.
 
-Cores are tracked as engine variables — mortal `aura_mc_{power,fortitude,agility,soul}`
-and immortal `aura_ic_{…}` — summed by script values `aura_{stat}_value`.
+- `aura_martial_artist` — 4 mortal-core tracks (8-core cap; small tiers).
+- `aura_cultivator` — 4 immortal-core tracks; 5 realm tiers per track at
+  **1 / 10 / 30 / 75 / 150** cores. A focused Archon (~100–150 in one core) is
+  flatly superhuman.
 
-### Passive benefits (per effective core in that stat)
+A core is one point of track XP: `add_trait_xp = { trait = … track = … value = 1 }`.
+**Passive benefits are the track-level modifiers themselves** (cumulative — base
++ every reached level, exactly like blademaster's +3/+6/+12), so there is no
+separate stat recalculation:
 
-| Core | Benefit per core | Notes |
-|------|------------------|-------|
-| **Power** | +1.5 Prowess | Raw striking force |
-| **Agility** | +1.2 Prowess | Speed / finesse in a fight |
-| **Fortitude** | +0.5 Prowess, +0.05 Health, +5 yrs life expectancy | Durability & longevity |
-| **Soul** | +0.25 Learning | Insight / perception (more once techniques exist) |
+| Core | Track modifiers (cumulative across tiers) |
+|------|-------------------------------------------|
+| **Power** | Prowess (→ ~+100 at the top tier) |
+| **Agility** | Prowess (→ ~+80) |
+| **Fortitude** | Prowess + Health + life expectancy; **no-age-prowess-loss at tier 2 (10 cores)** |
+| **Soul** | Learning (+ minor piety) |
 
-**Fortitude longevity thresholds:** at **10** cores, age stops sapping prowess
-(`no_prowess_loss_from_age` modifier); health & life expectancy rise (stepped per
-10 cores); at **50** cores the character gains the **`aura_ageless`** trait
-(`immortal = yes`) and can no longer die of old age.
+**Agelessness:** when the Fortitude immortal track passes **50** cores,
+`aura_check_ageless_effect` grants the **`aura_ageless`** trait (`immortal = yes`)
+— a trait can't be granted by a track modifier, so this one step is scripted.
 
-Implementation (verified against `wiki_pages/`): `aura_recalculate_passives_effect`
-recomputes the totals from core counts and applies them —
-- **Prowess** (Pow/Agi/For) and **Learning** (Soul) via `add_prowess_skill` /
-  `add_learning_skill`, as a delta vs `aura_applied_*` (values may be fractional;
-  sub-point drift is cosmetic at these magnitudes);
-- **Health + life expectancy** via stepped Fortitude tier modifiers
-  (`aura_fortitude_tier_1..4`) — there is no `add_health` effect, so health must
-  come from a modifier;
-- **no-age-prowess-loss** and **agelessness** by threshold.
-
-It runs whenever cores change and at game start. Soul's Dread / Prestige flavor
-and a smooth (vs stepped) Fortitude curve are still to come.
+Numbers verified against vanilla (track modifiers stack; `add_trait_xp` /
+`has_trait_xp` confirmed). Soul Dread/Prestige flavor and richer per-core
+benefits can be layered into the track levels later.
 
 ## Elements (8, master up to 2)
 
