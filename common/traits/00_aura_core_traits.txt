@@ -1,68 +1,105 @@
 ﻿# Identity traits for the Aura Kings cultivation system.
 #
-# Cores come in two tiers (see docs/AURA_CLASH_GAME_GUIDE.md §3):
-#   - Mortal cores   : trained by anyone who has learned the martial path.
-#                      Tracked by the MARTIAL ARTIST trait. Capped at 8 total
-#                      across the four stats (1 in each at start = 4 free to train).
-#   - Immortal cores : condensed from free Aura Pressure once awakened.
-#                      Tracked by the CULTIVATOR trait. Requires Martial Artist.
+# These are MULTI-TRACK leveled traits (same machinery as vanilla lifestyle
+# traits such as lifestyle_hunter / blademaster). Each of the four cores —
+# Power, Fortitude, Agility, Soul — is its own TRACK inside the trait; a track's
+# XP is the number of cores you've forged in that stat, its level is that core's
+# realm tier, and the four track levels sum to the trait's overall level.
 #
-# A Cultivator KEEPS the Martial Artist trait (the two stack): Martial Artist
-# tracks the mortal cores, Cultivator tracks the immortal cores on top.
+#   - aura_martial_artist : tracks MORTAL cores (trained; 8 total cap).
+#   - aura_cultivator     : tracks IMMORTAL cores (condensed from Aura Pressure).
 #
-# The traits are identity flags. The actual per-stat core counts and Aura
-# Pressure live in character variables (see common/scripted_effects). Icons are
-# referenced but not yet supplied; they fall back gracefully.
+# Gain a core with:  add_trait_xp = { trait = <trait> track = <stat> value = 1 }
+# Check a tier with: has_trait_xp = { trait = <trait> track = <stat> value >= N }
+#
+# Track-level modifiers STACK cumulatively (base + every reached level), exactly
+# like vanilla blademaster (+3 base / +3 / +6 -> 3/6/12). So each level block
+# below is the INCREMENT added at that tier.
 
 aura_martial_artist = {
-	# Has learned to gather Aura Pressure and forge mortal cores through training.
-	# Acquired via a teacher, a manual, or self-study (gating TODO).
-	prowess = 2
-
+	category = lifestyle
 	icon = aura_martial_artist.dds
-
-	# Not a personality/physical trait and not randomly assigned.
 	shown_in_ruler_designer = no
 
-	# Dynamic tooltip: shows live Aura Pressure and per-stat mortal cores when a
-	# character is in scope; falls back to a static description otherwise (e.g.
-	# the trait encyclopedia, where there is no character).
-	desc = {
-		first_valid = {
-			triggered_desc = {
-				trigger = { NOT = { exists = this } }
-				desc = aura_martial_artist_desc
-			}
-			desc = aura_martial_artist_desc_dynamic
+	# Base (the path itself).
+	prowess = 1
+
+	# Mortal-core tracks. 1 core = 100 track XP (same scale as Aura Pressure).
+	# Levels at 1/2/3 cores in a stat (8 total cap enforced in script). Modest
+	# gains — mortal cores are the human-tier foundation.
+	tracks = {
+		power = {
+			100 = { prowess = 1 }
+			200 = { prowess = 1 }
+			300 = { prowess = 2 }
+		}
+		fortitude = {
+			100 = { health = 0.2 }
+			200 = { health = 0.2 }
+			300 = { health = 0.3  prowess = 1 }
+		}
+		agility = {
+			100 = { prowess = 1 }
+			200 = { prowess = 1 }
+			300 = { prowess = 2 }
+		}
+		soul = {
+			100 = { learning = 1 }
+			200 = { learning = 1 }
+			300 = { learning = 1 }
 		}
 	}
 }
 
 aura_cultivator = {
-	# Has awakened the immortal cores by condensing Aura Pressure, and gained a
-	# Foundation in the process (Foundation system TODO). Implies Martial Artist.
-	prowess = 4
-	dread_baseline_add = 5
-	monthly_prestige = 0.25
-
+	category = lifestyle
 	icon = aura_cultivator.dds
-
 	shown_in_ruler_designer = no
 
-	# Dynamic tooltip: shows live Aura Pressure and per-stat immortal cores.
-	desc = {
-		first_valid = {
-			triggered_desc = {
-				trigger = { NOT = { exists = this } }
-				desc = aura_cultivator_desc
-			}
-			desc = aura_cultivator_desc_dynamic
+	# Base (awakened presence).
+	monthly_prestige = 0.25
+	dread_baseline_add = 5
+
+	# Immortal-core tracks. 1 core = 100 track XP, because the XP IS the Aura
+	# Pressure condensed into that core (100 AP per core). Five realm tiers reached
+	# at 1 / 10 / 30 / 75 / 150 cores -> 100 / 1000 / 3000 / 7500 / 15000 XP.
+	# Increments are cumulative, so a focused Archon (~100-150 cores in one core)
+	# becomes flatly superhuman.
+	tracks = {
+		power = {
+			100   = { prowess = 3 }
+			1000  = { prowess = 7 }
+			3000  = { prowess = 15 }
+			7500  = { prowess = 25 }
+			15000 = { prowess = 50 }
+		}
+		fortitude = {
+			# health, longevity, and the "no prowess loss from age" threshold.
+			100   = { health = 0.5  prowess = 1  life_expectancy = 25 }
+			1000  = { health = 0.5  prowess = 2  life_expectancy = 50  no_prowess_loss_from_age = yes }
+			3000  = { health = 1.0  prowess = 3  life_expectancy = 75 }
+			7500  = { health = 1.0  prowess = 5  life_expectancy = 100 }
+			15000 = { health = 2.0  prowess = 9  life_expectancy = 150 }
+		}
+		agility = {
+			100   = { prowess = 2 }
+			1000  = { prowess = 6 }
+			3000  = { prowess = 12 }
+			7500  = { prowess = 20 }
+			15000 = { prowess = 40 }
+		}
+		soul = {
+			100   = { learning = 1  monthly_piety = 0.1 }
+			1000  = { learning = 2  monthly_piety = 0.1 }
+			3000  = { learning = 3 }
+			7500  = { learning = 4 }
+			15000 = { learning = 5 }
 		}
 	}
 }
 
-# Granted automatically at 50 Fortitude cores. immortal = yes makes the character
-# immune to death by old age (they may still die in other ways).
+# Granted by script when the Cultivator's Fortitude track reaches 50 immortal
+# cores (see aura_check_ageless_effect). immortal = yes -> immune to old-age death.
 aura_ageless = {
 	immortal = yes
 	shown_in_ruler_designer = no

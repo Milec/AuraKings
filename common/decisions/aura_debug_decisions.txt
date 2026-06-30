@@ -1,0 +1,117 @@
+﻿# Debug / testing decisions for Aura Kings.
+#
+# These let you exercise the whole cultivation system without grinding the normal
+# progression. They are player-only ([is_ai = no]) and labelled [DEBUG]. Delete
+# this file (and its localization) before any release.
+
+# [DEBUG] Become a Martial Artist immediately.
+aura_debug_become_martial_artist_decision = {
+	desc = aura_debug_become_martial_artist_decision_desc
+	selection_tooltip = aura_debug_become_martial_artist_decision_tooltip
+	is_shown = {
+		is_ai = no
+		aura_is_untrained_trigger = yes
+	}
+	is_valid = { is_adult = yes }
+	effect = { aura_begin_martial_training_effect = yes }
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# [DEBUG] +1000 Aura Pressure.
+aura_debug_gain_pressure_decision = {
+	desc = aura_debug_gain_pressure_decision_desc
+	selection_tooltip = aura_debug_gain_pressure_decision_tooltip
+	is_shown = {
+		is_ai = no
+		aura_is_martial_artist_trigger = yes
+	}
+	is_valid = { always = yes }
+	effect = { aura_gain_pressure_effect = { AMOUNT = 1000 } }
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# [DEBUG] Awaken into a Cultivator now (grants AP, then runs the real first-core
+# and Foundation choosers).
+aura_debug_awaken_decision = {
+	desc = aura_debug_awaken_decision_desc
+	selection_tooltip = aura_debug_awaken_decision_tooltip
+	is_shown = {
+		is_ai = no
+		aura_is_martial_artist_trigger = yes
+		NOT = { has_trait = aura_cultivator }
+	}
+	is_valid = { always = yes }
+	effect = {
+		aura_gain_pressure_effect = { AMOUNT = 500 }
+		aura_awaken_cultivation_effect = yes
+		trigger_event = aura_kings.0003
+	}
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# [DEBUG] Forge a mortal core in every stat (respects the 8 cap).
+aura_debug_forge_mortal_cores_decision = {
+	desc = aura_debug_forge_mortal_cores_decision_desc
+	selection_tooltip = aura_debug_forge_mortal_cores_decision_tooltip
+	is_shown = {
+		is_ai = no
+		aura_is_martial_artist_trigger = yes
+	}
+	is_valid = { aura_can_martial_train_trigger = yes }
+	effect = {
+		aura_forge_mortal_core_effect = { STAT = power }
+		aura_forge_mortal_core_effect = { STAT = fortitude }
+		aura_forge_mortal_core_effect = { STAT = agility }
+		aura_forge_mortal_core_effect = { STAT = soul }
+	}
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# [DEBUG] +10 immortal cores to every stat (test cultivator realm tiers).
+aura_debug_add_immortal_cores_decision = {
+	desc = aura_debug_add_immortal_cores_decision_desc
+	selection_tooltip = aura_debug_add_immortal_cores_decision_tooltip
+	is_shown = {
+		is_ai = no
+		aura_is_cultivator_trigger = yes
+	}
+	is_valid = { always = yes }
+	effect = { aura_debug_add_immortal_cores_effect = { AMOUNT = 1000 } }
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# [DEBUG] +50 immortal Fortitude cores (test longevity & agelessness threshold).
+aura_debug_max_fortitude_decision = {
+	desc = aura_debug_max_fortitude_decision_desc
+	selection_tooltip = aura_debug_max_fortitude_decision_tooltip
+	is_shown = {
+		is_ai = no
+		aura_is_cultivator_trigger = yes
+	}
+	is_valid = { always = yes }
+	effect = {
+		add_trait_xp = { trait = aura_cultivator track = fortitude value = 5000 }
+		aura_check_ageless_effect = yes
+	}
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
+
+# [DEBUG] Open the Foundation chooser.
+aura_debug_pick_foundation_decision = {
+	desc = aura_debug_pick_foundation_decision_desc
+	selection_tooltip = aura_debug_pick_foundation_decision_tooltip
+	is_shown = {
+		is_ai = no
+		aura_is_cultivator_trigger = yes
+	}
+	is_valid = { always = yes }
+	effect = { trigger_event = aura_kings.0004 }
+	ai_potential = { always = no }
+	ai_will_do = { base = 0 }
+}
