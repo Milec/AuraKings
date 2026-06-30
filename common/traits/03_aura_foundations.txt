@@ -180,17 +180,7 @@ aura_foundation_jade_lotus = {
 	shown_in_ruler_designer = no
 }
 
-# Jade Dragon — legendary/sovereign Foundation. On acquisition it also grants +2
-# to every immortal core (see aura_grant_jade_dragon_cores_effect).
-aura_foundation_jade_dragon = {
-	prowess = 4
-	health = 1.0
-	learning = 2
-	monthly_prestige = 0.5
-	diplomacy = 1
-	martial = 1
-	stewardship = 1
-	intrigue = 1
-	icon = aura_foundation_jade_dragon.dds
-	shown_in_ruler_designer = no
-}
+# Jade Dragon — DEFERRED. This is essentially a "cheat"/reincarnation foundation
+# (start with bonus cores, no extra cost), so it's removed for now. Re-add as a
+# trait here + an option in aura_kings.0004 + an effect granting starting cores
+# when the reincarnation/start-bonus path is built.

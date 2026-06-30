@@ -85,12 +85,7 @@ aura_kings.0004 = {
 		name = aura_kings.0004.jade_lotus
 		add_trait = aura_foundation_jade_lotus
 	}
-	# Jade Dragon — legendary, +all cores. (Gate later: reincarnation/Eldra.)
-	option = {
-		name = aura_kings.0004.jade_dragon
-		add_trait = aura_foundation_jade_dragon
-		aura_grant_jade_dragon_cores_effect = yes
-	}
+	# (Jade Dragon foundation deferred — a cheat/reincarnation start-bonus path.)
 }
 
 # 0005 — Core Foundation sub-chooser.

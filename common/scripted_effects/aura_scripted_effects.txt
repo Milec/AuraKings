@@ -172,12 +172,15 @@ aura_check_ageless_effect = {
 	}
 }
 
-# Jade Dragon Foundation grants +2 to every immortal core on acquisition.
-aura_grant_jade_dragon_cores_effect = {
-	add_trait_xp = { trait = aura_cultivator track = power value = 200 }
-	add_trait_xp = { trait = aura_cultivator track = fortitude value = 200 }
-	add_trait_xp = { trait = aura_cultivator track = agility value = 200 }
-	add_trait_xp = { trait = aura_cultivator track = soul value = 200 }
+# --- Debug helpers (see common/decisions/aura_debug_decisions.txt) -----------
+
+# Add the same amount of immortal-core XP to all four cultivator tracks.
+# Usage: aura_debug_add_immortal_cores_effect = { AMOUNT = 1000 }
+aura_debug_add_immortal_cores_effect = {
+	add_trait_xp = { trait = aura_cultivator track = power value = $AMOUNT$ }
+	add_trait_xp = { trait = aura_cultivator track = fortitude value = $AMOUNT$ }
+	add_trait_xp = { trait = aura_cultivator track = agility value = $AMOUNT$ }
+	add_trait_xp = { trait = aura_cultivator track = soul value = $AMOUNT$ }
 	aura_check_ageless_effect = yes
 }
 
@@ -213,10 +216,5 @@ aura_inherit_foundation_effect = {
 		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_fuel } }     add_trait = aura_foundation_fuel }
 		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_flayed_god } } add_trait = aura_foundation_flayed_god }
 		else_if = { limit = { scope:aura_forebear = { has_trait = aura_foundation_jade_lotus } } add_trait = aura_foundation_jade_lotus }
-		else_if = {
-			limit = { scope:aura_forebear = { has_trait = aura_foundation_jade_dragon } }
-			add_trait = aura_foundation_jade_dragon
-			aura_grant_jade_dragon_cores_effect = yes
-		}
 	}
 }

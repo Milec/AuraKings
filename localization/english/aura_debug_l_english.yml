@@ -1,0 +1,29 @@
+﻿l_english:
+ # Debug / testing decisions. Delete with common/decisions/aura_debug_decisions.txt.
+ aura_debug_become_martial_artist_decision:0 "[DEBUG] Become a Martial Artist"
+ aura_debug_become_martial_artist_decision_desc:0 "Instantly learn the martial path and forge your four starting mortal cores."
+ aura_debug_become_martial_artist_decision_tooltip:0 "Grant the Martial Artist trait"
+
+ aura_debug_gain_pressure_decision:0 "[DEBUG] +1000 Aura Pressure"
+ aura_debug_gain_pressure_decision_desc:0 "Add 1000 free Aura Pressure (enough to awaken and condense several immortal cores)."
+ aura_debug_gain_pressure_decision_tooltip:0 "+1000 Aura Pressure"
+
+ aura_debug_awaken_decision:0 "[DEBUG] Awaken into a Cultivator"
+ aura_debug_awaken_decision_desc:0 "Grant Aura Pressure, become a Cultivator, then run the first-immortal-core and Foundation choosers."
+ aura_debug_awaken_decision_tooltip:0 "Force awakening and run the choosers"
+
+ aura_debug_forge_mortal_cores_decision:0 "[DEBUG] Forge a mortal core in every stat"
+ aura_debug_forge_mortal_cores_decision_desc:0 "Forge one mortal core in Power, Fortitude, Agility, and Soul (respects the 8-core cap)."
+ aura_debug_forge_mortal_cores_decision_tooltip:0 "+1 mortal core per stat (up to the cap)"
+
+ aura_debug_add_immortal_cores_decision:0 "[DEBUG] +10 immortal cores (every stat)"
+ aura_debug_add_immortal_cores_decision_desc:0 "Add 10 immortal cores to each of the four cultivator tracks, to test the realm tiers and their bonuses."
+ aura_debug_add_immortal_cores_decision_tooltip:0 "+10 immortal cores to every stat"
+
+ aura_debug_max_fortitude_decision:0 "[DEBUG] +50 immortal Fortitude cores"
+ aura_debug_max_fortitude_decision_desc:0 "Add 50 immortal cores to the Fortitude track — enough to trigger agelessness and the longevity tiers."
+ aura_debug_max_fortitude_decision_tooltip:0 "+50 immortal Fortitude cores (test agelessness)"
+
+ aura_debug_pick_foundation_decision:0 "[DEBUG] Open the Foundation chooser"
+ aura_debug_pick_foundation_decision_desc:0 "Open the Foundation selection event to pick or change a Foundation."
+ aura_debug_pick_foundation_decision_tooltip:0 "Open the Foundation chooser"

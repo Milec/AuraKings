@@ -323,10 +323,11 @@ Fortitude+Agility, *Snowsteel* Fortitude+Soul, *Truegold* Power+Agility.)
 > 4 **Core** foundations, **Fuel** (bonus AP gathering now; Gate absorption
 > later), the **12 Zodiac** animals, **Flayed God** (ageless via `immortal`, full
 > plague immunity via `epidemic_resistance`, high health for regen, scheme
-> resistance for poison), **Jade Lotus** (+all skills), and **Jade Dragon** (+2 all
-> immortal cores). The elemental color-base layer and Kitsune are future
-> additions; the special foundations are freely choosable now and will be gated
-> behind their mentor/sect/reincarnation paths once those exist.
+> resistance for poison), and **Jade Lotus** (+all skills). **Jade Dragon** (the
+> Awakened-Jade-Dragon cheat/start-bonus foundation) is deferred. The elemental
+> color-base layer and Kitsune are future additions; the special foundations are
+> freely choosable now and will be gated behind their mentor/sect/reincarnation
+> paths once those exist.
 
 ---
 

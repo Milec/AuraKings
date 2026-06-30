@@ -76,7 +76,6 @@ aura_has_foundation_trigger = {
 		has_trait = aura_foundation_fuel
 		has_trait = aura_foundation_flayed_god
 		has_trait = aura_foundation_jade_lotus
-		has_trait = aura_foundation_jade_dragon
 	}
 }
 
